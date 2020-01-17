@@ -1,3 +1,9 @@
 [submodule "catkin_ws/src/hrp"]
 	path = catkin_ws/src/hrp
 	url = https://github.com/HusqvarnaResearch/hrp
+[submodule "catkin_ws/src/mqtt_ros_bridge"]
+	path = catkin_ws/src/mqtt_ros_bridge
+	url = https://github.com/EmaroLab/mqtt_ros_bridge
+[submodule "catkin_ws/src/gesture-based-controller"]
+	path = catkin_ws/src/gesture-based-controller
+	url = https://github.com/EmaroLab/gesture-based-controller
