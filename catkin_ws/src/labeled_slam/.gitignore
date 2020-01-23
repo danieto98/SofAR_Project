@@ -1,0 +1,8 @@
+atomic_configure/
+catkin/
+catkin_generated/
+cmake/
+CMakeFiles/
+devel/
+gtest/
+test_results/
