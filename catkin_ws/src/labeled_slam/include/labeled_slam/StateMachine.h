@@ -4,14 +4,7 @@
 // ROS includes.
 #include "ros/ros.h"
 #include "ros/time.h"
-
-// Custom message includes. Auto-generated from msg/ directory.
-//#include "node_example/node_example_data.h"
-
-// Dynamic reconfigure includes.
-//#include <dynamic_reconfigure/server.h>
-// Auto-generated from cfg/ directory.
-//#include <node_example/node_example_paramsConfig.h>
+#include "labeled_slam/Command.h"
 
 using std::string;
 
@@ -24,7 +17,7 @@ StateMachine();
 //! Destructor.
 ~StateMachine();
 
-
+void callback(const labeled_slam::Command::ConstPtr& msg);
 //! Publish the message.
 //void publishMessage(ros::Publisher *pub_message);
 
