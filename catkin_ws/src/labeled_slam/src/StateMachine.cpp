@@ -1,4 +1,5 @@
 #include "StateMachine.h"
+#include <iostream>
 
 StateMachine::StateMachine()
         : state_(new State_LISTENING() )
@@ -18,10 +19,29 @@ void StateMachine::callback(const labeled_slam::Command::ConstPtr& msg)
         string command = msg->command;
         string argument = msg->argument;
 
-
+        if (msg->command.compare("drive") == 0) //strings are equal!
+        {
+                drive();
+        }
+        else if (msg->command.compare("listen") == 0) //strings are equal!
+        {
+                listen();
+        }
+        else if (msg->command.compare("go to") == 0) //strings are equal!
+        {
+                go_to(msg->argument);
+        }
+        else if (msg->command.compare("label") == 0) //strings are equal!
+        {
+                label(msg->argument);
+        }
+        else
+        {
+                ROS_INFO("wrong command: %s", command.c_str());
+        }
         // Note that these are only set to INFO so they will print to a terminal for example purposes.
         // Typically, they should be DEBUG.
-        ROS_INFO("command is %s", command.c_str());
+        //ROS_INFO("command is %s", command.c_str());
 }    // end publishCallback()
 
 void StateMachine::change_state(BaseState * state)

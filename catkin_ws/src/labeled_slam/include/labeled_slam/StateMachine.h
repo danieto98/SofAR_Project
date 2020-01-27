@@ -27,13 +27,13 @@ void callback(const labeled_slam::Command::ConstPtr& msg);
 
 void change_state (BaseState * state);
 
+private:
+BaseState* state_;
+
 void drive();
 void listen();
 void go_to(string target);
 void label(string label);
-
-private:
-BaseState* state_;
 
 //! Publish the message.
 //void publishMessage(ros::Publisher *pub_message);
