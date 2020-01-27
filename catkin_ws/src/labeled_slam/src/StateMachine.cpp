@@ -1,12 +1,14 @@
 #include "StateMachine.h"
 
 StateMachine::StateMachine()
+        : state_(new State_LISTENING() )
 {
 }
 
 
 StateMachine::~StateMachine()
 {
+        delete state_;
 } // end ~NodeExample()
 
 
@@ -25,6 +27,26 @@ void StateMachine::callback(const labeled_slam::Command::ConstPtr& msg)
 void StateMachine::change_state(BaseState * state)
 {
         state_ = state;
+}
+
+void StateMachine::drive()
+{
+        state_->drive(this);
+}
+
+void StateMachine::listen()
+{
+        state_->listen(this);
+}
+
+void StateMachine::go_to(string target)
+{
+        state_->go_to(this, target);
+}
+
+void StateMachine::label(string label)
+{
+        state_->label(this, label);
 }
 
 
@@ -66,7 +88,7 @@ void State_LISTENING::listen(StateMachine* m)
 void State_LISTENING::go_to(StateMachine* m, string target)
 {
         ROS_INFO("Switching to go_to mode");
-        ROS_INFO("Target: %s", target.c_str());
+        ROS_INFO("Target: %s", target.c_str() );
         m->change_state( new State_GO_TO(target) );
         delete this;
 }
