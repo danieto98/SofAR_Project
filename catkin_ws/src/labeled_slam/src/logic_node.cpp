@@ -1,43 +1,32 @@
-#include "state_machine.h"
+#include "StateMachine.h"
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "labeled_slam/Command.h"
 
-/*--------------------------------------------------------------------
- * main()
- * Main function to set up ROS node.
- *------------------------------------------------------------------*/
+//#include <sstream>
 
 int main(int argc, char **argv)
 {
-  // Set up ROS.
-  ros::init(argc, argv, "listener");
-  ros::NodeHandle n;
+        ros::init(argc, argv, "logic_node");
 
-  // Declare variables that can be modified by launch file or command line.
-  int rate;
-  string topic;
+        //Create state machine
+        StateMachine state_machine;
 
-  // Initialize node parameters from launch file or command line.
-  // Use a private node handle so that multiple instances of the node can be run simultaneously
-  // while using different parameters.
-  ros::NodeHandle private_node_handle_("~");
-  private_node_handle_.param("rate", rate, int(40));
-  private_node_handle_.param("topic", topic, string("example"));
+        ros::NodeHandle n;
+        ros::Subscriber sub = n.subscribe("text_command", 1000, &StateMachine::callback, &state_machine);
 
-  // Create a new NodeExample object.
-  NodeExample *node_example = new NodeExample();
+        ros::Publisher chatter_pub = n.advertise<labeled_slam::Command>("chatter", 1000);
 
-  // Create a subscriber.
-  // Name the topic, message queue, callback function with class name, and object containing callback function.
-  ros::Subscriber sub_message = n.subscribe(topic.c_str(), 1000, &NodeExample::messageCallback, node_example);
+        /*
+           std_msgs::String msg;
+           std::stringstream ss;
+           ss << "hello world " << count;
+           msg.data = ss.str();
+           ROS_INFO("%s", msg.data.c_str());
+           chatter_pub.publish(msg);
+         */
 
-  // Tell ROS how fast to run this node.
-  ros::Rate r(rate);
+        ros::spin();
 
-  // Main loop.
-  while (n.ok())
-  {
-    ros::spinOnce();
-    r.sleep();
-  }
-
-  return 0;
-} // end main()
+        return 0;
+}
