@@ -139,7 +139,7 @@ void State_GO_TO::listen(StateMachine* m)
 
 void State_GO_TO::go_to(StateMachine* m, string target)
 {
-        ROS_INFO("Already in go_to mode!");
+        ROS_INFO("Robot is already moving to a target. To set a new target say listen again!");
 }
 
 void State_GO_TO::label(StateMachine* m, string label)
