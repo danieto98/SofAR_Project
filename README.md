@@ -28,11 +28,17 @@ For the Speech Recognition Library, you can follow the guidelines at:  https://p
 In this project, we use a microphone as input: it therefore necessary to install the PyAudio repository (https://pypi.org/project/PyAudio/)
 For ROS Melodic users, the installation should not greate any issue. 
 For ROS Kinetic users, the suggested installation and version requirements might not work. To avoid this problem, we suggest to:
--download PyAudio-0.2.11.tar.gz from https://pypi.org/project/PyAudio/ .
--move it to the the Python2.7 repository (/usr/local/lib/python2.7/dist-packages, you will need sudo privileges. 
--run tar xvf PyAudio-0.2.11.tar.gz
--cd PyAudio-0.2.11
--sudo python setup.py install
+
+-Download PyAudio-0.2.11.tar.gz from https: //pypi.org/project/PyAudio/ .
+-Move it to the the Python2.7 package folder (/usr/local/lib/python2.7/dist-packages, you will need sudo privileges). 
+-In that directory, run:
+
+```
+tar xvf PyAudio-0.2.11.tar.gz
+cd PyAudio-0.2.11
+sudo python setup.py install
+```
+
 
  ##### Installation of freenect_stack package #####
 Use these instructions to install libfreenect
