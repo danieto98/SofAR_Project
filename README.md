@@ -34,5 +34,30 @@ For ROS Kinetic users, the suggested installation and version requirements might
 -cd PyAudio-0.2.11
 -sudo python setup.py install
 
- 
+ ##### Installation of freenect_stack package #####
+Use these instructions to install libfreenect
+```
+cd  ~    
+git clone https://github.com/OpenKinect/libfreenect.git    
+cd libfreenect    
+mkdir build   
+cd build
+cmake -L ..    
+make
+sudo make install
+```
+NOTE: you must edit CmakeLists.txt before running cmake and add the following line:
+```
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++11")
+```
+Use these instructions to install freenect_stack
+```
+cd ~/catkin_workspace/src
+git clone https://github.com/ros-drivers/freenect_stack.git
+cd ..
+catkin_make
+```
+##### Installation of rtabmap_ros package #####
+Look at this webpage: https://github.com/introlab/rtabmap_ros#build-from-source
+NOTE: We do not need any optional dependencies but steps 0, 2, & 3 are required.
 
