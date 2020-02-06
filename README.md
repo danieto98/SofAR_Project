@@ -22,9 +22,9 @@ The robot is expected to navigate an area, through smartwatch teleoperation, and
 
 
 
-##### SPEECH RECOGNITION REQUIREMENTS #####
+##### Speech Recognition, Installation Testing and Requirements #####
 
-For the Speech Recognition Library, you can follow the guidelines at:  https://pypi.org/project/SpeechRecognition/ .
+For the Speech Recognition Library, you can follow the installations guidelines at:  https://pypi.org/project/SpeechRecognition/ .
 In this project, we use a microphone as input: it therefore necessary to install the PyAudio repository (https://pypi.org/project/PyAudio/)
 For ROS Melodic users, the installation should not greate any issue. 
 For ROS Kinetic users, the suggested installation and version requirements might not work. To avoid this problem, we suggest to:
@@ -38,7 +38,17 @@ tar xvf PyAudio-0.2.11.tar.gz
 cd PyAudio-0.2.11
 sudo python setup.py install
 ```
-
+For a quick package test, it is possible to test it as a Python package (1) or a ROS package (2):
+(1)
+```
+python -m speech_recognition
+```
+(2) Open three terminals, RUN "source ./devel/setup.bash" in each of them and then run each of the following in a terminal:
+```
+roscore
+rosrun myspeechrecognition myspeechcommand.py
+rostopic echo /speechcommandtopic
+```
 
  ##### Installation of freenect_stack package #####
 Use these instructions to install libfreenect
