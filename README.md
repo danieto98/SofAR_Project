@@ -19,3 +19,20 @@ The goal of the project is to combine SLAM with voice recognition and semantic l
 The mobile robot used is an Husqvarna, connected to a RaspberryPi, Kinect for RGBD data, a microphone, and a Smartwatch to teleoperate it. 
 
 The robot is expected to navigate an area, through smartwatch teleoperation, and acquire labels for objects when a voice command is sent. Then, is expected to move between labelled objects once voice commands are given through the microphone. 
+
+
+
+##### SPEECH RECOGNITION REQUIREMENTS #####
+
+For the Speech Recognition Library, you can follow the guidelines at:  https://pypi.org/project/SpeechRecognition/ .
+In this project, we use a microphone as input: it therefore necessary to install the PyAudio repository (https://pypi.org/project/PyAudio/)
+For ROS Melodic users, the installation should not greate any issue. 
+For ROS Kinetic users, the suggested installation and version requirements might not work. To avoid this problem, we suggest to:
+-download PyAudio-0.2.11.tar.gz from https://pypi.org/project/PyAudio/ .
+-move it to the the Python2.7 repository (/usr/local/lib/python2.7/dist-packages, you will need sudo privileges. 
+-run tar xvf PyAudio-0.2.11.tar.gz
+-cd PyAudio-0.2.11
+-sudo python setup.py install
+
+ 
+
