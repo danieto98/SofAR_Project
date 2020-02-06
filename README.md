@@ -20,7 +20,7 @@ The mobile robot used is an Husqvarna, connected to a RaspberryPi, Kinect for RG
 
 The robot is expected to navigate an area, through smartwatch teleoperation, and acquire labels for objects when a voice command is sent. Then, is expected to move between labelled objects once voice commands are given through the microphone. 
 
-##### Turning on Husqvarna #####
+###### Turning on Husqvarna ######
 -Flip on the two switches on the back of the automower (left, then center).
 -Open the lid on top of the robot by pressing the red STOP button.
 -Enter the password: ######
@@ -31,13 +31,13 @@ The robot is expected to navigate an area, through smartwatch teleoperation, and
 -Press OK once more and navigate back to the main menu
 -Close the lid on top of the robot
 
-##### Find your computer's IP address #####
+###### Find your computer's IP address ######
 -Run the following command: "ifconfig"
 -Find the interface corresponding to your current connection (Ethernet or Wi-Fi), make sure the address is not localhost(127.0.0.1)
 -Under that interface, note down the IP address which follows "inet addr:"
 -For every terminal you open up, immediately run the following command "export ROS_IP=<your_ip>" by substituting "<your_ip>" with the IP address obtained above
 
-#####  Set the ROS master on the Raspberry Pi ##### 
+######  Set the ROS master on the Raspberry Pi ######
 -SSH into the Pi using its IP address (currently ############ ): "ssh emarolab@<pi_ip>".
 -Enter the password: ###########
 -Set the ROS master to your machine: ```export ROS_MASTER_URI=<your_ip>:11311 ```
@@ -54,13 +54,13 @@ Start up the required nodes:
    ```sudo chmod 666 /dev/ttyACM0```
    ```roslaunch am_driver_legacy automower_legacy.launch```
     
-#### LG Smartwatch: Start controlling the robot #####
+###### LG Smartwatch: Start controlling the robot ######
 -Open up the IMU app on the LG SmartWatch
 -Set the IP address to that of your machine and the port number to "11311"
 -Move your hand to drive the robot
 
 
-##### Speech Recognition, Installation Testing and Requirements #####
+###### Speech Recognition, Installation Testing and Requirements ######
 
 For the Speech Recognition Library, you can follow the installations guidelines at:  https://pypi.org/project/SpeechRecognition/ .
 In this project, we use a microphone as input: it therefore necessary to install the PyAudio repository (https://pypi.org/project/PyAudio/)
@@ -89,7 +89,7 @@ rosrun myspeechrecognition myspeechcommand.py
 rostopic echo /speechcommandtopic
 ```
 
- ##### Installation of freenect_stack package #####
+ ###### Installation of freenect_stack package #######
 Use these instructions to install libfreenect
 ```
 cd  ~    
