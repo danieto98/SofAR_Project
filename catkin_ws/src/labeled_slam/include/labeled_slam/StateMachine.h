@@ -18,14 +18,17 @@ class StateMachine
 {
 public:
 //! Constructor.
-StateMachine();
+StateMachine(ros::ServiceClient* client_set_goal);
 
 //! Destructor.
 ~StateMachine();
 
-void callback(const labeled_slam::Command::ConstPtr& msg);
+void callback_command(const labeled_slam::Command::ConstPtr& msg);
+void callback_goal_reached(const std_msgs::Bool::ConstPtr& msg);
 
 void change_state (BaseState * state);
+
+ros::ServiceClient* client_set_goal_;
 
 private:
 BaseState* state_;
@@ -34,6 +37,7 @@ void drive();
 void listen();
 void go_to(string target);
 void label(string label);
+void goal_reached();
 
 //! Publish the message.
 //void publishMessage(ros::Publisher *pub_message);
@@ -47,6 +51,7 @@ virtual void drive(StateMachine* m) = 0;
 virtual void listen(StateMachine* m) = 0;
 virtual void go_to(StateMachine* m, string target) = 0;
 virtual void label(StateMachine* m, string label) = 0;
+virtual void goal_reached(StateMachine* m) = 0;
 };
 
 
@@ -58,6 +63,7 @@ virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
 virtual void label(StateMachine* m, string label);
+virtual void goal_reached(StateMachine* m);
 };
 
 class State_LISTENING : public BaseState
@@ -66,6 +72,7 @@ virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
 virtual void label(StateMachine* m, string label);
+virtual void goal_reached(StateMachine* m);
 };
 
 class State_GO_TO : public BaseState
@@ -76,6 +83,7 @@ virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
 virtual void label(StateMachine* m, string label);
+virtual void goal_reached(StateMachine* m);
 private:
 string target_;
 
