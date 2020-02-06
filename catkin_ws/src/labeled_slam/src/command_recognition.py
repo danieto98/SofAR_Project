@@ -24,7 +24,7 @@ class Main_Speech_Controller:
         def __init__(self):
 
             # Topic where we will publish our costume message
-            self.mytopic= rospy.Publisher('text_command', speechcommand, queue_size=10)
+            self.mytopic= rospy.Publisher('text_command', Command, queue_size=10)
 
             # Structure for the speech recognition library result
             self.speech= {"Transcription":None, "Success":True, "Error":None}
@@ -46,6 +46,7 @@ class Main_Speech_Controller:
             # Declare a type of recognizer an microphone for the speech recognition library
             speechrecognizer= sr.Recognizer()
             microphone= sr.Microphone()
+
 
             with microphone as source:
                 # Identifies the backgroundnoise to recognize better the speech
