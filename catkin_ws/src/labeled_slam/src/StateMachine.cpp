@@ -39,6 +39,7 @@ void StateMachine::callback(const labeled_slam::Command::ConstPtr& msg)
         {
                 ROS_INFO("wrong command: %s", command.c_str());
         }
+
         // Note that these are only set to INFO so they will print to a terminal for example purposes.
         // Typically, they should be DEBUG.
         //ROS_INFO("command is %s", command.c_str());
@@ -70,6 +71,12 @@ void StateMachine::label(string label)
 }
 
 
+State_DRIVING::State_DRIVING()
+{
+        //
+
+}
+
 void State_DRIVING::drive(StateMachine* m)
 {
         ROS_INFO("Already in driving mode!");
@@ -85,12 +92,12 @@ void State_DRIVING::listen(StateMachine* m)
 
 void State_DRIVING::go_to(StateMachine* m, string target)
 {
-        ROS_INFO("Invalid Command GO_TO for driving mode. First say listen to go to listening mode.");
+        ROS_INFO("Invalid Command 'go to' for driving mode. Expected to receive a listen command first (typing '1')");
 }
 
 void State_DRIVING::label(StateMachine* m, string label)
 {
-        ROS_INFO("Invalid Command LABEL for driving mode. First say listen to go to listening mode.");
+        ROS_INFO("Invalid Command 'label' for driving mode. Expected to receive a listen command first (typing '1')");
 }
 
 void State_LISTENING::drive(StateMachine* m)
@@ -125,9 +132,7 @@ State_GO_TO::State_GO_TO(string target)
 
 void State_GO_TO::drive(StateMachine* m)
 {
-        ROS_INFO("Switching to driving mode");
-        m->change_state( new State_DRIVING() );
-        delete this;
+        ROS_INFO("Invalid Command 'drive' for go_to mode. Expected to receive a listen command first (typing '1')");
 }
 
 void State_GO_TO::listen(StateMachine* m)
@@ -139,10 +144,10 @@ void State_GO_TO::listen(StateMachine* m)
 
 void State_GO_TO::go_to(StateMachine* m, string target)
 {
-        ROS_INFO("Robot is already moving to a target. To set a new target say listen again!");
+        ROS_INFO("Invalid Command 'go to' for go_to mode. Expected to receive a listen command first (typing '1')");
 }
 
 void State_GO_TO::label(StateMachine* m, string label)
 {
-        ROS_INFO("Invalid Command LABEL for go_to mode. First say listen to go to listening mode.");
+        ROS_INFO("Invalid Command 'label' for go_to mode. Expected to receive a listen command first (typing '1')");
 }

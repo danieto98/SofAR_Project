@@ -52,6 +52,8 @@ virtual void label(StateMachine* m, string label) = 0;
 
 class State_DRIVING : public BaseState
 {
+State_DRIVING();
+~State_DRIVING();
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
