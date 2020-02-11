@@ -2,9 +2,11 @@
 #include "ros/ros.h"
 #include "labeled_slam/Command.h"
 
-
-//#include <sstream>
-
+/**
+ *   @brief This node implements the main logic of the labeled_slam project
+ *
+ *
+ **/
 int main(int argc, char **argv)
 {
         ros::init(argc, argv, "logic_node");
@@ -17,13 +19,13 @@ int main(int argc, char **argv)
         ros::ServiceClient client_activate_path_following = n.serviceClient<std_srvs::SetBool>("activate_path_following");
         ros::ServiceClient client_activate_driving        = n.serviceClient<std_srvs::SetBool>("activate_driving");
 
-        //Create state machine
+        //Create state machine, pass all the service clients to state machine (services will be called from inside)
         StateMachine state_machine(&client_set_goal,
                                    &client_set_label,
                                    &client_activate_path_following,
                                    &client_activate_driving);
 
-        //Create Subscribers
+        //Create Subscribers, assign callback-functions to memberfunctions of state_machine
         ros::Subscriber sub_command       = n.subscribe("text_command", 1000, &StateMachine::callback_command, &state_machine);
         ros::Subscriber sub_goal_reached  = n.subscribe("goal_reached", 1000, &StateMachine::callback_goal_reached, &state_machine);
 
