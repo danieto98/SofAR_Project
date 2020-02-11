@@ -20,7 +20,7 @@ We have used the following hardware components:
 
 The architecture can be summarized using the following UML diagram:
 <p align="center"> 
-<img src="https://github.com/danieto98/SofAR_Project/UML.png">
+<img src="https://github.com/danieto98/SofAR_Project/blob/master/UML.png">
 </p>
 
 The Kinect driver (freenect_camera) provides an image, a depth image and the camera information for the device. All of this data is synched into a single topic using the rtabmap_ros/rgbd_sync nodelet. This is later fed to both the rtabmap and rgbd_odometry nodes. The latter computes odometry from the current image and point cloud visualized by the Kinect. The Husqvarna driver node (am_driver_legacy) provides odometry based on the model of the robot and the current speed of the wheels. These two odometry estimates are merged into a more robust estimate using the odometry_merge node. The results from this node and the synched Kinect data are fed into the rtabmap node which generates an estimate of the current map and computes the position of the robot as a tf using an RGBD SLAM approach.
