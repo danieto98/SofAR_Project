@@ -1,7 +1,7 @@
 #include "StateMachine.h"
 #include "ros/ros.h"
-#include "std_msgs/String.h"
 #include "labeled_slam/Command.h"
+
 
 //#include <sstream>
 
@@ -10,16 +10,22 @@ int main(int argc, char **argv)
         ros::init(argc, argv, "logic_node");
 
         ros::NodeHandle n;
-        ros::ServiceClient client_set_goal = n.serviceClient<SRV_TYPE_SET_GOAL>("set_goal");
-        ros::ServiceClient client_set_label = n.serviceClient<SRV_TYPE_SET_LABEL>("set_label");
+
+        //Define all service clients
+        ros::ServiceClient client_set_goal                = n.serviceClient<SRV_TYPE_SET_GOAL>("set_goal");
+        ros::ServiceClient client_set_label               = n.serviceClient<SRV_TYPE_SET_LABEL>("set_label");
+        ros::ServiceClient client_activate_path_following = n.serviceClient<std_srvs::SetBool>("activate_path_following");
+        ros::ServiceClient client_activate_driving        = n.serviceClient<std_srvs::SetBool>("activate_driving");
 
         //Create state machine
-        StateMachine state_machine(&client_set_goal, &client_set_label);
+        StateMachine state_machine(&client_set_goal,
+                                   &client_set_label,
+                                   &client_activate_path_following,
+                                   &client_activate_driving);
 
-        ros::Subscriber sub_command = n.subscribe("text_command", 1000, &StateMachine::callback_command, &state_machine);
-        ros::Subscriber sub_goal_reached = n.subscribe("goal_reached", 1000, &StateMachine::callback_goal_reached, &state_machine);
-
-        ros::Publisher chatter_pub = n.advertise<labeled_slam::Command>("chatter", 1000);
+        //Create Subscribers
+        ros::Subscriber sub_command       = n.subscribe("text_command", 1000, &StateMachine::callback_command, &state_machine);
+        ros::Subscriber sub_goal_reached  = n.subscribe("goal_reached", 1000, &StateMachine::callback_goal_reached, &state_machine);
 
         ros::spin();
 

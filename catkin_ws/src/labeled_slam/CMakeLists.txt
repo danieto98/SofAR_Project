@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  std_srvs
   geometry_msgs
   message_generation
 )
@@ -72,6 +73,7 @@ add_service_files(
  generate_messages(
    DEPENDENCIES
    std_msgs
+   std_srvs
    geometry_msgs
  )
 
@@ -107,7 +109,7 @@ add_service_files(
 catkin_package(
    INCLUDE_DIRS include
    LIBRARIES labeled_slam
-   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+   CATKIN_DEPENDS roscpp rospy std_msgs std_srvs message_runtime
    DEPENDS system_lib
 )
 

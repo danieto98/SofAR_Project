@@ -5,6 +5,7 @@
 #include "ros/ros.h"
 #include "ros/time.h"
 #include "labeled_slam/Command.h"
+#include "std_srvs/SetBool.h"
 #include "std_msgs/Bool.h"
 
 #define STATE_MACHINE_STANDALONE
@@ -34,7 +35,10 @@ class StateMachine
 {
 public:
 //! Constructor.
-StateMachine(ros::ServiceClient* client_set_goal, ros::ServiceClient* client_set_label);
+StateMachine(ros::ServiceClient* client_set_goal,
+             ros::ServiceClient* client_set_label,
+             ros::ServiceClient* client_activate_path_following,
+             ros::ServiceClient* client_activate_driving);
 
 //! Destructor.
 ~StateMachine();
@@ -46,6 +50,8 @@ void change_state (BaseState * state);
 
 ros::ServiceClient* client_set_goal_;
 ros::ServiceClient* client_set_label_;
+ros::ServiceClient* client_activate_path_following_;
+ros::ServiceClient* client_activate_driving_;
 
 private:
 BaseState* state_;
@@ -75,31 +81,32 @@ virtual void goal_reached(StateMachine* m) = 0;
 class State_DRIVING : public BaseState
 {
 public:
-State_DRIVING();
-virtual void drive(StateMachine* m);
-virtual void listen(StateMachine* m);
-virtual void go_to(StateMachine* m, string target);
-virtual void label(StateMachine* m, string label);
-virtual void goal_reached(StateMachine* m);
-};
-
-class State_LISTENING : public BaseState
-{
-public:
-State_LISTENING(ros::ServiceClient* client_set_label);
+State_DRIVING(StateMachine* m);
+~State_DRIVING();
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
 virtual void label(StateMachine* m, string label);
 virtual void goal_reached(StateMachine* m);
 private:
-ros::ServiceClient* client_set_label_;
+ros::ServiceClient* client_activate_driving_;
+};
+
+class State_LISTENING : public BaseState
+{
+public:
+virtual void drive(StateMachine* m);
+virtual void listen(StateMachine* m);
+virtual void go_to(StateMachine* m, string target);
+virtual void label(StateMachine* m, string label);
+virtual void goal_reached(StateMachine* m);
 };
 
 class State_GO_TO : public BaseState
 {
 public:
-State_GO_TO(string target, ros::ServiceClient* client_set_goal);
+State_GO_TO(StateMachine* m, string target);
+~State_GO_TO();
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
@@ -107,6 +114,7 @@ virtual void label(StateMachine* m, string label);
 virtual void goal_reached(StateMachine* m);
 private:
 string target_;
+ros::ServiceClient* client_activate_path_following_;
 
 
 };
