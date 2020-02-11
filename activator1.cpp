@@ -12,17 +12,17 @@ bool activation = false;
 void velocity_callback(const geometry_msgs::Twist& received_velocity);
 void path_following_callback(const std_msgs::Bool::ConstPtr& activation_msg);
 
-//initializing my node
-
-ros::NodeHandle node;
-ros::Publisher  twist_pub = node.advertise<geometry_msgs::Twist>("ac1/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
-ros::Subscriber twist_sub = node.subscribe("path/cmd_vel", 1000, &velocity_callback); //subscriber for the velocity from the path planner
-ros::Subscriber bool_sub = node.subscribe("activate_path_following", 1000, &path_following_callback );  //boolean check to see wether data needs to be sent or not.
-
-
 int main(int argc, char** argv){
 
   ros::init(argc, argv, "activator1");
+
+  //initializing my node
+
+  ros::NodeHandle node;
+  ros::Publisher  twist_pub = node.advertise<geometry_msgs::Twist>("ac1/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
+  ros::Subscriber twist_sub = node.subscribe("path/cmd_vel", 1000, &velocity_callback); //subscriber for the velocity from the path planner
+  ros::Subscriber bool_sub = node.subscribe("activate_path_following", 1000, &path_following_callback );  //boolean check to see wether data needs to be sent or not.
+
   ros::Rate loop_rate(1000);
 
 // while here dunno why
