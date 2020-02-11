@@ -118,5 +118,5 @@ NOTE: We do not need any optional dependencies but steps 0, 2, & 3 are required.
 
 
 ##### Notes for Us #####
-Maybe relevant for writing a path folower, receives TF and publishes cmd_vel. 
+Maybe relevant for writing a path folower, receives TF and publishes geometry_msgs/Twists
 http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20listener%20%28C%2B%2B%29
