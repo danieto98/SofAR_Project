@@ -1,9 +1,10 @@
 #include "StateMachine.h"
 #include <iostream>
 
-StateMachine::StateMachine(ros::ServiceClient* client_set_goal)
-        : state_(new State_LISTENING() )
+StateMachine::StateMachine(ros::ServiceClient* client_set_goal, ros::ServiceClient* client_set_label)
+        : state_(new State_DRIVING() )
         , client_set_goal_( client_set_goal )
+        , client_set_label_( client_set_label )
 {
 }
 
@@ -96,7 +97,7 @@ void State_DRIVING::drive(StateMachine* m)
 void State_DRIVING::listen(StateMachine* m)
 {
         ROS_INFO("Switching to listening mode");
-        m->change_state( new State_LISTENING() );
+        m->change_state( new State_LISTENING(m->client_set_label_) );
         delete this;
 }
 
@@ -113,6 +114,11 @@ void State_DRIVING::label(StateMachine* m, string label)
 void State_DRIVING::goal_reached(StateMachine* m)
 {
         ROS_INFO("Invalid message: Goal should not be reached, when in driving mode!");
+}
+
+State_LISTENING::State_LISTENING(ros::ServiceClient* client_set_label)
+        : client_set_label_(client_set_label)
+{
 }
 
 void State_LISTENING::drive(StateMachine* m)
@@ -137,7 +143,15 @@ void State_LISTENING::go_to(StateMachine* m, string target)
 
 void State_LISTENING::label(StateMachine* m, string label)
 {
-        ROS_INFO("TODO!! Labeling");
+        SRV_TYPE_SET_LABEL srv;
+        srv.request.node_id = 0; //Means, that label will b set to last node_id
+        srv.request.node_label = label;
+        if (!ros::service::exists("set_label", true  ))//Info and return, if service does not exist
+        {
+                ROS_INFO("set_label service does not exist! Labeling unsuccessfull.");
+                return;
+        }
+        if (client_set_label_->call(srv));
 }
 
 void State_LISTENING::goal_reached(StateMachine* m)
@@ -149,8 +163,13 @@ State_GO_TO::State_GO_TO(string target,ros::ServiceClient* client_set_goal)
         : target_(target)
 {
         SRV_TYPE_SET_GOAL srv;
-        srv.request.node_id = 0; //Not sure about that
+        //srv.request.node_id = 0; //Not sure about that
         srv.request.node_label = target_;
+        if (!ros::service::exists("set_goal", true  ))//Info and return, if service does not exist
+        {
+                ROS_INFO("set_goal service does not exist! Going to specified location unsuccessfull.");
+                return;
+        }
         if (client_set_goal->call(srv));
 }
 
@@ -162,7 +181,7 @@ void State_GO_TO::drive(StateMachine* m)
 void State_GO_TO::listen(StateMachine* m)
 {
         ROS_INFO("Switching to listening mode");
-        m->change_state( new State_LISTENING() );
+        m->change_state( new State_LISTENING(m->client_set_label_) );
         delete this;
 }
 
@@ -179,6 +198,6 @@ void State_GO_TO::label(StateMachine* m, string label)
 void State_GO_TO::goal_reached(StateMachine* m)
 {
         ROS_INFO("GOAL REACHED! Switching to listening mode");
-        m->change_state( new State_LISTENING() );
+        m->change_state( new State_LISTENING(m->client_set_label_) );
         delete this;
 }

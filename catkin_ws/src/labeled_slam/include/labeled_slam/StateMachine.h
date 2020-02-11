@@ -34,7 +34,7 @@ class StateMachine
 {
 public:
 //! Constructor.
-StateMachine(ros::ServiceClient* client_set_goal);
+StateMachine(ros::ServiceClient* client_set_goal, ros::ServiceClient* client_set_label);
 
 //! Destructor.
 ~StateMachine();
@@ -45,6 +45,7 @@ void callback_goal_reached(const std_msgs::Bool::ConstPtr& msg);
 void change_state (BaseState * state);
 
 ros::ServiceClient* client_set_goal_;
+ros::ServiceClient* client_set_label_;
 
 private:
 BaseState* state_;
@@ -85,17 +86,20 @@ virtual void goal_reached(StateMachine* m);
 class State_LISTENING : public BaseState
 {
 public:
+State_LISTENING(ros::ServiceClient* client_set_label);
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
 virtual void label(StateMachine* m, string label);
 virtual void goal_reached(StateMachine* m);
+private:
+ros::ServiceClient* client_set_label_;
 };
 
 class State_GO_TO : public BaseState
 {
 public:
-State_GO_TO(string target, ros::ServiceClient* client_set_goal_);
+State_GO_TO(string target, ros::ServiceClient* client_set_goal);
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
