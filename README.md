@@ -116,3 +116,7 @@ catkin_make
 Look at this webpage: https://github.com/introlab/rtabmap_ros#build-from-source
 NOTE: We do not need any optional dependencies but steps 0, 2, & 3 are required.
 
+
+##### Notes for Us #####
+Maybe relevant for writing a path folower, receives TF and publishes cmd_vel. 
+http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20listener%20%28C%2B%2B%29
