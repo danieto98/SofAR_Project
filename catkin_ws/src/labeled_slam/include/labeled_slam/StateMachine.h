@@ -5,10 +5,21 @@
 #include "ros/ros.h"
 #include "ros/time.h"
 #include "labeled_slam/Command.h"
+#include "std_msgs/Bool.h"
+
+#define STATE_MACHINE_STANDALONE
+
+#ifdef STATE_MACHINE_STANDALONE
+  #include "labeled_slam/SetGoalDummy.h"
+  #define SRV_TYPE_SET_GOAL labeled_slam::SetGoalDummy
+#else
+  #include "rtabmap_ros/SetGoal.h"
+  #define SRV_TYPE_SET_GOAL rtabmap_ros::SetGoal
+#endif
 
 using std::string;
 
-//forward declare classes
+//forward declare classess
 class BaseState;
 class State_DRIVING;
 class State_LISTENING;
@@ -57,8 +68,8 @@ virtual void goal_reached(StateMachine* m) = 0;
 
 class State_DRIVING : public BaseState
 {
+public:
 State_DRIVING();
-~State_DRIVING();
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
@@ -68,6 +79,7 @@ virtual void goal_reached(StateMachine* m);
 
 class State_LISTENING : public BaseState
 {
+public:
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);
@@ -78,7 +90,7 @@ virtual void goal_reached(StateMachine* m);
 class State_GO_TO : public BaseState
 {
 public:
-State_GO_TO(string target);
+State_GO_TO(string target, ros::ServiceClient* client_set_goal_);
 virtual void drive(StateMachine* m);
 virtual void listen(StateMachine* m);
 virtual void go_to(StateMachine* m, string target);

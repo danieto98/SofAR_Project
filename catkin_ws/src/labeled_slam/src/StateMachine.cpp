@@ -1,7 +1,7 @@
 #include "StateMachine.h"
 #include <iostream>
 
-StateMachine::StateMachine(ros::ServiceClient client_set_goal)
+StateMachine::StateMachine(ros::ServiceClient* client_set_goal)
         : state_(new State_LISTENING() )
         , client_set_goal_( client_set_goal )
 {
@@ -42,7 +42,7 @@ void StateMachine::callback_command(const labeled_slam::Command::ConstPtr& msg)
         }
 }
 
-void StateMachine::callback_goal_reached(const std_msgs::Bool::ConstPtr& msg);
+void StateMachine::callback_goal_reached(const std_msgs::Bool::ConstPtr& msg)
 {
         if(msg->data == true)
         {
@@ -75,9 +75,9 @@ void StateMachine::label(string label)
         state_->label(this, label);
 }
 
-void StateMachine::goal_reached();
+void StateMachine::goal_reached()
 {
-        state_->goal_reached();
+        state_->goal_reached(this);
 }
 
 
@@ -112,7 +112,7 @@ void State_DRIVING::label(StateMachine* m, string label)
 
 void State_DRIVING::goal_reached(StateMachine* m)
 {
-        ROS_INFO("Invalid message: Goal should not be reached, when in Driving mode!");
+        ROS_INFO("Invalid message: Goal should not be reached, when in driving mode!");
 }
 
 void State_LISTENING::drive(StateMachine* m)
@@ -145,13 +145,13 @@ void State_LISTENING::goal_reached(StateMachine* m)
         ROS_INFO("Invalid message: Goal should not be reached, when in labeling mode!");
 }
 
-State_GO_TO::State_GO_TO(string target,ros::ServiceClient* client_set_goal_)
+State_GO_TO::State_GO_TO(string target,ros::ServiceClient* client_set_goal)
         : target_(target)
 {
-        rtabmap_ros::SetGoal srv;
+        SRV_TYPE_SET_GOAL srv;
         srv.request.node_id = 0; //Not sure about that
-        srv.request.node_label = 0; //Not sure about that
-        if (client_set_goal.call(srv));
+        srv.request.node_label = target_;
+        if (client_set_goal->call(srv));
 }
 
 void State_GO_TO::drive(StateMachine* m)
