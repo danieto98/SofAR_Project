@@ -11,11 +11,16 @@
 
 #ifdef STATE_MACHINE_STANDALONE
   #include "labeled_slam/SetGoalDummy.h"
+  #include "labeled_slam/SetLabelDummy.h"
   #define SRV_TYPE_SET_GOAL labeled_slam::SetGoalDummy
+  #define SRV_TYPE_SET_LABEL labeled_slam::SetLabelDummy
 #else
   #include "rtabmap_ros/SetGoal.h"
+  #include "rtabmap_ros/SetLabel.h"
   #define SRV_TYPE_SET_GOAL rtabmap_ros::SetGoal
+  #define SRV_TYPE_SET_LABEL rtabmap_ros::SetLabel
 #endif
+
 
 using std::string;
 
