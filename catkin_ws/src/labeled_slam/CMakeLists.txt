@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  std_srvs
+  geometry_msgs
   message_generation
 )
 
@@ -54,11 +56,11 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  SetGoalDummy.srv
+  SetLabelDummy.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -71,6 +73,8 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs
+   std_srvs
+   geometry_msgs
  )
 
 ################################################
@@ -105,7 +109,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
    INCLUDE_DIRS include
    LIBRARIES labeled_slam
-   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+   CATKIN_DEPENDS roscpp rospy std_msgs std_srvs message_runtime
    DEPENDS system_lib
 )
 
@@ -118,6 +122,7 @@ catkin_package(
 include_directories(
   include
   include/${PROJECT_NAME}
+  include/${PROJECT_NAME}/StateMachine
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -135,7 +140,12 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/labeled_slam_node.cpp)
-add_executable(logic_node src/logic_node.cpp src/StateMachine.cpp)
+add_executable(logic_node
+  src/logic_node.cpp
+  src/StateMachine/StateMachine.cpp
+  src/StateMachine/State_LISTENING.cpp
+  src/StateMachine/State_DRIVING.cpp
+  src/StateMachine/State_GO_TO.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
