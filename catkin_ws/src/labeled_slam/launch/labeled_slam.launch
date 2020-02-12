@@ -1,0 +1,8 @@
+<launch>
+  <node name="command_recognition" pkg="labeled_slam" type="command_recognition.py" />
+  <node name="logic" pkg="labeled_slam" type="logic_node" />
+  <include file="$(find gesture-based-controller)/launch/hrp_gb_controller.launch">
+    <arg name="inertial_sub_topic" value="/G_Watch_R_5567/imu_data" />
+    <arg name="vel_pub_topic"  value="/gbc/cmd_vel" />
+  </include>
+</launch>
