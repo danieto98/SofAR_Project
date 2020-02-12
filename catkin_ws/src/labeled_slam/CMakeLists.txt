@@ -122,6 +122,7 @@ catkin_package(
 include_directories(
   include
   include/${PROJECT_NAME}
+  include/${PROJECT_NAME}/StateMachine
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -139,7 +140,12 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/labeled_slam_node.cpp)
-add_executable(logic_node src/logic_node.cpp src/StateMachine.cpp)
+add_executable(logic_node
+  src/logic_node.cpp
+  src/StateMachine/StateMachine.cpp
+  src/StateMachine/State_LISTENING.cpp
+  src/StateMachine/State_DRIVING.cpp
+  src/StateMachine/State_GO_TO.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

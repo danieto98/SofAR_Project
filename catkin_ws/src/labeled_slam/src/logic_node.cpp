@@ -3,9 +3,12 @@
 #include "labeled_slam/Command.h"
 
 /**
- *   @brief This node implements the main logic of the labeled_slam project
+ *  @brief This node implements the main logic of the labeled_slam project
  *
- *
+ *  The core object of this node is state_machine
+ *  The c++ "state"-pattern is used to imlement the state machine in an object-
+ *  oriented, safe and maintainable way
+ *  Possible states of the state machine are "DRIVING", "LISTENING" and "GO_TO"
  **/
 int main(int argc, char **argv)
 {
