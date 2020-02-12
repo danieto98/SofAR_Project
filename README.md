@@ -11,7 +11,7 @@ This project has been developed using the [Robot Operating System (ROS)](https:/
 We have used the following hardware components:
 * Husqvarna 430x automower with a Raspberry Pi installed as explained in section 7.3 [here](https://github.com/HusqvarnaResearch/hrp/blob/master/Startup%20Guide%20HRP.pdf)
 * LG Smart Watch
-* Xbox 360 Kinect attached to the top of the automower
+* Microsoft Kinect for Xbox 360 attached to the top of the automower
 * Microphone
 * Wi-Fi router
 * PC running ROS Kinetic or Melodic on a Linux distribution
@@ -45,6 +45,29 @@ You must have a working ROS installation. For this project to work, we recommend
 
 * You can find instructions on how to download ROS Kinetic [here](http://wiki.ros.org/kinetic/Installation).
 * For downloading ROS Melodic, you can find instructions [here](http://wiki.ros.org/melodic/Installation).
+
+#### rtabmap_ros
+
+This is a ROS wrapper for the rtabmap libary which we will be using for SLAM and path planning.
+
+If you are a ROS Kinetic user, install it with:
+```
+sudo apt-get install ros-kinetic-rtabmap ros-kinetic-rtabmap-ros
+```
+
+If you are a ROS Melodic user, use this one instead:
+```
+sudo apt-get install ros-melodic-rtabmap ros-melodic-rtabmap-ros
+```
+
+#### freenect_stack
+
+This is a libfreenect-based ROS driver for the Microsoft Kinect.
+Install both the library and the ROS stack using:
+```
+sudo apt-get install libfreenect-dev
+sudo apt-get install ros-kinetic-freenect-stack
+```
 
 #### Speech Recognition Library
 
