@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   std_srvs
+  rtabmap_ros
   geometry_msgs
   message_generation
 )
@@ -74,6 +75,7 @@ add_service_files(
    DEPENDENCIES
    std_msgs
    std_srvs
+   rtabmap_ros
    geometry_msgs
  )
 
