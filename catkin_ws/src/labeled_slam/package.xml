@@ -7,7 +7,12 @@
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="filip@todo.todo">filip</maintainer>
+  <maintainer email="filip_hesse@yahoo.de">Filip Hesse</maintainer>
+  <maintainer email="leej1996@gmail.com">Justin Lee</maintainer>
+  <maintainer email="danieto98@gmail.com">Daniel Nieto</maintainer>
+  <maintainer email="robyrugby95@gmail.com">Roberto Canale</maintainer>
+  <maintainer email="imstevenpm.study@gmail.com">Steven Palma Morera</maintainer>
+  <maintainer email="rueda_999@hotmail.com">Josep Rueda</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -20,12 +25,19 @@
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
   <!-- <url type="website">http://wiki.ros.org/labeled_slam</url> -->
+  <url type="website">https://github.com/danieto98/SofAR_Project</url>
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
   <!-- Authors do not have to be maintainers, but could be -->
   <!-- Example: -->
   <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="filip_hesse@yahoo.de">Filip Hesse</author>
+  <author email="leej1996@gmail.com">Justin Lee</author>
+  <author email="danieto98@gmail.com">Daniel Nieto</author>
+  <author email="robyrugby95@gmail.com">Roberto Canale</author>
+  <author email="imstevenpm.study@gmail.com">Steven Palma Morera</author>
+  <author email="rueda_999@hotmail.com">Josep Rueda</author>
 
 
   <!-- The *depend tags are used to specify dependencies -->
@@ -52,12 +64,18 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <build_depend>rtabmap_ros</build_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>std_srvs</build_export_depend>
+  <build_export_depend>rtabmap_ros</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>rtabmap_ros</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
