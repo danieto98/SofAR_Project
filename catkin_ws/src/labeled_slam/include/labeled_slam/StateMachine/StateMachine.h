@@ -9,7 +9,7 @@
 #include "std_msgs/Bool.h"
 
 // comment out the following line after rtabmap package has been created!
-#define STATE_MACHINE_STANDALONE
+//#define STATE_MACHINE_STANDALONE
 
 #ifdef STATE_MACHINE_STANDALONE
   #include "labeled_slam/SetGoalDummy.h"
