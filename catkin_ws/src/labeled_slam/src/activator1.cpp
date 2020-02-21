@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "ros/ros.h"
 #include "std_msgs/Bool.h"
+#include "std_srvs.h"
 #include "geometry_msgs/Twist.h"
 
 using namespace std;
@@ -24,13 +25,13 @@ int main(int argc, char** argv){
   ros::NodeHandle node;
   ros::Publisher  twist_pub = node.advertise<geometry_msgs::Twist>("ac1/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
   ros::Subscriber twist_sub = node.subscribe("path/cmd_vel", 1000, &velocity_callback); //subscriber for the velocity from the path planner
-  ros::ServiceServer bool_serv = node.advertiseService("activate_path_following", path_following_activate );  //boolean check to see wether data needs to be sent or not.
+  ros::ServiceServer bool_serv = node.advertiseService("activate_path_following", path_following_activate);  //boolean check to see wether data needs to be sent or not.
 
 
 // while here dunno why
   while(ros::ok()){
     if(activation == true){
-      wist_pub.publish(velocity_to_publish);
+      Twist_pub.publish(velocity_to_publish);
       ROS_INFO("Path Follower is active.\n");
     } else{
       ROS_INFO("Path Follower is not active.\n");
