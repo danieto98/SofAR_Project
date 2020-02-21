@@ -18,26 +18,26 @@ bool path_following_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool:
 int main(int argc, char** argv){
 
         ros::init(argc, argv, "activator1");
-        ros::Rate loop_rate(1000);
 
         //initializing my node
-
         ros::NodeHandle node;
+
+        ros::Rate loop_rate(1000);
+
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("ac1/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber twist_sub = node.subscribe("path/cmd_vel", 1000, &velocity_callback); //subscriber for the velocity from the path planner
         ros::ServiceServer bool_serv = node.advertiseService("activate_path_following", path_following_activate); //boolean check to see wether data needs to be sent or not.
 
 
+        ROS_INFO("Path Following is not active.\n");
+
 // while here dunno why
         while(ros::ok()) {
-                if(activation == true) {
+                if(activation == true)
                         twist_pub.publish(velocity_to_publish);
-                        ROS_INFO("Path Follower is active.\n");
-                } else{
-                        ROS_INFO("Path Follower is not active.\n");
-                }
 
-                ros::spin();
+                ros::spinOnce();
+                loop_rate.sleep();
         }
 
         return 0;
@@ -46,7 +46,12 @@ int main(int argc, char** argv){
 
 bool path_following_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& response){
 
-        activation  == req.data;// iff activation->data = true
+        activation  = req.data;// iff activation->data = true
+
+        if (activation == true)
+                ROS_INFO("Path Following is active.\n");
+        else
+                ROS_INFO("Path Following is not active.\n");
         response.success = true;
         response.message = "";
         return true;

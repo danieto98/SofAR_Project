@@ -29,7 +29,7 @@ int main(int argc, char** argv){
         ros::ServiceServer bool_serv = node.advertiseService("activate_driving", driving_activate); //boolean check to see wether data needs to be sent or not.
 
 
-        ROS_INFO("Driving Mode  is not active.\n");
+        ROS_INFO("Driving Mode is not active.\n");
 
 
 // while here dunno why
