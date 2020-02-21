@@ -17,27 +17,28 @@ bool driving_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Respon
 
 int main(int argc, char** argv){
 
-        ros::init(argc, argv, "activator1");
+
+        ros::init(argc, argv, "activator2");
+        //initializing my node
+        ros::NodeHandle node;
+
         ros::Rate loop_rate(1000);
 
-        //initializing my node
-
-        ros::NodeHandle node;
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("ac1/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber twist_sub = node.subscribe("gbc/cmd_vel", 1000, &velocity_callback); //subscriber for the velocity from the path planner
         ros::ServiceServer bool_serv = node.advertiseService("activate_driving", driving_activate); //boolean check to see wether data needs to be sent or not.
 
 
+        ROS_INFO("Driving Mode  is not active.\n");
+
+
 // while here dunno why
         while(ros::ok()) {
-                if(activation == true) {
+                if(activation == true)
                         twist_pub.publish(velocity_to_publish);
-                        ROS_INFO("Driving Mode is active.\n");
-                } else{
-                        ROS_INFO("Driving Mode  is not active.\n");
-                }
 
-                ros::spin();
+                ros::spinOnce();
+                loop_rate.sleep();
         }
 
         return 0;
@@ -47,7 +48,12 @@ int main(int argc, char** argv){
 bool driving_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& response)
 {
 
-        activation  == req.data;// iff activation->data = true
+        activation  = req.data;// iff activation->data = true
+        //ROS_INFO("Activation %d.\n",activation);
+        if (activation == true)
+                ROS_INFO("Driving Mode is active.\n");
+        else
+                ROS_INFO("Driving Mode  is not active.\n");
         response.success = true;
         response.message = "";
         return true;

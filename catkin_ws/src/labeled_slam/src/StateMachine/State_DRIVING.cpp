@@ -18,6 +18,7 @@ State_DRIVING::State_DRIVING(StateMachine* m)
                 ROS_INFO("activate_driving service does not exist! Driving will not be activated.");
                 return;
         }
+        ROS_INFO("srv.request.data %d.\n",srv.request.data);
         client_activate_driving_->call(srv);
 }
 
