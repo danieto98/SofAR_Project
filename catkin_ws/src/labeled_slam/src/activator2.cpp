@@ -31,8 +31,7 @@ int main(int argc, char** argv){
 
         ROS_INFO("Driving Mode is not active.\n");
 
-
-// while here dunno why
+        s
         while(ros::ok()) {
                 if(activation == true)
                         twist_pub.publish(velocity_to_publish);
@@ -48,7 +47,7 @@ int main(int argc, char** argv){
 bool driving_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& response)
 {
 
-        activation  = req.data;// iff activation->data = true
+        activation  = req.data; // iff activation->data = true
         //ROS_INFO("Activation %d.\n",activation);
         if (activation == true)
                 ROS_INFO("Driving Mode is active.\n");

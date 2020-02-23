@@ -31,7 +31,6 @@ int main(int argc, char** argv){
 
         ROS_INFO("Path Following is not active.\n");
 
-// while here dunno why
         while(ros::ok()) {
                 if(activation == true)
                         twist_pub.publish(velocity_to_publish);
@@ -46,7 +45,7 @@ int main(int argc, char** argv){
 
 bool path_following_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& response){
 
-        activation  = req.data;// iff activation->data = true
+        activation  = req.data; // iff activation->data = true
 
         if (activation == true)
                 ROS_INFO("Path Following is active.\n");
