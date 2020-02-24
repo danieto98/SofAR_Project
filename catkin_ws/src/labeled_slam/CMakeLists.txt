@@ -150,8 +150,10 @@ add_executable(logic_node
 
   add_executable(activator1_node
     src/activator1.cpp)
- add_executable(activator2_node
+  add_executable(activator2_node
     src/activator2.cpp)
+  add_executable(path_follower_node
+    src/path_follower.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
