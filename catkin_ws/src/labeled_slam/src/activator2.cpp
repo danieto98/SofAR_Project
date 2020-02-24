@@ -31,7 +31,7 @@ int main(int argc, char** argv){
 
         ROS_INFO("Driving Mode is not active.\n");
 
-        s
+
         while(ros::ok()) {
                 if(activation == true)
                         twist_pub.publish(velocity_to_publish);

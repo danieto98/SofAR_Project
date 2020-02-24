@@ -1,7 +1,6 @@
 #include "StateMachine.h"
 #include "ros/ros.h"
-#include "labeled_slam/Command.h"
-
+//
 /**
  *  @brief This node implements the main logic of the labeled_slam project
  *
