@@ -8,6 +8,7 @@
 #include "geometry_msgs/Vector3.h"
 #include "geometry_msgs/TransformStamped.h"
 #include "geometry_msgs/Transform.h"
+#include "tf/transform_listener.h"
 #include "nav_msgs/Path.h"
 #include <string>
 #include <array>
@@ -33,7 +34,6 @@ EulerAngles ToEulerAngles(Quaternion q);
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
 bool proximity_check(geometry_msgs::Point goal, geometry_msgs::Point current);
-void tf_callback(const tf::tfMessage::ConstPtr& robot_position);
 
 geometry_msgs::Point current_position;
 geometry_msgs::Quaternion current_orientation; //maybe don't need
@@ -42,9 +42,6 @@ geometry_msgs::Point goal_position;
 geometry_msgs::Quaternion goal_orientation; //maybe don't need
 
 geometry_msgs::Twist velocity_to_publish;
-
-string desired_child = "/odom";
-string desired_frame = "/map";
 
 int main(int argc, char** argv){
 
@@ -57,7 +54,7 @@ int main(int argc, char** argv){
 
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("path/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber nav_sub = node.subscribe("local_path", 1000, &path_callback); //subscriber for the velocity from the path planner
-        ros::Subscriber tf_sub = node.subscribe("tf", 1000, &tf_callback);
+        tf::transform_listener odom_listener;
 
         //initializing speeds at 0
         velocity_to_publish.linear.x = 0.0;
@@ -69,12 +66,33 @@ int main(int argc, char** argv){
 
         float inc_x, inc_y, current_roll, current_pitch, current_yaw, angle_to_goal;
         struct EulerAngles robot_angle;
+        struct Quaternion dummy_current_orientation;
+        tf::StampedTransform my_transform;
 
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
 
         while(ros::ok()) {
 
-                robot_angle = ToEulerAngles(current_orientation);
+                //this is how they do it in the tutorial
+                try {
+                        odom_listener.lookupTransform ("/odom", "/map", ros::Time(0), my_transform);
+                } catch {
+                        ROS_ERROR("%s", ex.what());
+                        ros::Duration(1.0).sleep();
+                        continue;
+                }
+
+                //initializng robot current position and orientation
+                current_position = my_transform.getOrigin();
+                current_orientation = my_transform.getRotation();
+
+                //initializing my dummy quaternion with the values of my quaternion
+                dummy_current_orientation.x = current_orientation.x;
+                dummy_current_orientation.y = current_orientation.y;
+                dummy_current_orientation.z = current_orientation.z;
+                dummy_current_orientation.w = current_orientation.w;
+
+                robot_angle = ToEulerAngles(dummy_current_orientation);
                 current_roll = robot_angle.roll;
                 current_pitch = robot_angle.pitch;
                 current_yaw =  robot_angle.yaw;
@@ -87,14 +105,14 @@ int main(int argc, char** argv){
                 if( !proximity_check(goal_position, current_position)) {
                         if((angle_to_goal - current_yaw) > 0.01 ) {
                                 // RIGHT ROTATION
-                                velocity_to_publish.linear.x = 0.0;
+                                velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = 0.3;
 
                                 //actually publish velocity
                                 twist_pub.publish(velocity_to_publish);
                         } else if ((angle_to_goal - current_yaw) < 0.1 ) {
                                 //LFET ROTATION
-                                velocity_to_publish.linear.x = 0.0;
+                                velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = -0.3;
 
                                 //actually publish velocity
@@ -108,8 +126,6 @@ int main(int argc, char** argv){
                                 twist_pub.publish(velocity_to_publish);
                         }
                 }
-
-
                 ros::spinOnce();
                 loop_rate.sleep();
         }
@@ -124,20 +140,6 @@ void path_callback(const nav_msgs::Path::ConstPtr& received_path){
 
 }
 
-void tf_callback(const tf::tfMessage::ConstPtr& robot_position){
-
-        for(std::vector<int>::const_iterator it = robot_position->TransformStamped.begin(); it != robot_position->TransformStamped.end(); ++it)
-        {
-                if(strcmp(desired_frame, it->Header.frame_id)   && strcmp(desired_child, it->child_frame_id) ) {
-
-                        current_position = *it->Transform.Vector3;
-                        current_orientation = *it->Transform.Quaternion;
-
-                }
-
-        }
-
-}
 
 bool proximity_check(geometry_msgs::Point goal, geometry_msgs::Point current){
         //checking if the robot is close/has almost reached to my goal
@@ -171,3 +173,17 @@ EulerAngles ToEulerAngles(Quaternion q){
 
         return angles;
 }
+
+
+
+
+
+
+/*
+   WHAT IF THE EULER DOESNT WORK?  this is a second case, much shorter, that could work!
+   tfScalar yaw, pitch, roll;
+   tf::Matrix3x3 mat(current_orientation);
+   mat.getEulerYPR((float)&current_yaw, (float)&current_pitch, (float)&current_roll);
+
+
+ */
