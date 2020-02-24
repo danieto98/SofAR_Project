@@ -5,7 +5,12 @@
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/Pose.h"
 #include "geometry_msgs/Twist.h"
+#include "geometry_msgs/Vector3.h"
+#include "geometry_msgs/TransformStamped.h"
+#include "geometry_msgs/Transform.h"
 #include "nav_msgs/Path.h"
+#include "string.h"
+#include "array.h"
 #include "math.h"
 
 using namespace std;
@@ -19,6 +24,9 @@ geometry_msgs::Quaternion current_orientation; //maybe don't need
 
 geometry_msgs::Point goal_position;
 geometry_msgs::Quaternion goal_orientation; //maybe don't need
+
+string desired_child = "/odom";
+string desired_frame = "/map";
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
 bool proximity_check(geometry_msgs::Point goal, geometry_msgs::Point current);
@@ -34,6 +42,7 @@ int main(int argc, char** argv){
 
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("path/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber nav_sub = node.subscribe("local_path", 1000, &path_callback); //subscriber for the velocity from the path planner
+        ros::Subscriber tf_sub = node.subscribe("tf", 1000, &tf_callback);
 
         //initializing speeds at 0
         velocity_to_publish.linear.x = 0.0;
@@ -89,11 +98,25 @@ int main(int argc, char** argv){
         return 0;
 };
 
-
 void path_callback(const nav_msgs::Path::ConstPtr& received_path){
 
-        goal_position = received_path->Pose.Point;
-        goal_orientation = received_path->Pose.Quaternion;
+        goal_position = received_path[0]->Pose.Point;
+        goal_orientation = received_path[0]->Pose.Quaternion;
+
+}
+
+void tf_callback(const tf::tfMessage::ConstPtr& robot_position){
+
+        for(std::vector<int>::const_iterator it = robot_position->TransformStamped.begin(); it != robot_position->TransformStamped.end(); ++it)
+        {
+                if(strcmp(desired_frame, it->Header.frame_id)   && strcmp(desired_child, it->child_frame_id) ) {
+
+                        current_position = *it->Transform.Vector3;
+                        current_orientation = *it->Transform.Quaternion;
+
+                }
+
+        }
 
 }
 
