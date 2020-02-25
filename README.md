@@ -34,6 +34,10 @@ When not following a given path, the robot is controlled by using certain gestur
 ## Description of the System’s Architecture
 
 TODO
+
+## Notes for Us
+Maybe relevant for writing a path folower, receives TF and publishes geometry_msgs/Twists
+http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20listener%20%28C%2B%2B%29
 	
 ## Installation and System Testing
 
@@ -183,7 +187,6 @@ Make the catkin workspace:
 cd ~/SofAR_Project/catkin_ws
 catkin_make
 ```
-
 ### Running the Project
 
 #### Preliminary Steps
