@@ -60,13 +60,27 @@ If you are a ROS Melodic user, use this one instead:
 sudo apt-get install ros-melodic-rtabmap ros-melodic-rtabmap-ros
 ```
 
-#### freenect_stack
+#### Libfreenect
 
-This is a libfreenect-based ROS driver for the Microsoft Kinect.
-Install both the library and the ROS stack using:
+This library provides drivers for the Microsoft Kinect which you will have to install in the Raspberry Pi connected directly to the Husqvarna automower.
+
+You will first need to clone the libfreenect library from source. Open up a terminal in your desire directory and run:
 ```
-sudo apt-get install libfreenect-dev
-sudo apt-get install ros-kinetic-freenect-stack
+git clone https://github.com/OpenKinect/libfreenect
+cd libfreenect
+```
+
+Before installing the source, modify the CMakeLists.txt file in the repository's root directory by adding the following line:
+```
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++11")
+```
+
+Now make and install the library:
+```
+mkdir build
+cd build
+cmake -L  ..
+make
 ```
 
 #### Speech Recognition Library
@@ -87,11 +101,26 @@ tar xvf PyAudio-0.2.11.tar.gz
 cd PyAudio-0.2.11
 sudo python setup.py install
 ```
+
 ##### Installation Test
 
 In order to test the installation as a Python package, input the following command:
 ```
 python -m speech_recognition
+```
+
+#### Navigation Stack
+
+We use this stack, which includes the robot_pose_ekf package, to merge odometry data from our two sources.
+
+If you are a ROS Kinetic user, install it with:
+```
+sudo apt-get install ros-kinetic-navigation
+```
+
+If you are a ROS Melodic user, install it with:
+```
+sudo apt-get install ros-melodic-navigation
 ```
 
 ### Installation
@@ -117,6 +146,11 @@ Navigate to the src directory and clone the Husqvarna driver repository:
 ```
 cd ~/catkin_ws/src
 git clone https://github.com/HusqvarnaResearch/hrp
+```
+
+Clone the freenect ROS stack too:
+```
+git clone https://github.com/ros-drivers/freenect_stack
 ```
 
 Make the catkin workspace:
@@ -177,7 +211,7 @@ catkin_make
 * Enter the password
 * Set the ROS master to your machine:
 ```
-export ROS_MASTER_URI=<your_ip>:11311
+export ROS_MASTER_URI=http://<your_ip>:11311
 ```
 
 #### Running the project
