@@ -57,11 +57,9 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  SetGoalDummy.srv
-  SetLabelDummy.srv
-)
+#add_service_files(
+#  FILES
+#)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -147,7 +145,15 @@ add_executable(logic_node
   src/StateMachine/StateMachine.cpp
   src/StateMachine/State_LISTENING.cpp
   src/StateMachine/State_DRIVING.cpp
-  src/StateMachine/State_GO_TO.cpp)
+  src/StateMachine/State_GO_TO.cpp
+  )
+
+  add_executable(activator1_node
+    src/activator1.cpp)
+  add_executable(activator2_node
+    src/activator2.cpp)
+  add_executable(path_follower_node
+    src/path_follower.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -161,6 +167,12 @@ add_executable(logic_node
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(logic_node
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(activator1_node
+   ${catkin_LIBRARIES}
+ )
+ target_link_libraries(activator2_node
    ${catkin_LIBRARIES}
  )
 
