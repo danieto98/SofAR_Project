@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 
         ros::Rate loop_rate(1000);
 
-        ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("ac1/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
+        ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("ac2/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber twist_sub = node.subscribe("gbc/cmd_vel", 1000, &velocity_callback); //subscriber for the velocity from the path planner
         ros::ServiceServer bool_serv = node.advertiseService("activate_driving", driving_activate); //boolean check to see wether data needs to be sent or not.
 
