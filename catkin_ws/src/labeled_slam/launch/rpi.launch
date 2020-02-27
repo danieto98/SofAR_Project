@@ -1,0 +1,21 @@
+<launch>
+  <!--TODO: Debug the output of the freenect_camera_driver node and adapt other parameters accordingly-->
+  <!--Pay special attention to tfs and rectified image topics (if any) not shown in the docs-->
+  <!--Make sure tfs don't clash with others-->
+
+  <!--Argument for the serial port-->
+  <arg name="serialPort" default="/dev/ttyACM0" />
+  <arg name="device_id" default="#1" />
+
+  <!--Start the am_driver-->
+  <node name="am_driver_legacy" pkg="am_driver_legacy" type="am_driver_legacy_node" output="screen">
+	<param name="serialPort" type="str" value="$(arg serialPort)" />
+	<param name="publishTf" value="0"/>
+  </node>
+  
+  <!--Start the freenect_camera driver-->
+  <include file="$(find freenect_launch)/launch/freenect.launch" >
+    <arg name="depth_registration" value="true" />
+    <arg name="device_id" value="$(arg device_id)" />
+  </include>
+</launch>
