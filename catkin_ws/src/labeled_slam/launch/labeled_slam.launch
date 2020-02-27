@@ -1,6 +1,4 @@
 <launch>
-  <!--TODO: find the tf between base_link and camera_rgb_optical_frame and create a static_transform_publisher with it-->
-
   <!--Start the rtabmap/rgbd_sync nodelet to synchronize rgbd images-->
   <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
     <remap from="rgb/image"       to="rgb/image_raw"/>
@@ -123,10 +121,6 @@
   
   <!--Start the logic node-->
   <node name="logic" pkg="labeled_slam" type="logic_node" />
-  
-  <!--Start the activators-->
-  <node name="activator1" pkg="labeled_slam" type="activator1_node" />
-  <node name="activator2" pkg="labeled_slam" type="activator2_node" />
   
   <!--Start the gesture-based controller node to control the robot with the watch-->
   <include file="$(find gesture-based-controller)/launch/hrp_gb_controller.launch">
