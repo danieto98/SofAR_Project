@@ -182,6 +182,16 @@ cd ~
 git clone --recurse-submodules -j8 https://github.com/danieto98/SofAR_Project.git
 ```
 
+Navigate to the location of the gb_controller.py file:
+```
+cd ~/SofAR_Project/catkin_ws/src/gesture-based-controller/src/
+```
+
+Edit the following line (currently line 52) by replacing the number 1 with a number 2:
+```
+if (now.secs-self.last_time) < 1:
+```
+
 Make the catkin workspace:
 ```
 cd ~/SofAR_Project/catkin_ws
