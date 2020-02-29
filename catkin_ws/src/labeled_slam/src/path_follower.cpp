@@ -143,7 +143,7 @@ void path_callback(const nav_msgs::Path::ConstPtr& received_path){
 
 bool proximity_check(geometry_msgs::Point goal, geometry_msgs::Point current){
         //checking if the robot is close/has almost reached to my goal
-        if( ( (goal.x - current.x) <0.1 ) &&  ( (goal.x - current.x) <0.1 ) ) {
+        if( ( (goal.x - current.x) <0.1 ) &&  ( (goal.y - current.y) <0.1 ) ) {
                 return true;
         } else {
                 return false;
