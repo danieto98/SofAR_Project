@@ -28,12 +28,15 @@ using namespace std;
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
 bool proximity_check(geometry_msgs::Point goal, tf::Point current);
 
+///Current position of robot
 tf::Point current_position;
-tf::Quaternion current_orientation; //maybe don't need
-
+///Current orientation of robot in quaternion
+tf::Quaternion current_orientation;
+///Goal position on map
 geometry_msgs::Point goal_position;
-geometry_msgs::Quaternion goal_orientation; //maybe don't need
-
+///Goal orientation on map
+geometry_msgs::Quaternion goal_orientation;
+///Velocity sent to robot driver
 geometry_msgs::Twist velocity_to_publish;
 
 
@@ -68,8 +71,6 @@ int main(int argc, char** argv){
         velocity_to_publish.angular.z = 0.0;
 
         float inc_x, inc_y, angle_to_goal;
-        struct EulerAngles robot_angle;
-        struct Quaternion dummy_current_orientation;
         tf::StampedTransform my_transform;
 
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
@@ -98,30 +99,26 @@ int main(int argc, char** argv){
                 inc_y = goal_position.y - current_position.getY();
                 angle_to_goal = atan2 (inc_y, inc_x);
 
-                if( !proximity_check(goal_position, current_position)) {
+                if(!proximity_check(goal_position, current_position)) {
                         if((angle_to_goal - current_yaw) > 0.01 ) {
                                 // RIGHT ROTATION
                                 velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = 0.3;
-
-                                //actually publish velocity
-                                twist_pub.publish(velocity_to_publish);
                         } else if ((angle_to_goal - current_yaw) < -0.01 ) {
                                 //LFET ROTATION
                                 velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = -0.3;
-
-                                //actually publish velocity
-                                twist_pub.publish(velocity_to_publish);
-                        } else
-                        { //GO STRAIGHT
-                                velocity_to_publish.linear.x = 1;
+                        } else if (proximity_check(goal_position, current_position && abs(angle_to_goal - current_yaw) <= 0.01) {
+				velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = 0.0;
-
-                                //actually publish velocity
-                                twist_pub.publish(velocity_to_publish);
+			} else { //GO STRAIGHT
+                                velocity_to_publish.linear.x = 1.0;
+                                velocity_to_publish.angular.z = 0.0;
                         }
                 }
+		
+		//publish velocity to robot
+		twist_pub.publish(velocity_to_publish);
                 ros::spinOnce();
                 loop_rate.sleep();
         }
