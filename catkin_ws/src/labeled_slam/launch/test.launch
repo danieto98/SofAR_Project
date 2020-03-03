@@ -1,0 +1,11 @@
+<launch>
+  <!--Start the rtabmap/rgbd_sync nodelet to synchronize rgbd images-->
+  <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
+    <remap from="rgb/image"       to="/camera/rgb/image_rect_mono"/>
+    <remap from="rgb/camera_info"  to="/camera/rgb/camera_info" />
+    <remap from="depth/image"     to="/camera/depth_registered/hw_registered/image_rect"/>
+    <param name="approx_sync"     type="bool"   value="true"/>
+    <param name="queue_size"      type="int"    value="10"/>
+    <param name="depth_scale"     type="double" value="1.0"/>
+  </node>
+</launch>
