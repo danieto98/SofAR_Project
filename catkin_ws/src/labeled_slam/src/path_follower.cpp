@@ -108,7 +108,7 @@ int main(int argc, char** argv){
                                 //LFET ROTATION
                                 velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = -0.3;
-                        } else if (proximity_check(goal_position, current_position && abs(angle_to_goal - current_yaw) <= 0.01) {
+                        } else if (proximity_check(goal_position, current_position) && abs(angle_to_goal - current_yaw) <= 0.01) {
 				velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = 0.0;
 			} else { //GO STRAIGHT
