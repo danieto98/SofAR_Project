@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   rtabmap_ros
   geometry_msgs
   message_generation
+  genmsg
 )
 
 ## System dependencies are found with CMake's conventions
@@ -155,6 +156,8 @@ add_executable(logic_node
   add_executable(path_follower_node
     src/path_follower.cpp)
 
+add_executable(velocity_forwarder src/velocity_forwarder.cpp)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -175,6 +178,9 @@ add_executable(logic_node
  target_link_libraries(activator2_node
    ${catkin_LIBRARIES}
  )
+
+ target_link_libraries(velocity_forwarder 
+ ${catkin_LIBRARIES})
 
 #############
 ## Install ##
