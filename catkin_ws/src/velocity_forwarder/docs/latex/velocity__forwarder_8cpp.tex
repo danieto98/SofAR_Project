@@ -1,0 +1,63 @@
+\hypertarget{velocity__forwarder_8cpp}{}\section{src/velocity\+\_\+forwarder.cpp File Reference}
+\label{velocity__forwarder_8cpp}\index{src/velocity\+\_\+forwarder.\+cpp@{src/velocity\+\_\+forwarder.\+cpp}}
+{\ttfamily \#include $<$ros/ros.\+h$>$}\\*
+{\ttfamily \#include $<$geometry\+\_\+msgs/\+Twist.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}std\+\_\+msgs/\+String.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+Include dependency graph for velocity\+\_\+forwarder.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{velocity__forwarder_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{velocity__forwarder_8cpp_a5121f63bb791a335dbb5110dd1afbaa9}{Callback\+\_\+activator1} (const geometry\+\_\+msgs\+::\+Twist \&\hyperlink{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}{msg})
+\item 
+void \hyperlink{velocity__forwarder_8cpp_aa9ddda9a2dce0b17a19a6b1f8f96e7cb}{Callback\+\_\+activator2} (const geometry\+\_\+msgs\+::\+Twist \&\hyperlink{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}{msg})
+\item 
+int \hyperlink{velocity__forwarder_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+geometry\+\_\+msgs\+::\+Twist \hyperlink{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}{msg}
+\item 
+ros\+::\+Publisher \hyperlink{velocity__forwarder_8cpp_a350594df3e8f6948c8462edfd41ce086}{pub}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}!Callback\+\_\+activator1@{Callback\+\_\+activator1}}
+\index{Callback\+\_\+activator1@{Callback\+\_\+activator1}!velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}}
+\subsubsection[{\texorpdfstring{Callback\+\_\+activator1(const geometry\+\_\+msgs\+::\+Twist \&msg)}{Callback_activator1(const geometry_msgs::Twist &msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void Callback\+\_\+activator1 (
+\begin{DoxyParamCaption}
+\item[{const geometry\+\_\+msgs\+::\+Twist \&}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{velocity__forwarder_8cpp_a5121f63bb791a335dbb5110dd1afbaa9}{}\label{velocity__forwarder_8cpp_a5121f63bb791a335dbb5110dd1afbaa9}
+The Callback functions, mainly publish the received messages on the topic chosen in the \char`\"{}int main\char`\"{} The only difference, as said before, is the beginning of the display message\+: \char`\"{}\+Subscriber 1 velocities\+:\char`\"{} and \char`\"{}\+Subscriber 2 velocities\+:\char`\"{} R\+O\+S\+\_\+\+I\+N\+F\+O\+\_\+\+S\+T\+R\+E\+AM outputs the received messages through the terminal \index{velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}!Callback\+\_\+activator2@{Callback\+\_\+activator2}}
+\index{Callback\+\_\+activator2@{Callback\+\_\+activator2}!velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}}
+\subsubsection[{\texorpdfstring{Callback\+\_\+activator2(const geometry\+\_\+msgs\+::\+Twist \&msg)}{Callback_activator2(const geometry_msgs::Twist &msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void Callback\+\_\+activator2 (
+\begin{DoxyParamCaption}
+\item[{const geometry\+\_\+msgs\+::\+Twist \&}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{velocity__forwarder_8cpp_aa9ddda9a2dce0b17a19a6b1f8f96e7cb}{}\label{velocity__forwarder_8cpp_aa9ddda9a2dce0b17a19a6b1f8f96e7cb}
+\index{velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}!main@{main}}
+\index{main@{main}!velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}}
+\subsubsection[{\texorpdfstring{main(int argc, char $\ast$$\ast$argv)}{main(int argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}\hypertarget{velocity__forwarder_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{velocity__forwarder_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}
+We subscribe to the \char`\"{}ac1/cmd\+\_\+vel\char`\"{} and \char`\"{}ac2/cmd\+\_\+vel\char`\"{} topics, which are the topics where the nodes \char`\"{}activator\+\_\+1\char`\"{} and \char`\"{}activator\+\_\+2\char`\"{} publish messages respectively. Everytime we receive a message we will execute the callback functions \char`\"{}\+Callback\+\_\+activator1\char`\"{} and \char`\"{}\+Callback\+\_\+activator2\char`\"{} depending on the topic we receive the incoming message. They both do mainly the same, so we could use the same callback function for both, but we have split them so we can see which topic are we reading from on the terminal.
+
+\subsection{Variable Documentation}
+\index{velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}!msg@{msg}}
+\index{msg@{msg}!velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}}
+\subsubsection[{\texorpdfstring{msg}{msg}}]{\setlength{\rightskip}{0pt plus 5cm}geometry\+\_\+msgs\+::\+Twist msg}\hypertarget{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}{}\label{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}
+\index{velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}!pub@{pub}}
+\index{pub@{pub}!velocity\+\_\+forwarder.\+cpp@{velocity\+\_\+forwarder.\+cpp}}
+\subsubsection[{\texorpdfstring{pub}{pub}}]{\setlength{\rightskip}{0pt plus 5cm}ros\+::\+Publisher pub}\hypertarget{velocity__forwarder_8cpp_a350594df3e8f6948c8462edfd41ce086}{}\label{velocity__forwarder_8cpp_a350594df3e8f6948c8462edfd41ce086}
