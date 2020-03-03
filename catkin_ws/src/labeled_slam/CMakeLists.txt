@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   rtabmap_ros
   geometry_msgs
   message_generation
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -173,6 +174,10 @@ add_executable(logic_node
    ${catkin_LIBRARIES}
  )
  target_link_libraries(activator2_node
+   ${catkin_LIBRARIES}
+ )
+
+ target_link_libraries(path_follower_node
    ${catkin_LIBRARIES}
  )
 
