@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   rtabmap_ros
   geometry_msgs
   message_generation
+  tf
   genmsg
 )
 
@@ -181,6 +182,10 @@ add_executable(velocity_forwarder src/velocity_forwarder.cpp)
 
  target_link_libraries(velocity_forwarder 
  ${catkin_LIBRARIES})
+
+ target_link_libraries(path_follower_node
+   ${catkin_LIBRARIES}
+ )
 
 #############
 ## Install ##

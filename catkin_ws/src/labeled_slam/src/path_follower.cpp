@@ -8,11 +8,14 @@
 #include "geometry_msgs/Vector3.h"
 #include "geometry_msgs/TransformStamped.h"
 #include "geometry_msgs/Transform.h"
-#include "tf/transform_listener.h"
+#include <tf/transform_listener.h>
 #include "nav_msgs/Path.h"
+#include "tf/LinearMath/Transform.h"
+#include "tf/LinearMath/Matrix3x3.h"
 #include <string>
 #include <array>
 #include <cmath>
+
 using namespace std;
 
 
@@ -33,10 +36,10 @@ EulerAngles ToEulerAngles(Quaternion q);
 //still need to fix my current position, i just gotta find it!
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
-bool proximity_check(geometry_msgs::Point goal, geometry_msgs::Point current);
+bool proximity_check(geometry_msgs::Point goal, tf::Point current);
 
-geometry_msgs::Point current_position;
-geometry_msgs::Quaternion current_orientation; //maybe don't need
+tf::Point current_position;
+tf::Quaternion current_orientation; //maybe don't need
 
 geometry_msgs::Point goal_position;
 geometry_msgs::Quaternion goal_orientation; //maybe don't need
@@ -54,7 +57,7 @@ int main(int argc, char** argv){
 
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("path/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber nav_sub = node.subscribe("local_path", 1000, &path_callback); //subscriber for the velocity from the path planner
-        tf::transform_listener odom_listener;
+        tf::TransformListener robot_listener;
 
         //initializing speeds at 0
         velocity_to_publish.linear.x = 0.0;
@@ -64,7 +67,7 @@ int main(int argc, char** argv){
         velocity_to_publish.angular.y = 0.0;
         velocity_to_publish.angular.z = 0.0;
 
-        float inc_x, inc_y, current_roll, current_pitch, current_yaw, angle_to_goal;
+        float inc_x, inc_y, angle_to_goal;
         struct EulerAngles robot_angle;
         struct Quaternion dummy_current_orientation;
         tf::StampedTransform my_transform;
@@ -75,8 +78,8 @@ int main(int argc, char** argv){
 
                 //this is how they do it in the tutorial
                 try {
-                        odom_listener.lookupTransform ("/odom", "/map", ros::Time(0), my_transform);
-                } catch {
+                        robot_listener.lookupTransform ("/base_link", "/map", ros::Time(0), my_transform);
+                } catch(tf::TransformException ex) {
                         ROS_ERROR("%s", ex.what());
                         ros::Duration(1.0).sleep();
                         continue;
@@ -87,19 +90,23 @@ int main(int argc, char** argv){
                 current_orientation = my_transform.getRotation();
 
                 //initializing my dummy quaternion with the values of my quaternion
-                dummy_current_orientation.x = current_orientation.x;
-                dummy_current_orientation.y = current_orientation.y;
-                dummy_current_orientation.z = current_orientation.z;
-                dummy_current_orientation.w = current_orientation.w;
+                //dummy_current_orientation.x = current_orientation.x;
+                //dummy_current_orientation.y = current_orientation.y;
+                //dummy_current_orientation.z = current_orientation.z;
+                //dummy_current_orientation.w = current_orientation.w;
 
-                robot_angle = ToEulerAngles(dummy_current_orientation);
-                current_roll = robot_angle.roll;
-                current_pitch = robot_angle.pitch;
-                current_yaw =  robot_angle.yaw;
+                tfScalar current_yaw, current_pitch, current_roll;
+                tf::Matrix3x3 mat(current_orientation);
+                mat.getEulerYPR(current_yaw, current_pitch, current_roll);
+
+                //robot_angle = ToEulerAngles(dummy_current_orientation);
+                //current_roll = robot_angle.roll;
+                //current_pitch = robot_angle.pitch;
+                //current_yaw =  robot_angle.yaw;
                 //determine proper orientation of my goal = received path
 
-                inc_x = goal_position.x - current_position.x;
-                inc_y = goal_position.y - current_position.y;
+                inc_x = goal_position.x - current_position.getX();
+                inc_y = goal_position.y - current_position.getY();
                 angle_to_goal = atan2 (inc_y, inc_x);
 
                 if( !proximity_check(goal_position, current_position)) {
@@ -134,16 +141,15 @@ int main(int argc, char** argv){
 };
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path){
-
-        goal_position = received_path[0]->Pose.Point;
-        goal_orientation = received_path[0]->Pose.Quaternion;
+        goal_position = received_path->poses[0].pose.position;
+        goal_orientation = received_path->poses[0].pose.orientation;
 
 }
 
 
-bool proximity_check(geometry_msgs::Point goal, geometry_msgs::Point current){
+bool proximity_check(geometry_msgs::Point goal, tf::Point current){
         //checking if the robot is close/has almost reached to my goal
-        if( ( (goal.x - current.x) <0.1 ) &&  ( (goal.y - current.y) <0.1 ) ) {
+        if( ( (goal.x - current.getX()) <0.1 ) &&  ( (goal.y - current.getY()) <0.1 ) ) {
                 return true;
         } else {
                 return false;
