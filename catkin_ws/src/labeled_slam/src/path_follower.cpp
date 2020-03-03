@@ -1,3 +1,5 @@
+/** Path Follower Node: Receives the goal position and the current position of the robot, and publishes the Twist velocity to reach that goal.
+ */
 #include <sstream>
 #include <stdlib.h>
 #include "ros/ros.h"
@@ -18,18 +20,6 @@
 
 using namespace std;
 
-
-struct Quaternion {
-        float w, x, y, z;
-};
-
-struct EulerAngles {
-        float roll, pitch, yaw;
-};
-
-EulerAngles ToEulerAngles(Quaternion q);
-
-
 //Constants and general stuff
 //These current positions and orientations could be vectors!!!!!!
 //I don't really know the contents, or what rtabmap pushes out, but we'll have to discuss about it
@@ -38,13 +28,26 @@ EulerAngles ToEulerAngles(Quaternion q);
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
 bool proximity_check(geometry_msgs::Point goal, tf::Point current);
 
+///Current position of robot
 tf::Point current_position;
-tf::Quaternion current_orientation; //maybe don't need
-
+///Current orientation of robot in quaternion
+tf::Quaternion current_orientation;
+///Goal position on map
 geometry_msgs::Point goal_position;
-geometry_msgs::Quaternion goal_orientation; //maybe don't need
-
+///Goal orientation on map
+geometry_msgs::Quaternion goal_orientation;
+///Velocity sent to robot driver
 geometry_msgs::Twist velocity_to_publish;
+
+
+
+/** The node subscribes to a TF topic, and gets the current position of the robot as a base_link.
+ * It receives from the callback the goal position, and publishes the required position as a geometry_msgs::Twist to reach that position.
+ * The path follower computes the angle difference between the goal position and the robot orientation.
+ * The robot then rotates left or right accordingly, until it is on the same line as the goal orientation.
+ * At that moment, the robot moves forward. All "robot movements" are considered as published veolcities as geometry_msgs::Twist messages.
+ */
+
 
 int main(int argc, char** argv){
 
@@ -68,8 +71,6 @@ int main(int argc, char** argv){
         velocity_to_publish.angular.z = 0.0;
 
         float inc_x, inc_y, angle_to_goal;
-        struct EulerAngles robot_angle;
-        struct Quaternion dummy_current_orientation;
         tf::StampedTransform my_transform;
 
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
@@ -89,50 +90,35 @@ int main(int argc, char** argv){
                 current_position = my_transform.getOrigin();
                 current_orientation = my_transform.getRotation();
 
-                //initializing my dummy quaternion with the values of my quaternion
-                //dummy_current_orientation.x = current_orientation.x;
-                //dummy_current_orientation.y = current_orientation.y;
-                //dummy_current_orientation.z = current_orientation.z;
-                //dummy_current_orientation.w = current_orientation.w;
-
                 tfScalar current_yaw, current_pitch, current_roll;
                 tf::Matrix3x3 mat(current_orientation);
                 mat.getEulerYPR(current_yaw, current_pitch, current_roll);
 
-                //robot_angle = ToEulerAngles(dummy_current_orientation);
-                //current_roll = robot_angle.roll;
-                //current_pitch = robot_angle.pitch;
-                //current_yaw =  robot_angle.yaw;
-                //determine proper orientation of my goal = received path
 
                 inc_x = goal_position.x - current_position.getX();
                 inc_y = goal_position.y - current_position.getY();
                 angle_to_goal = atan2 (inc_y, inc_x);
 
-                if( !proximity_check(goal_position, current_position)) {
+                if(!proximity_check(goal_position, current_position)) {
                         if((angle_to_goal - current_yaw) > 0.01 ) {
                                 // RIGHT ROTATION
                                 velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = 0.3;
-
-                                //actually publish velocity
-                                twist_pub.publish(velocity_to_publish);
-                        } else if ((angle_to_goal - current_yaw) < 0.1 ) {
+                        } else if ((angle_to_goal - current_yaw) < -0.01 ) {
                                 //LFET ROTATION
                                 velocity_to_publish.linear.x = 0.2;
                                 velocity_to_publish.angular.z = -0.3;
-
-                                //actually publish velocity
-                                twist_pub.publish(velocity_to_publish);
-                        } else
-                        { //GO STRAIGHT
-                                velocity_to_publish.linear.x = 1;
+                        } else if (proximity_check(goal_position, current_position && abs(angle_to_goal - current_yaw) <= 0.01) {
+				velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = 0.0;
-
-                                //actually publish velocity
-                                twist_pub.publish(velocity_to_publish);
+			} else { //GO STRAIGHT
+                                velocity_to_publish.linear.x = 1.0;
+                                velocity_to_publish.angular.z = 0.0;
                         }
                 }
+		
+		//publish velocity to robot
+		twist_pub.publish(velocity_to_publish);
                 ros::spinOnce();
                 loop_rate.sleep();
         }
@@ -140,12 +126,22 @@ int main(int argc, char** argv){
         return 0;
 };
 
+/** Path Callback
+ * Callback function for the path follower. The node subscribes to the nav_msgs::Path published by rtabmap.
+ * These messages provide the node with the goal position and orientation to be achived when in GO_TO_GOAL MODE.
+ * The callback is used to initialize the two gobal variables goal_position and goal_orientation used in the
+ */
+
 void path_callback(const nav_msgs::Path::ConstPtr& received_path){
         goal_position = received_path->poses[0].pose.position;
         goal_orientation = received_path->poses[0].pose.orientation;
 
 }
-
+/** Proximity Check
+ * The function checks whether the  robot is close enough to the target position and returns a bool.
+ * It takes as input and uses the xy coordinates of the goal position and current positions.
+ * If the robot is close enough, it returns a true, otherwise returns a false.
+ */
 
 bool proximity_check(geometry_msgs::Point goal, tf::Point current){
         //checking if the robot is close/has almost reached to my goal
@@ -155,41 +151,3 @@ bool proximity_check(geometry_msgs::Point goal, tf::Point current){
                 return false;
         }
 }
-
-
-EulerAngles ToEulerAngles(Quaternion q){
-        EulerAngles angles;
-
-        // roll (x-axis rotation)
-        float sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
-        float cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
-        angles.roll = std::atan2(sinr_cosp, cosr_cosp);
-
-        // pitch (y-axis rotation)
-        float sinp = 2 * (q.w * q.y - q.z * q.x);
-        if (std::abs(sinp) >= 1)
-                angles.pitch = std::copysign(M_PI / 2, sinp);  // use 90 degrees if out of range
-        else
-                angles.pitch = std::asin(sinp);
-
-        // yaw (z-axis rotation)
-        float siny_cosp = 2 * (q.w * q.z + q.x * q.y);
-        float cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
-        angles.yaw = std::atan2(siny_cosp, cosy_cosp);
-
-        return angles;
-}
-
-
-
-
-
-
-/*
-   WHAT IF THE EULER DOESNT WORK?  this is a second case, much shorter, that could work!
-   tfScalar yaw, pitch, roll;
-   tf::Matrix3x3 mat(current_orientation);
-   mat.getEulerYPR((float)&current_yaw, (float)&current_pitch, (float)&current_roll);
-
-
- */
