@@ -2,6 +2,8 @@
   <!--TODO: Debug the output of the freenect_camera_driver node and adapt other parameters accordingly-->
   <!--Pay special attention to tfs and rectified image topics (if any) not shown in the docs-->
   <!--Make sure tfs don't clash with others-->
+  
+  <!--Tf frame for camera is camera_link-->
 
   <!--Argument for the serial port-->
   <arg name="serialPort" default="/dev/ttyACM0" />
