@@ -101,18 +101,19 @@ int main(int argc, char** argv){
 
                 if(!proximity_check(goal_position, current_position)) {
                         if((angle_to_goal - current_yaw) > 0.01 ) {
-                                // RIGHT ROTATION
-                                velocity_to_publish.linear.x = 0.2;
-                                velocity_to_publish.angular.z = 0.3;
+                                //LEFT ROTATION
+                                velocity_to_publish.linear.x = 0.0;
+                                velocity_to_publish.angular.z = 0.5;
                         } else if ((angle_to_goal - current_yaw) < -0.01 ) {
-                                //LFET ROTATION
-                                velocity_to_publish.linear.x = 0.2;
-                                velocity_to_publish.angular.z = -0.3;
+                                //RIGHT ROTATION
+                                velocity_to_publish.linear.x = 0.0;
+                                velocity_to_publish.angular.z = -0.5;
                         } else if (proximity_check(goal_position, current_position) && abs(angle_to_goal - current_yaw) <= 0.01) {
+				//STOP
 				velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = 0.0;
 			} else { //GO STRAIGHT
-                                velocity_to_publish.linear.x = 1.0;
+                                velocity_to_publish.linear.x = 0.5;
                                 velocity_to_publish.angular.z = 0.0;
                         }
                 }
