@@ -19,12 +19,12 @@ bool driving_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Respon
 
 int main(int argc, char** argv){
 
-  zero_velocity.linear.x = 0;
-  zero_velocity.linear.y = 0;
-  zero_velocity.linear.z = 0;
-  zero_velocity.angular.x = 0;
-  zero_velocity.angular.y = 0;
-  zero_velocity.angular.z = 0;
+        zero_velocity.linear.x = 0;
+        zero_velocity.linear.y = 0;
+        zero_velocity.linear.z = 0;
+        zero_velocity.angular.x = 0;
+        zero_velocity.angular.y = 0;
+        zero_velocity.angular.z = 0;
 
         ros::init(argc, argv, "activator2");
         //initializing my node
@@ -41,16 +41,17 @@ int main(int argc, char** argv){
 
         bool zero_vel_sent = false;
         while(ros::ok()) {
-                if(activation == true){
+                if(activation == true) {
                         zero_vel_sent = false;
-                        twist_pub.publish(velocity_to_publish);}
-                        else{
-                          if (! zero_vel_sent)
-                          {
-                          twist_pub.publish(zero_velocity);
-                          zero_vel_sent = true;
+                        twist_pub.publish(velocity_to_publish);
+                }
+                else{
+                        if (!zero_vel_sent)
+                        {
+                                twist_pub.publish(zero_velocity);
+                                zero_vel_sent = true;
                         }
-                        }
+                }
 
 
                 ros::spinOnce();
