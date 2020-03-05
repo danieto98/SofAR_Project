@@ -9,6 +9,8 @@ using namespace std;
 
 //Constants and general stuff
 geometry_msgs::Twist velocity_to_publish;
+geometry_msgs::Twist zero_velocity;
+
 bool activation = false;
 void velocity_callback(const geometry_msgs::Twist::ConstPtr& received_velocity);
 bool path_following_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& response);
@@ -16,6 +18,14 @@ bool path_following_activate(std_srvs::SetBool::Request& req, std_srvs::SetBool:
 
 
 int main(int argc, char** argv){
+
+        zero_velocity.linear.x = 0;
+        zero_velocity.linear.y = 0;
+        zero_velocity.linear.z = 0;
+        zero_velocity.angular.x = 0;
+        zero_velocity.angular.y = 0;
+        zero_velocity.angular.z = 0;
+
 
         ros::init(argc, argv, "activator1");
 
@@ -31,9 +41,20 @@ int main(int argc, char** argv){
 
         ROS_INFO("Path Following is not active.\n");
 
+        bool zero_vel_sent = false;
         while(ros::ok()) {
-                if(activation == true)
+                if(activation == true) {
+                        zero_vel_sent = false;
                         twist_pub.publish(velocity_to_publish);
+                }
+                else{
+                        if (!zero_vel_sent)
+                        {
+                                twist_pub.publish(zero_velocity);
+                                zero_vel_sent = true;
+                        }
+                }
+
 
                 ros::spinOnce();
                 loop_rate.sleep();
