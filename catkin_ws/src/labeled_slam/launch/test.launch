@@ -1,11 +1,9 @@
 <launch>
-  <!--Start the rtabmap/rgbd_sync nodelet to synchronize rgbd images-->
-  <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
-    <remap from="rgb/image"       to="/camera/rgb/image_rect_mono"/>
-    <remap from="rgb/camera_info"  to="/camera/rgb/camera_info" />
-    <remap from="depth/image"     to="/camera/depth_registered/hw_registered/image_rect"/>
-    <param name="approx_sync"     type="bool"   value="true"/>
-    <param name="queue_size"      type="int"    value="100"/>
-    <param name="depth_scale"     type="double" value="1.0"/>
-  </node>
+  <!--Start the gesture-based controller node to control the robot with the watch-->
+  <include file="$(find gesture_based_controller)/launch/hrp_gb_controller.launch">
+    <!--Subscribe to IMU data from the smartwatch-->
+    <arg name="inertial_sub_topic" value="/G_Watch_R_5509/imu_data" />
+    <!--Change the published velocity topic so that it is captured by the activator and not sent directly to the Husqvarna driver-->
+    <arg name="vel_pub_topic"  value="/cmd_vel" />
+  </include>
 </launch>

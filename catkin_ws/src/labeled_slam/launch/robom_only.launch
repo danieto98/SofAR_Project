@@ -1,5 +1,4 @@
 <launch>
-  <!--TODO: find the tf between base_link and camera_rgb_optical_frame and create a static_transform_publisher with it-->
   <node pkg="tf" type="static_transform_publisher" name="camera_link_pub" args="0 0 0 0 0 0 1 base_link camera_rgb_optical_frame 100" />
 
   <!--Start the rtabmap/rgbd_sync nodelet to synchronize rgbd images-->
@@ -10,71 +9,6 @@
     <param name="approx_sync"     type="bool"   value="true"/>
     <param name="queue_size"      type="int"    value="100"/>
     <param name="depth_scale"     type="double" value="1.0"/>
-  </node>
-
-  <!--Start the RGBD odometry node from rtabmap-->
-  <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen" args="" launch-prefix="">
-    <!--Remap input topic names-->
-    <remap from="rgb/image"       to="/camera/rgb/image_rect_color"/>
-    <remap from="rgb/camera_info"  to="/camera/rgb/camera_info" />
-    <remap from="depth/image"     to="/camera/depth_registered/hw_registered/image_rect"/>
-    
-    <!--Remap output topic name-->
-    <remap from="odom"            to="rgbd/odom"/>
-
-    <!--Don't publish a tf so that the odometry merger publishes it-->
-    <param name="frame_id"                    type="string" value="base_link"/>
-    <param name="odom_frame_id"               type="string" value="camera_rgb_optical_frame"/>
-    <param name="publish_tf"                  type="bool"   value="false"/>
-    
-    <!--Set approximate synchronization of topics-->
-    <param name="approx_sync"                 type="bool"   value="true"/>
-    
-    <!--Subscribe to rgbd_image topic (from rtabmap/rgbd_sync)-->
-    <param name="subscribe_rgbd"              type="bool"   value="true"/>
-    
-    <!--Set these to defaults-->
-    <remap from="imu"             to="/imu/data"/>
-    <param name="ground_truth_frame_id"       type="string" value=""/>
-    <param name="ground_truth_base_frame_id"  type="string" value=""/>
-    <param name="wait_for_transform_duration" type="double" value="0.2"/>
-    <param name="wait_imu_to_init"            type="bool"   value="false"/>
-    <param name="config_path"                 type="string" value=""/>
-    <param name="queue_size"                  type="int"    value="100"/>
-    <param name="guess_frame_id"              type="string" value=""/>
-    <param name="guess_min_translation"       type="double" value="0"/>
-    <param name="guess_min_rotation"          type="double" value="0"/>
-  </node>
-  
-  <!--Start the node to merge the two odometries-->
-  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-    <!--Change odometry input topic from wheel odometry to the one given by the Husqvarna driver-->
-    <remap from="odom" to="robot/odom" />
-    
-    <!--Change odometry input topic from visual odometry to the one given by the RGBD odometry node-->
-    <remap from="vo" to="rgbd/odom" />
-    
-    <!--Change odometry output topic to the one used by rtabmap-->
-    <remap from="robot_pose_ekf/odom_combined" to="odom" />
-    
-    <!--Change output odometry frame to odom-->
-    <param name="output_frame" value="odom" />
-    
-    <!--Change base_footprint frame to base_link-->
-    <param name="base_footprint_frame" value="base_link"/>
-    
-    <!--Use default values-->
-    <param name="freq" value="30.0" />
-    <param name="sensor_timeout" value="1.0" />
-    
-    <!--Enable wheel and visual (RGBD) odometry-->
-    <param name="odom_used" value="true" />
-    <param name="imu_used" value="false" />
-    <param name="vo_used" value="true" />
-    
-    <!--Disable debugging and diagnosis-->
-    <param name="debug" value="false" />
-    <param name="self_diagnose" value="false" />
   </node>
   
   <!--Start the rtabmap node-->
@@ -137,7 +71,7 @@
   <!--Start the gesture-based controller node to control the robot with the watch-->
   <include file="$(find gesture_based_controller)/launch/hrp_gb_controller.launch">
     <!--Subscribe to IMU data from the smartwatch-->
-    <arg name="inertial_sub_topic" value="/G_Watch_R_5509/imu_data" />
+    <arg name="inertial_sub_topic" value="/G_Watch_R_5567/imu_data" />
     <!--Change the published velocity topic so that it is captured by the activator and not sent directly to the Husqvarna driver-->
     <arg name="vel_pub_topic"  value="/gbc/cmd_vel" />
   </include>
