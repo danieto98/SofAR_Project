@@ -1,13 +1,22 @@
 <launch>
+  <!--Start the freenect_camera driver-->
+    <arg name="device_id" default="#1" />
+  <include file="$(find freenect_launch)/launch/freenect.launch" >
+    <arg name="depth_registration" value="true" />
+    <arg name="device_id" value="$(arg device_id)" />
+  </include>
+
+    <node pkg="tf" type="static_transform_publisher" name="camera_link_pub" args="0 0 0 -0.7071 0 0 0.7071 base_link camera_rgb_optical_frame 100" />
+
   <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
       <remap from="rgb/image"        to="/camera/rgb/image_rect_color"/>
       <remap from="depth/image"      to="/camera/depth_registered/image_raw"/>
       <remap from="rgb/camera_info"  to="/camera/rgb/camera_info"/>
       <remap from="rgbd_image"       to="rgbd_image"/> <!-- output -->
-      
-      <!-- Should be true for not synchronized camera topics 
+
+      <!-- Should be true for not synchronized camera topics
            (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
-      <param name="approx_sync"       value="true"/> 
+      <param name="approx_sync"       value="true"/>
     </node>
 
     <!-- Odometry -->
@@ -32,8 +41,10 @@
           <param name="RGBD/AngularUpdate"        type="string" value="0.01"/>
           <param name="RGBD/LinearUpdate"         type="string" value="0.01"/>
           <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
+          <param name="Grid/FromDepth" type="string" value="true"/>
+          <param name="Reg/Strategy" type="string" value="0"/>
     </node>
-  
+
     <!--Start the command_recognition node to listen for voice commands-->
     <node name="command_recognition" pkg="labeled_slam" type="command_recognition.py" output="screen" launch-prefix="xterm -e" />
 
