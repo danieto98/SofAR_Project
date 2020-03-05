@@ -1,9 +1,6 @@
 [submodule "catkin_ws/src/gesture-based-controller"]
 	path = catkin_ws/src/gesture-based-controller
 	url = https://github.com/EmaroLab/gesture-based-controller
-[submodule "freenect_stack"]
-	path = freenect_stack
-	url = ../../ros-drivers/freenect_stack.git
 [submodule "catkin_ws/src/freenect_stack"]
 	path = catkin_ws/src/freenect_stack
 	url = ../../ros-drivers/freenect_stack.git
