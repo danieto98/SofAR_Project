@@ -7,7 +7,7 @@
   </include>
 
   <!--Record a bag of the Kinect data-->
-  <node pkg="rosbag" type="record" name="rosbag_record_kinect" args="record /camera/rgb/camera_info /camera/rgb/image_rect_color /camera/depth_registered/image_raw" />
+  <node pkg="rosbag" type="record" name="rosbag_record_kinect" args="record -o /home/pep/Desktop/bag1.bag /camera/rgb/camera_info /camera/rgb/image_rect_color /camera/depth_registered/image_raw" />
 
   <!--Start the gesture-based controller node to control the robot with the watch-->
   <include file="$(find gesture_based_controller)/launch/hrp_gb_controller.launch">
