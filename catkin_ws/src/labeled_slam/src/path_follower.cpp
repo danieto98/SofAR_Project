@@ -28,10 +28,8 @@ using namespace std;
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
 bool proximity_check(geometry_msgs::Point goal, tf::Point current);
 
-///Current position of robot
-tf::Point current_position;
-///Current orientation of robot in quaternion
-tf::Quaternion current_orientation;
+std::vector<geometry_msgs::PoseStamped> current_state;
+std::vector<geometry_msgs::PoseStamped>::iterator it;
 ///Goal position on map
 geometry_msgs::Point goal_position;
 ///Goal orientation on map
@@ -61,6 +59,19 @@ int main(int argc, char** argv){
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("path/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber nav_sub = node.subscribe("local_path", 1000, &path_callback); //subscriber for the velocity from the path planner
         tf::TransformListener robot_listener;
+
+        ///Current position of robot
+        tf::Point current_position;
+        ///Current orientation of robot in quaternion
+        tf::Quaternion current_orientation;
+
+        goal_position.x = 0.0;
+        goal_position.y = 0.0;
+        goal_position.z = 0.0;
+        goal_orientation.x = 0.0;
+        goal_orientation.y = 0.0;
+        goal_orientation.z = 0.0;
+        goal_orientation.w = 1.0;
 
         //initializing speeds at 0
         velocity_to_publish.linear.x = 0.0;
@@ -93,6 +104,8 @@ int main(int argc, char** argv){
                 tfScalar current_yaw, current_pitch, current_roll;
                 tf::Matrix3x3 mat(current_orientation);
                 mat.getEulerYPR(current_yaw, current_pitch, current_roll);
+                current_pitch=0;
+                current_roll=0;
 
 
                 inc_x = goal_position.x - current_position.getX();
@@ -109,17 +122,22 @@ int main(int argc, char** argv){
                                 velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = -0.5;
                         } else if (proximity_check(goal_position, current_position) && abs(angle_to_goal - current_yaw) <= 0.01) {
-				//STOP
-				velocity_to_publish.linear.x = 0.0;
+                                //STOP
+                                velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = 0.0;
-			} else { //GO STRAIGHT
+                        } else { //GO STRAIGHT
                                 velocity_to_publish.linear.x = 0.5;
                                 velocity_to_publish.angular.z = 0.0;
                         }
+                } else if(it != current_state.end()) {
+                        ++it;
+                        goal_position = it->pose.position;
+                        goal_orientation = it->pose.orientation;
                 }
-		
-		//publish velocity to robot
-		twist_pub.publish(velocity_to_publish);
+
+
+                //publish velocity to robot
+                twist_pub.publish(velocity_to_publish);
                 ros::spinOnce();
                 loop_rate.sleep();
         }
@@ -134,9 +152,10 @@ int main(int argc, char** argv){
  */
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path){
-        goal_position = received_path->poses[0].pose.position;
-        goal_orientation = received_path->poses[0].pose.orientation;
-
+        current_state = received_path->poses;
+        it = current_state.begin();
+        goal_position = it->pose.position;
+        goal_orientation = it->pose.orientation;
 }
 /** Proximity Check
  * The function checks whether the  robot is close enough to the target position and returns a bool.
