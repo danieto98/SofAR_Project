@@ -1,0 +1,17 @@
+<launch>  
+  <!--Start the freenect_camera driver-->
+  <arg name="device_id" default="#1" />
+  <include file="$(find freenect_launch)/launch/freenect.launch" >
+    <arg name="depth_registration" value="true" />
+    <arg name="device_id" value="$(arg device_id)" />
+  </include>
+
+  <!--Record a bag of the Kinect data-->
+  <node pkg="rosbag" type="record" name="rosbag_record_kinect" args="record /camera/rgb/camera_info /camera/rgb/image_rect_color /camera/depth_registered/image_raw" />
+
+  <!--Start the gesture-based controller node to control the robot with the watch-->
+  <include file="$(find gesture_based_controller)/launch/hrp_gb_controller.launch">
+    <!--Subscribe to IMU data from the smartwatch-->
+    <arg name="inertial_sub_topic" value="/G_Watch_R_5567/imu_data" />
+  </include>
+</launch>
