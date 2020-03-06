@@ -85,6 +85,7 @@ mkdir build
 cd build
 cmake -L  ..
 make
+sudo make install
 ```
 
 #### Speech Recognition Library
