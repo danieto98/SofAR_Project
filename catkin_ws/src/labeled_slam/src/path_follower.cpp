@@ -62,15 +62,16 @@ int main(int argc, char** argv){
 
         ///Current position of robot
         tf::Point current_position;
-        current_position.x = 0.0;
-        current_position.y = 0.0;
-        current_position.z = 0.0;
         ///Current orientation of robot in quaternion
         tf::Quaternion current_orientation;
-        current_orientation.x = 0.0;
-        current_orientation.y = 0.0;
-        current_orientation.z = 0.0;
-        current_orientation.w = 0.0;
+
+        goal_position.x = 0.0;
+        goal_position.y = 0.0;
+        goal_position.z = 0.0;
+        goal_orientation.x = 0.0;
+        goal_orientation.y = 0.0;
+        goal_orientation.z = 0.0;
+        goal_orientation.w = 1.0;
 
         //initializing speeds at 0
         velocity_to_publish.linear.x = 0.0;
@@ -103,6 +104,8 @@ int main(int argc, char** argv){
                 tfScalar current_yaw, current_pitch, current_roll;
                 tf::Matrix3x3 mat(current_orientation);
                 mat.getEulerYPR(current_yaw, current_pitch, current_roll);
+                current_pitch=0;
+                current_roll=0;
 
 
                 inc_x = goal_position.x - current_position.getX();
@@ -132,7 +135,7 @@ int main(int argc, char** argv){
                         goal_orientation = it->pose.orientation;
                 }
 
-                .
+
                 //publish velocity to robot
                 twist_pub.publish(velocity_to_publish);
                 ros::spinOnce();
