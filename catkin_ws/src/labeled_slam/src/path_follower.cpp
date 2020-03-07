@@ -85,7 +85,7 @@ int main(int argc, char** argv){
         tf::StampedTransform my_transform;
         tolerance_angle = 0.25;
         tolerance_dist = 0.5;
-        K_vel=1.25;
+        K_vel=0.8;
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
 
         while(ros::ok()) {
@@ -119,10 +119,16 @@ int main(int argc, char** argv){
                 //IF WE ARE NOT THERE YET
                 if(!angle_check(angle_to_goal, current_yaw)) {  //ANGLE IS NOT GOOD ENOUGH
                         //ROTATION & STRAIGHT
+                        ROS_INFO("GO_STRAIGHT & ROTATE");
+                        ROS_INFO("Angle_to_goal = %f\n Current_yaw = %f", angle_to_goal, current_yaw);
+                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.linear.y = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
                 } else if (!proximity_check(goal_position, current_position)) { //DISTANCE IS NOT GOOD ENOUGH
                         //GO STRAIGHT
+                        ROS_INFO("GO_STRAIGHT");
+                        ROS_INFO("Goal_position = %f\n Current_position = %f", goal_position, current_position);
+                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.linear.y = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.angular.z = 0.0;
                 }
@@ -137,6 +143,7 @@ int main(int argc, char** argv){
                 }
 
                 //publish velocity to robot
+                ROS_INFO("Velocity:\n X_lin = %f\n Y_lin = %f\n Z_ang = %f\n",velocity_to_publish.linear.x, velocity_to_publish.linear.y, velocity_to_publish.angular.z);
                 twist_pub.publish(velocity_to_publish);
                 ros::spinOnce();
                 loop_rate.sleep();
@@ -152,10 +159,15 @@ int main(int argc, char** argv){
  */
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path){
+
+
         current_path = received_path->poses;
         it = current_path.begin();
         goal_position = it->pose.position;
         goal_orientation = it->pose.orientation;
+        for (auto itr=current_path.begin(); itr!=current_path.end(); itr++) {
+                ROS_INFO("Path[%ld] [x;y]: [%f ; %f]\n", itr-current_path.begin(), itr->pose.position.x, itr->pose.position.y );
+        }
 }
 /** Proximity Check
  * The function checks whether the  robot is close enough to the target position and returns a bool.
