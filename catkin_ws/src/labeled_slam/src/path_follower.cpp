@@ -119,15 +119,15 @@ int main(int argc, char** argv){
                 //IF WE ARE NOT THERE YET
                 if(!angle_check(angle_to_goal, current_yaw)) {  //ANGLE IS NOT GOOD ENOUGH
                         //ROTATION & STRAIGHT
-                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.linear.y = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
                 } else if (!proximity_check(goal_position, current_position)) { //DISTANCE IS NOT GOOD ENOUGH
                         //GO STRAIGHT
-                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.linear.y = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.angular.z = 0.0;
                 }
                 else{ //IF WE ARE THERE THEN STOP & ITERATE TO NEXT GOAL POSITION
-                        velocity_to_publish.linear.x = 0.0;
+                        velocity_to_publish.linear.y = 0.0;
                         velocity_to_publish.angular.z = 0.0;
                         if(it != current_path.end()) {
                                 ++it;
