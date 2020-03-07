@@ -1,0 +1,31 @@
+<launch>  
+  <!--Start the freenect_camera driver-->
+  <arg name="device_id" default="#1" />
+  <include file="$(find freenect_launch)/launch/freenect.launch" >
+    <arg name="depth_registration" value="true" />
+    <arg name="device_id" value="$(arg device_id)" />
+  </include>
+
+    <!--Start the command_recognition node to listen for voice commands-->
+    <node name="command_recognition" pkg="labeled_slam" type="command_recognition.py" output="screen" launch-prefix="xterm -e" />
+
+    <!--Start the logic node-->
+    <node name="logic" pkg="labeled_slam" type="logic_node" />
+
+    <!--Start the activators-->
+    <node name="activator1" pkg="labeled_slam" type="activator1_node" />
+    <node name="activator2" pkg="labeled_slam" type="activator2_node" />
+
+    <!--Start the velocity forwarder-->
+    <node name="velocity_forwarder" pkg="labeled_slam" type="velocity_forwarder" />
+
+  <!--Record a bag of the Kinect data-->
+  <node pkg="rosbag" type="record" name="rosbag_record_kinect" args="record -o /home/pep/Desktop/bag3 /camera/rgb/camera_info /camera/rgb/image_rect_color /camera/depth_registered/image_raw /text_command" />
+
+  <!--Start the gesture-based controller node to control the robot with the watch-->
+  <include file="$(find gesture_based_controller)/launch/hrp_gb_controller.launch">
+    <!--Subscribe to IMU data from the smartwatch-->
+    <arg name="inertial_sub_topic" value="/G_Watch_R_5567/imu_data" />
+    <arg name="vel_pub_topic"  value="/gbc/cmd_vel" />
+  </include>
+</launch>
