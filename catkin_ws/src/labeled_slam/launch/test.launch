@@ -1,10 +1,13 @@
 <launch>
-  <!--Start the freenect_camera driver-->
+    <!--Start the freenect_camera driver-->
     <arg name="device_id" default="#1" />
-  <include file="$(find freenect_launch)/launch/freenect.launch" >
-    <arg name="depth_registration" value="true" />
-    <arg name="device_id" value="$(arg device_id)" />
-  </include>
+    <include file="$(find freenect_launch)/launch/freenect.launch" >
+        <arg name="depth_registration" value="true" />
+        <arg name="device_id" value="$(arg device_id)" />
+    </include>
+
+    <!--Record a bag of the Kinect data-->
+    <node pkg="rosbag" type="record" name="rosbag_record_kinect" args="record -o /home/pep/Desktop/bag1.bag /camera/rgb/camera_info /camera/rgb/image_rect_color /camera/depth_registered/image_raw" />
 
     <node pkg="tf" type="static_transform_publisher" name="camera_link_pub" args="0 0 0 -0.6087614 0 0 0.7933533 base_link camera_rgb_optical_frame 100" />
 
