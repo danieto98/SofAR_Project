@@ -27,8 +27,8 @@ using namespace std;
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path);
 bool proximity_check(geometry_msgs::Point goal, tf::Point current);
-
-std::vector<geometry_msgs::PoseStamped> current_state;
+bool angle_check(float goal_angle, tfScalar yaw);
+std::vector<geometry_msgs::PoseStamped> current_path;
 std::vector<geometry_msgs::PoseStamped>::iterator it;
 ///Goal position on map
 geometry_msgs::Point goal_position;
@@ -37,7 +37,7 @@ geometry_msgs::Quaternion goal_orientation;
 ///Velocity sent to robot driver
 geometry_msgs::Twist velocity_to_publish;
 
-
+float tolerance_angle, tolerance_dist;
 
 /** The node subscribes to a TF topic, and gets the current position of the robot as a base_link.
  * It receives from the callback the goal position, and publishes the required position as a geometry_msgs::Twist to reach that position.
@@ -83,7 +83,8 @@ int main(int argc, char** argv){
 
         float inc_x, inc_y, angle_to_goal, K_vel;
         tf::StampedTransform my_transform;
-
+        tolerance_angle = 0.25;
+        tolerance_dist = 0.5;
         K_vel=1.25;
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
 
@@ -115,30 +116,25 @@ int main(int argc, char** argv){
 
                 //implementing a PID controller for speed, speed depends on target distance. In case it doesnt work, just use 0 and 1s
 
-
-                if(!proximity_check(goal_position, current_position)) {
-                        if((angle_to_goal - current_yaw) > 0.1 ) {
-                                //LEFT ROTATION
-                                velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                                velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
-                        } else if ((angle_to_goal - current_yaw) < -0.1 ) {
-                                //RIGHT ROTATION
-                                velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                                velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
-                        } else if (proximity_check(goal_position, current_position) && abs(angle_to_goal - current_yaw) <= 0.1) {
-                                //STOP
-                                velocity_to_publish.linear.x = 0.0;
-                                velocity_to_publish.angular.z = 0.0;
-                        } else { //GO STRAIGHT
-                                velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                                velocity_to_publish.angular.z = 0.0;
-                        }
-                } else if(it != current_state.end()) {
-                        ++it;
-                        goal_position = it->pose.position;
-                        goal_orientation = it->pose.orientation;
+                //IF WE ARE NOT THERE YET
+                if(!angle_check(angle_to_goal, current_yaw)) {  //ANGLE IS NOT GOOD ENOUGH
+                        //ROTATION & STRAIGHT
+                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
+                } else if (!proximity_check(goal_position, current_position)) { //DISTANCE IS NOT GOOD ENOUGH
+                        //GO STRAIGHT
+                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.angular.z = 0.0;
                 }
-
+                else{ //IF WE ARE THERE THEN STOP & ITERATE TO NEXT GOAL POSITION
+                        velocity_to_publish.linear.x = 0.0;
+                        velocity_to_publish.angular.z = 0.0;
+                        if(it != current_path.end()) {
+                                ++it;
+                                goal_position = it->pose.position;
+                                goal_orientation = it->pose.orientation;
+                        }
+                }
 
                 //publish velocity to robot
                 twist_pub.publish(velocity_to_publish);
@@ -156,8 +152,8 @@ int main(int argc, char** argv){
  */
 
 void path_callback(const nav_msgs::Path::ConstPtr& received_path){
-        current_state = received_path->poses;
-        it = current_state.begin();
+        current_path = received_path->poses;
+        it = current_path.begin();
         goal_position = it->pose.position;
         goal_orientation = it->pose.orientation;
 }
@@ -169,7 +165,15 @@ void path_callback(const nav_msgs::Path::ConstPtr& received_path){
 
 bool proximity_check(geometry_msgs::Point goal, tf::Point current){
         //checking if the robot is close/has almost reached to my goal
-        if( ( (goal.x - current.getX()) <0.1 ) &&  ( (goal.y - current.getY()) <0.1 ) ) {
+        if( ( (goal.x - current.getX()) <tolerance_dist ) &&  ( (goal.y - current.getY()) <tolerance_dist ) ) {
+                return true;
+        } else {
+                return false;
+        }
+}
+bool angle_check(float goal_angle, tfScalar yaw){
+        //checking if the robot is close/has almost reached to my goal
+        if( (abs(goal_angle - yaw) <= tolerance_angle)) {
                 return true;
         } else {
                 return false;
