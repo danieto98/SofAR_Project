@@ -54,7 +54,7 @@ int main(int argc, char** argv){
         //initializing my node
         ros::NodeHandle node;
 
-        ros::Rate loop_rate(1000);
+        ros::Rate loop_rate(1);
 
         ros::Publisher twist_pub = node.advertise<geometry_msgs::Twist>("path/cmd_vel", 1000); //publisher for the veolocity forwarder/the robot
         ros::Subscriber nav_sub = node.subscribe("local_path", 1000, &path_callback); //subscriber for the velocity from the path planner
@@ -81,11 +81,12 @@ int main(int argc, char** argv){
         velocity_to_publish.angular.y = 0.0;
         velocity_to_publish.angular.z = 0.0;
 
-        float inc_x, inc_y, angle_to_goal, K_vel;
+        float inc_x, inc_y, angle_to_goal, K_lin, K_ang;
         tf::StampedTransform my_transform;
-        tolerance_angle = 0.25;
+        tolerance_angle = 0.5;
         tolerance_dist = 0.5;
-        K_vel=0.8;
+        K_lin=0.1;
+        K_ang=0.2;
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
 
         while(ros::ok()) {
@@ -109,10 +110,19 @@ int main(int argc, char** argv){
                 current_pitch=0;
                 current_roll=0;
 
+                if (current_yaw < 0)
+                {
+                        current_yaw += 2*M_PI;
+                }
+
 
                 inc_x = goal_position.x - current_position.getX();
                 inc_y = goal_position.y - current_position.getY();
                 angle_to_goal = atan2 (inc_y, inc_x);
+                if (angle_to_goal < 0)
+                {
+                        angle_to_goal += 2*M_PI;
+                }
 
                 //implementing a PID controller for speed, speed depends on target distance. In case it doesnt work, just use 0 and 1s
 
@@ -121,19 +131,36 @@ int main(int argc, char** argv){
                         //ROTATION & STRAIGHT
                         ROS_INFO("GO_STRAIGHT & ROTATE");
                         ROS_INFO("Angle_to_goal = %f\n Current_yaw = %f", angle_to_goal, current_yaw);
-                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                        velocity_to_publish.linear.y = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                        velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
+                        //velocity_to_publish.linear.x = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        //velocity_to_publish.linear.y = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.linear.x = 0;
+                        velocity_to_publish.angular.z = K_ang*(angle_to_goal - current_yaw);
+                        if (velocity_to_publish.angular.z>0.45)
+                        {
+                                velocity_to_publish.angular.z = 0.45;
+                        }
+                        if (velocity_to_publish.angular.z<-0.45)
+                        {
+                                velocity_to_publish.angular.z = -0.45;
+                        }
                 } else if (!proximity_check(goal_position, current_position)) { //DISTANCE IS NOT GOOD ENOUGH
                         //GO STRAIGHT
                         ROS_INFO("GO_STRAIGHT");
                         ROS_INFO("Goal_position = %f\n Current_position = %f", goal_position, current_position);
-                        velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                        velocity_to_publish.linear.y = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.linear.x = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        //velocity_to_publish.linear.y = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.angular.z = 0.0;
+                        if (velocity_to_publish.linear.x >0.9)
+                        {
+                                velocity_to_publish.linear.x  = 0.9;
+                        }
+                        if (velocity_to_publish.linear.x <-0.9)
+                        {
+                                velocity_to_publish.linear.x  = -0.9;
+                        }
                 }
                 else{ //IF WE ARE THERE THEN STOP & ITERATE TO NEXT GOAL POSITION
-                        velocity_to_publish.linear.y = 0.0;
+                        velocity_to_publish.linear.x = 0.0;
                         velocity_to_publish.angular.z = 0.0;
                         if(it != current_path.end()) {
                                 ++it;
@@ -143,7 +170,7 @@ int main(int argc, char** argv){
                 }
 
                 //publish velocity to robot
-                ROS_INFO("Velocity:\n X_lin = %f\n Y_lin = %f\n Z_ang = %f\n",velocity_to_publish.linear.x, velocity_to_publish.linear.y, velocity_to_publish.angular.z);
+                ROS_INFO("Velocity:\n X_lin = %f\n Z_ang = %f\n",velocity_to_publish.linear.x, velocity_to_publish.angular.z);
                 twist_pub.publish(velocity_to_publish);
                 ros::spinOnce();
                 loop_rate.sleep();
