@@ -58,6 +58,9 @@
     <!--Start the velocity forwarder-->
     <node name="velocity_forwarder" pkg="labeled_slam" type="velocity_forwarder" />
 
+    <!--Start the path follower-->
+    <node name="path_follower" pkg="labeled_slam" type="path_follower_node" />
+
     <!--Start the gesture-based controller node to control the robot with the watch-->
     <include file="$(find gesture_based_controller)/launch/hrp_gb_controller.launch">
         <!--Subscribe to IMU data from the smartwatch-->
