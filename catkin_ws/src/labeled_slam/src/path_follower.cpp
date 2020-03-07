@@ -81,9 +81,10 @@ int main(int argc, char** argv){
         velocity_to_publish.angular.y = 0.0;
         velocity_to_publish.angular.z = 0.0;
 
-        float inc_x, inc_y, angle_to_goal;
+        float inc_x, inc_y, angle_to_goal, K_vel;
         tf::StampedTransform my_transform;
 
+        K_vel=1.25;
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
 
         while(ros::ok()) {
@@ -112,21 +113,24 @@ int main(int argc, char** argv){
                 inc_y = goal_position.y - current_position.getY();
                 angle_to_goal = atan2 (inc_y, inc_x);
 
+                //implementing a PID controller for speed, speed depends on target distance. In case it doesnt work, just use 0 and 1s
+
+
                 if(!proximity_check(goal_position, current_position)) {
-                        if((angle_to_goal - current_yaw) > 0.01 ) {
+                        if((angle_to_goal - current_yaw) > 0.1 ) {
                                 //LEFT ROTATION
-                                velocity_to_publish.linear.x = 0.0;
-                                velocity_to_publish.angular.z = 0.5;
-                        } else if ((angle_to_goal - current_yaw) < -0.01 ) {
+                                velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                                velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
+                        } else if ((angle_to_goal - current_yaw) < -0.1 ) {
                                 //RIGHT ROTATION
-                                velocity_to_publish.linear.x = 0.0;
-                                velocity_to_publish.angular.z = -0.5;
-                        } else if (proximity_check(goal_position, current_position) && abs(angle_to_goal - current_yaw) <= 0.01) {
+                                velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                                velocity_to_publish.angular.z = K_vel*(angle_to_goal - current_yaw);
+                        } else if (proximity_check(goal_position, current_position) && abs(angle_to_goal - current_yaw) <= 0.1) {
                                 //STOP
                                 velocity_to_publish.linear.x = 0.0;
                                 velocity_to_publish.angular.z = 0.0;
                         } else { //GO STRAIGHT
-                                velocity_to_publish.linear.x = 0.5;
+                                velocity_to_publish.linear.x = K_vel*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                                 velocity_to_publish.angular.z = 0.0;
                         }
                 } else if(it != current_state.end()) {
