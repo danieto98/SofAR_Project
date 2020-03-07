@@ -1,0 +1,8 @@
+test_localize: the one we are using now with the map previously created and saved to rtabmap.db
+test_bag_labels: creates map with labels playing rosbag
+test_bag: creates map without labels and shows rtabmapviz by playing rosbag
+test: runs everything while recording rosbag of Kinect data
+run_bag: creates map without labels by playing rosbag
+rpi: originally it started the freenect drivers and husqvarna drivers on the Raspberry Pi
+record_bag: records a bag of the Kinect data while driving with the watch (no commands or logic)
+labels_bag records a bag of the Kinect data and the voice commands for labeling while driving with the watch and giving commands
