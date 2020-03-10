@@ -16,7 +16,7 @@ We have used the following hardware components:
 * Wi-Fi router
 * PC running ROS Kinetic or Melodic on a Linux distribution
 
-## Architecture of the System
+## Architecture of the System Description
 
 The architecture can be summarized using the following UML diagram:
 <p align="center"> 
@@ -31,13 +31,6 @@ The logic node also sets labels to the current position upon command by issuing 
 
 When not following a given path, the robot is controlled by using certain gestures captured by the smartwatch. The IMU data from the watch is received by the gb_controller node, which outputs velocity commands to the robot (activated by the logic node using activator_2).
 
-## Description of the System’s Architecture
-
-TODO
-
-## Notes for Us
-Maybe relevant for writing a path folower, receives TF and publishes geometry_msgs/Twists
-http://wiki.ros.org/tf/Tutorials/Writing%20a%20tf%20listener%20%28C%2B%2B%29
 	
 ## Installation and System Testing
 
