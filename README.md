@@ -47,9 +47,9 @@ Publish: ac1/cmd_vel (geometry_msgs/Twist)
 
 #### Activator 2
 
-Subrcribe: path/cmd_vel (geometry_msgs/Twist)
-Service:  activate_driving (std_srvs/SetBool)
-Publish:ac2/cmd_vel (geometry_msgs/Twist)
+Subrcribe: gbc/cmd_vel (geometry_msgs/Twist)
+Service: activate_driving (std_srvs/SetBool)
+Publish: ac2/cmd_vel (geometry_msgs/Twist)
 
 
 
