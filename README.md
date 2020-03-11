@@ -31,6 +31,17 @@ The logic node also sets labels to the current position upon command by issuing 
 
 When not following a given path, the robot is controlled by using certain gestures captured by the smartwatch. The IMU data from the watch is received by the gb_controller node, which outputs velocity commands to the robot (activated by the logic node using activator_2).
 
+### Activator Modules
+The system architecture requires 2 activator modules, that were mainly developed by Filip and Roberto. Their source code was written completely from scratch, because they strongly interact with the main logic, and are very specific for this project. This is why no additional software or libraries need to be installed and no specific hardware is necessary to run the nodes.
+
+These 2 nodes are used to activate the two different types of motion that the Husqvarna lawnmower can have. As previously described, the robot can move when it receives input from the LG Smartwatch, as DRIVING_MODE, or it can follow a path autonomously to reach a pre-defined goal, previously identified as GO_TO_MODE.
+
+Activator1 receives robot velocity inputs and passes it to the velocity forwarder (the node that actually sends velocity to the robot) when the state machine enters the GO_TO_MODE; Activator2 behaves similarly when in DRIVING_MODE. The state machine activates both activators through a Service call. The activators cannot overlap, as they are activated only in these two modes, and the state machine operation prevents activation inaccuracies.
+
+Their subscribed and subscribing topics can be observed in detail in the UML. 
+
+### Path Follower module
+The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target. 
 	
 ## Installation and System Testing
 
