@@ -1,0 +1,149 @@
+\hypertarget{path__follower_8cpp}{}\section{catkin\+\_\+ws/src/labeled\+\_\+slam/src/path\+\_\+follower.cpp File Reference}
+\label{path__follower_8cpp}\index{catkin\+\_\+ws/src/labeled\+\_\+slam/src/path\+\_\+follower.\+cpp@{catkin\+\_\+ws/src/labeled\+\_\+slam/src/path\+\_\+follower.\+cpp}}
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}std\+\_\+msgs/\+Header.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Point.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Pose.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Twist.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Vector3.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Transform\+Stamped.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Transform.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$tf/transform\+\_\+listener.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}nav\+\_\+msgs/\+Path.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tf/\+Linear\+Math/\+Transform.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}tf/\+Linear\+Math/\+Matrix3x3.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$array$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+Include dependency graph for path\+\_\+follower.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{path__follower_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{path__follower_8cpp_aa9a42b10b0895a8dea5f7a3e53622445}{path\+\_\+callback} (const nav\+\_\+msgs\+::\+Path\+::\+Const\+Ptr \&received\+\_\+path)
+\item 
+bool \hyperlink{path__follower_8cpp_a6580d4219bb711f9f65ecdc5ae43a7b4}{proximity\+\_\+check} (geometry\+\_\+msgs\+::\+Point goal, tf\+::\+Point current)
+\item 
+int \hyperlink{path__follower_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ geometry\+\_\+msgs\+::\+Pose\+Stamped $>$ \hyperlink{path__follower_8cpp_a73a99adc688e2eaa700896b945104f25}{current\+\_\+state}
+\item 
+std\+::vector$<$ geometry\+\_\+msgs\+::\+Pose\+Stamped $>$\+::iterator \hyperlink{path__follower_8cpp_afd300c5785c540c1370de4c45066f345}{it}
+\item 
+geometry\+\_\+msgs\+::\+Point \hyperlink{path__follower_8cpp_a1dd788339a5b3696b0f6273eda3136fc}{goal\+\_\+position}
+\begin{DoxyCompactList}\small\item\em Goal position on map. \end{DoxyCompactList}\item 
+geometry\+\_\+msgs\+::\+Quaternion \hyperlink{path__follower_8cpp_afbef336bbcb2c1100f1e01e10a7beee6}{goal\+\_\+orientation}
+\begin{DoxyCompactList}\small\item\em Goal orientation on map. \end{DoxyCompactList}\item 
+geometry\+\_\+msgs\+::\+Twist \hyperlink{path__follower_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}{velocity\+\_\+to\+\_\+publish}
+\begin{DoxyCompactList}\small\item\em Velocity sent to robot driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{path__follower_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{path__follower_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!main@{main}}
+\index{main@{main}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+The node subscribes to a TF topic, and gets the current position of the robot as a base\+\_\+link. It receives from the callback the goal position, and publishes the required position as a geometry\+\_\+msgs\+::\+Twist to reach that position. The path follower computes the angle difference between the goal position and the robot orientation. The robot then rotates left or right accordingly, until it is on the same line as the goal orientation. At that moment, the robot moves forward. All \char`\"{}robot movements\char`\"{} are considered as published veolcities as geometry\+\_\+msgs\+::\+Twist messages. Current position of robot
+
+Current orientation of robot in quaternion 
+
+Definition at line 50 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_aa9a42b10b0895a8dea5f7a3e53622445}\label{path__follower_8cpp_aa9a42b10b0895a8dea5f7a3e53622445}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!path\+\_\+callback@{path\+\_\+callback}}
+\index{path\+\_\+callback@{path\+\_\+callback}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{path\+\_\+callback()}{path\_callback()}}
+{\footnotesize\ttfamily void path\+\_\+callback (\begin{DoxyParamCaption}\item[{const nav\+\_\+msgs\+::\+Path\+::\+Const\+Ptr \&}]{received\+\_\+path }\end{DoxyParamCaption})}
+
+Path Callback Callback function for the path follower. The node subscribes to the nav\+\_\+msgs\+::\+Path published by rtabmap. These messages provide the node with the goal position and orientation to be achived when in G\+O\+\_\+\+T\+O\+\_\+\+G\+O\+AL M\+O\+DE. The callback is used to initialize the two gobal variables goal\+\_\+position and goal\+\_\+orientation used in the 
+
+Definition at line 154 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_a6580d4219bb711f9f65ecdc5ae43a7b4}\label{path__follower_8cpp_a6580d4219bb711f9f65ecdc5ae43a7b4}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!proximity\+\_\+check@{proximity\+\_\+check}}
+\index{proximity\+\_\+check@{proximity\+\_\+check}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{proximity\+\_\+check()}{proximity\_check()}}
+{\footnotesize\ttfamily bool proximity\+\_\+check (\begin{DoxyParamCaption}\item[{geometry\+\_\+msgs\+::\+Point}]{goal,  }\item[{tf\+::\+Point}]{current }\end{DoxyParamCaption})}
+
+Proximity Check The function checks whether the robot is close enough to the target position and returns a bool. It takes as input and uses the xy coordinates of the goal position and current positions. If the robot is close enough, it returns a true, otherwise returns a false. 
+
+Definition at line 166 of file path\+\_\+follower.\+cpp.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{path__follower_8cpp_a73a99adc688e2eaa700896b945104f25}\label{path__follower_8cpp_a73a99adc688e2eaa700896b945104f25}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!current\+\_\+state@{current\+\_\+state}}
+\index{current\+\_\+state@{current\+\_\+state}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{current\+\_\+state}{current\_state}}
+{\footnotesize\ttfamily std\+::vector$<$geometry\+\_\+msgs\+::\+Pose\+Stamped$>$ current\+\_\+state}
+
+
+
+Definition at line 31 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_afbef336bbcb2c1100f1e01e10a7beee6}\label{path__follower_8cpp_afbef336bbcb2c1100f1e01e10a7beee6}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!goal\+\_\+orientation@{goal\+\_\+orientation}}
+\index{goal\+\_\+orientation@{goal\+\_\+orientation}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{goal\+\_\+orientation}{goal\_orientation}}
+{\footnotesize\ttfamily geometry\+\_\+msgs\+::\+Quaternion goal\+\_\+orientation}
+
+
+
+Goal orientation on map. 
+
+
+
+Definition at line 36 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_a1dd788339a5b3696b0f6273eda3136fc}\label{path__follower_8cpp_a1dd788339a5b3696b0f6273eda3136fc}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!goal\+\_\+position@{goal\+\_\+position}}
+\index{goal\+\_\+position@{goal\+\_\+position}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{goal\+\_\+position}{goal\_position}}
+{\footnotesize\ttfamily geometry\+\_\+msgs\+::\+Point goal\+\_\+position}
+
+
+
+Goal position on map. 
+
+
+
+Definition at line 34 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_afd300c5785c540c1370de4c45066f345}\label{path__follower_8cpp_afd300c5785c540c1370de4c45066f345}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!it@{it}}
+\index{it@{it}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{it}{it}}
+{\footnotesize\ttfamily std\+::vector$<$geometry\+\_\+msgs\+::\+Pose\+Stamped$>$\+::iterator it}
+
+
+
+Definition at line 32 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}\label{path__follower_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!velocity\+\_\+to\+\_\+publish@{velocity\+\_\+to\+\_\+publish}}
+\index{velocity\+\_\+to\+\_\+publish@{velocity\+\_\+to\+\_\+publish}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{velocity\+\_\+to\+\_\+publish}{velocity\_to\_publish}}
+{\footnotesize\ttfamily geometry\+\_\+msgs\+::\+Twist velocity\+\_\+to\+\_\+publish}
+
+
+
+Velocity sent to robot driver. 
+
+
+
+Definition at line 38 of file path\+\_\+follower.\+cpp.
+

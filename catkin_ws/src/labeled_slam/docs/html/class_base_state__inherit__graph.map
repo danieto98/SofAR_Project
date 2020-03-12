@@ -1,0 +1,5 @@
+<map id="BaseState" name="BaseState">
+<area shape="rect" id="node2" href="$class_state___d_r_i_v_i_n_g.html" title="State class for the mode, when the robot is controlled manually using the smartwatch. " alt="" coords="5,80,123,107"/>
+<area shape="rect" id="node3" href="$class_state___g_o___t_o.html" title="State class for the mode, when the system is following a path towards a target. " alt="" coords="146,80,251,107"/>
+<area shape="rect" id="node4" href="$class_state___l_i_s_t_e_n_i_n_g.html" title="State class for the mode, when the system is listening to voice commands. " alt="" coords="275,80,405,107"/>
+</map>

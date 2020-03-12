@@ -1,0 +1,100 @@
+\hypertarget{activator1_8cpp}{}\section{catkin\+\_\+ws/src/labeled\+\_\+slam/src/activator1.cpp File Reference}
+\label{activator1_8cpp}\index{catkin\+\_\+ws/src/labeled\+\_\+slam/src/activator1.\+cpp@{catkin\+\_\+ws/src/labeled\+\_\+slam/src/activator1.\+cpp}}
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}ros/ros.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}std\+\_\+msgs/\+Bool.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}std\+\_\+srvs/\+Set\+Bool.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}geometry\+\_\+msgs/\+Twist.\+h\char`\"{}}\newline
+Include dependency graph for activator1.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{activator1_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{activator1_8cpp_a27ad8e26c626eefcdbb0d7ee54a71896}{velocity\+\_\+callback} (const geometry\+\_\+msgs\+::\+Twist\+::\+Const\+Ptr \&received\+\_\+velocity)
+\item 
+bool \hyperlink{activator1_8cpp_a0e0b3479775a039d6aa169f4a86f4c5b}{path\+\_\+following\+\_\+activate} (std\+\_\+srvs\+::\+Set\+Bool\+::\+Request \&req, std\+\_\+srvs\+::\+Set\+Bool\+::\+Response \&response)
+\item 
+int \hyperlink{activator1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+geometry\+\_\+msgs\+::\+Twist \hyperlink{activator1_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}{velocity\+\_\+to\+\_\+publish}
+\item 
+geometry\+\_\+msgs\+::\+Twist \hyperlink{activator1_8cpp_a17196b1618faaf44fb0a78bb5099d4ac}{zero\+\_\+velocity}
+\item 
+bool \hyperlink{activator1_8cpp_aa7bf910a844377996aa460aa46bcd5cc}{activation} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{activator1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{activator1_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{activator1.\+cpp@{activator1.\+cpp}!main@{main}}
+\index{main@{main}!activator1.\+cpp@{activator1.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 20 of file activator1.\+cpp.
+
+\mbox{\Hypertarget{activator1_8cpp_a0e0b3479775a039d6aa169f4a86f4c5b}\label{activator1_8cpp_a0e0b3479775a039d6aa169f4a86f4c5b}} 
+\index{activator1.\+cpp@{activator1.\+cpp}!path\+\_\+following\+\_\+activate@{path\+\_\+following\+\_\+activate}}
+\index{path\+\_\+following\+\_\+activate@{path\+\_\+following\+\_\+activate}!activator1.\+cpp@{activator1.\+cpp}}
+\subsubsection{\texorpdfstring{path\+\_\+following\+\_\+activate()}{path\_following\_activate()}}
+{\footnotesize\ttfamily bool path\+\_\+following\+\_\+activate (\begin{DoxyParamCaption}\item[{std\+\_\+srvs\+::\+Set\+Bool\+::\+Request \&}]{req,  }\item[{std\+\_\+srvs\+::\+Set\+Bool\+::\+Response \&}]{response }\end{DoxyParamCaption})}
+
+
+
+Definition at line 67 of file activator1.\+cpp.
+
+\mbox{\Hypertarget{activator1_8cpp_a27ad8e26c626eefcdbb0d7ee54a71896}\label{activator1_8cpp_a27ad8e26c626eefcdbb0d7ee54a71896}} 
+\index{activator1.\+cpp@{activator1.\+cpp}!velocity\+\_\+callback@{velocity\+\_\+callback}}
+\index{velocity\+\_\+callback@{velocity\+\_\+callback}!activator1.\+cpp@{activator1.\+cpp}}
+\subsubsection{\texorpdfstring{velocity\+\_\+callback()}{velocity\_callback()}}
+{\footnotesize\ttfamily void velocity\+\_\+callback (\begin{DoxyParamCaption}\item[{const geometry\+\_\+msgs\+::\+Twist\+::\+Const\+Ptr \&}]{received\+\_\+velocity }\end{DoxyParamCaption})}
+
+
+
+Definition at line 81 of file activator1.\+cpp.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{activator1_8cpp_aa7bf910a844377996aa460aa46bcd5cc}\label{activator1_8cpp_aa7bf910a844377996aa460aa46bcd5cc}} 
+\index{activator1.\+cpp@{activator1.\+cpp}!activation@{activation}}
+\index{activation@{activation}!activator1.\+cpp@{activator1.\+cpp}}
+\subsubsection{\texorpdfstring{activation}{activation}}
+{\footnotesize\ttfamily bool activation = false}
+
+
+
+Definition at line 14 of file activator1.\+cpp.
+
+\mbox{\Hypertarget{activator1_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}\label{activator1_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}} 
+\index{activator1.\+cpp@{activator1.\+cpp}!velocity\+\_\+to\+\_\+publish@{velocity\+\_\+to\+\_\+publish}}
+\index{velocity\+\_\+to\+\_\+publish@{velocity\+\_\+to\+\_\+publish}!activator1.\+cpp@{activator1.\+cpp}}
+\subsubsection{\texorpdfstring{velocity\+\_\+to\+\_\+publish}{velocity\_to\_publish}}
+{\footnotesize\ttfamily geometry\+\_\+msgs\+::\+Twist velocity\+\_\+to\+\_\+publish}
+
+
+
+Definition at line 11 of file activator1.\+cpp.
+
+\mbox{\Hypertarget{activator1_8cpp_a17196b1618faaf44fb0a78bb5099d4ac}\label{activator1_8cpp_a17196b1618faaf44fb0a78bb5099d4ac}} 
+\index{activator1.\+cpp@{activator1.\+cpp}!zero\+\_\+velocity@{zero\+\_\+velocity}}
+\index{zero\+\_\+velocity@{zero\+\_\+velocity}!activator1.\+cpp@{activator1.\+cpp}}
+\subsubsection{\texorpdfstring{zero\+\_\+velocity}{zero\_velocity}}
+{\footnotesize\ttfamily geometry\+\_\+msgs\+::\+Twist zero\+\_\+velocity}
+
+
+
+Definition at line 12 of file activator1.\+cpp.
+

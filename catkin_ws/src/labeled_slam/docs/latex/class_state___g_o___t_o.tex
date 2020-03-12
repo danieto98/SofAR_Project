@@ -1,0 +1,187 @@
+\hypertarget{class_state___g_o___t_o}{}\section{State\+\_\+\+G\+O\+\_\+\+TO Class Reference}
+\label{class_state___g_o___t_o}\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+
+
+State class for the mode, when the system is following a path towards a target.  
+
+
+
+
+{\ttfamily \#include $<$State\+\_\+\+G\+O\+\_\+\+T\+O.\+h$>$}
+
+
+
+Inheritance diagram for State\+\_\+\+G\+O\+\_\+\+TO\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{class_state___g_o___t_o__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for State\+\_\+\+G\+O\+\_\+\+TO\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{class_state___g_o___t_o__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_state___g_o___t_o_ad200bcfa107cbd4b1df514f074dcbf2d}{State\+\_\+\+G\+O\+\_\+\+TO} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string target)
+\begin{DoxyCompactList}\small\item\em Constructor of \hyperlink{class_state___g_o___t_o}{State\+\_\+\+G\+O\+\_\+\+TO}. \end{DoxyCompactList}\item 
+\hyperlink{class_state___g_o___t_o_a1f796efa57a876af5d85d1cbe92c48f2}{$\sim$\+State\+\_\+\+G\+O\+\_\+\+TO} ()
+\begin{DoxyCompactList}\small\item\em Destructor of \hyperlink{class_state___g_o___t_o}{State\+\_\+\+G\+O\+\_\+\+TO}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___g_o___t_o_aac09d9440545af49f32c947054bb9fcf}{drive} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anything on command drive. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___g_o___t_o_a9ef62ef0417ecbadae9ba02cac1903bd}{listen} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Switch to listening mode. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___g_o___t_o_a31cad500afd9332090862e4eac34509a}{go\+\_\+to} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string target)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anything on command go to. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___g_o___t_o_a069ecbdf4f8e48e697cebd14da6be795}{label} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string label)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anything on command label. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___g_o___t_o_aefada4399e8bfdc2794a7bd4c3fdc065}{goal\+\_\+reached} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em When goal reached is received, switch back to listening mode (leave this state) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+State class for the mode, when the system is following a path towards a target. 
+
+Target can be one of the labels which have been created before 
+
+Definition at line 12 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_state___g_o___t_o_ad200bcfa107cbd4b1df514f074dcbf2d}\label{class_state___g_o___t_o_ad200bcfa107cbd4b1df514f074dcbf2d}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{State\+\_\+\+G\+O\+\_\+\+T\+O()}{State\_GO\_TO()}}
+{\footnotesize\ttfamily State\+\_\+\+G\+O\+\_\+\+T\+O\+::\+State\+\_\+\+G\+O\+\_\+\+TO (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{target }\end{DoxyParamCaption})}
+
+
+
+Constructor of \hyperlink{class_state___g_o___t_o}{State\+\_\+\+G\+O\+\_\+\+TO}. 
+
+Always, when this state is entered\+: (1) Calls service activate\+\_\+path\+\_\+following with a T\+R\+UE flag (2) Calls service which sets the goal to the rtabmap 
+
+Definition at line 13 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+\mbox{\Hypertarget{class_state___g_o___t_o_a1f796efa57a876af5d85d1cbe92c48f2}\label{class_state___g_o___t_o_a1f796efa57a876af5d85d1cbe92c48f2}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!````~State\+\_\+\+G\+O\+\_\+\+TO@{$\sim$\+State\+\_\+\+G\+O\+\_\+\+TO}}
+\index{````~State\+\_\+\+G\+O\+\_\+\+TO@{$\sim$\+State\+\_\+\+G\+O\+\_\+\+TO}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{$\sim$\+State\+\_\+\+G\+O\+\_\+\+T\+O()}{~State\_GO\_TO()}}
+{\footnotesize\ttfamily State\+\_\+\+G\+O\+\_\+\+T\+O\+::$\sim$\+State\+\_\+\+G\+O\+\_\+\+TO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor of \hyperlink{class_state___g_o___t_o}{State\+\_\+\+G\+O\+\_\+\+TO}. 
+
+Calls service activate\+\_\+path\+\_\+following (always, when this state is left) with a F\+A\+L\+SE flag 
+
+Definition at line 45 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_state___g_o___t_o_aac09d9440545af49f32c947054bb9fcf}\label{class_state___g_o___t_o_aac09d9440545af49f32c947054bb9fcf}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!drive@{drive}}
+\index{drive@{drive}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{drive()}{drive()}}
+{\footnotesize\ttfamily void State\+\_\+\+G\+O\+\_\+\+T\+O\+::drive (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anything on command drive. 
+
+
+
+Implements \hyperlink{class_base_state_a398bc67a0353c3e8da1597dbdbbba2cc}{Base\+State}.
+
+
+
+Definition at line 61 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+\mbox{\Hypertarget{class_state___g_o___t_o_a31cad500afd9332090862e4eac34509a}\label{class_state___g_o___t_o_a31cad500afd9332090862e4eac34509a}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!go\+\_\+to@{go\+\_\+to}}
+\index{go\+\_\+to@{go\+\_\+to}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{go\+\_\+to()}{go\_to()}}
+{\footnotesize\ttfamily void State\+\_\+\+G\+O\+\_\+\+T\+O\+::go\+\_\+to (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anything on command go to. 
+
+
+
+Implements \hyperlink{class_base_state_a6acb02c9d6b3e54602e163dc1848ac3a}{Base\+State}.
+
+
+
+Definition at line 79 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+\mbox{\Hypertarget{class_state___g_o___t_o_aefada4399e8bfdc2794a7bd4c3fdc065}\label{class_state___g_o___t_o_aefada4399e8bfdc2794a7bd4c3fdc065}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!goal\+\_\+reached@{goal\+\_\+reached}}
+\index{goal\+\_\+reached@{goal\+\_\+reached}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{goal\+\_\+reached()}{goal\_reached()}}
+{\footnotesize\ttfamily void State\+\_\+\+G\+O\+\_\+\+T\+O\+::goal\+\_\+reached (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+When goal reached is received, switch back to listening mode (leave this state) 
+
+
+
+Implements \hyperlink{class_base_state_aafa71e762d651f1f5a1f7a6decd0d3b5}{Base\+State}.
+
+
+
+Definition at line 95 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+\mbox{\Hypertarget{class_state___g_o___t_o_a069ecbdf4f8e48e697cebd14da6be795}\label{class_state___g_o___t_o_a069ecbdf4f8e48e697cebd14da6be795}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!label@{label}}
+\index{label@{label}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{label()}{label()}}
+{\footnotesize\ttfamily void State\+\_\+\+G\+O\+\_\+\+T\+O\+::label (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anything on command label. 
+
+
+
+Implements \hyperlink{class_base_state_a9b21ace3d89308945fdecd81b34d3919}{Base\+State}.
+
+
+
+Definition at line 87 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+\mbox{\Hypertarget{class_state___g_o___t_o_a9ef62ef0417ecbadae9ba02cac1903bd}\label{class_state___g_o___t_o_a9ef62ef0417ecbadae9ba02cac1903bd}} 
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!listen@{listen}}
+\index{listen@{listen}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\subsubsection{\texorpdfstring{listen()}{listen()}}
+{\footnotesize\ttfamily void State\+\_\+\+G\+O\+\_\+\+T\+O\+::listen (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Switch to listening mode. 
+
+
+
+Implements \hyperlink{class_base_state_ac65db46601f60cd025ff058dae117d7c}{Base\+State}.
+
+
+
+Definition at line 69 of file State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/include/labeled\+\_\+slam/\+State\+Machine/\hyperlink{_state___g_o___t_o_8h}{State\+\_\+\+G\+O\+\_\+\+T\+O.\+h}\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/src/\+State\+Machine/\hyperlink{_state___g_o___t_o_8cpp}{State\+\_\+\+G\+O\+\_\+\+T\+O.\+cpp}\end{DoxyCompactItemize}
