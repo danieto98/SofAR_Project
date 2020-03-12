@@ -1,0 +1,185 @@
+\hypertarget{class_state___d_r_i_v_i_n_g}{}\section{State\+\_\+\+D\+R\+I\+V\+I\+NG Class Reference}
+\label{class_state___d_r_i_v_i_n_g}\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+
+
+State class for the mode, when the robot is controlled manually using the smartwatch.  
+
+
+
+
+{\ttfamily \#include $<$State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+h$>$}
+
+
+
+Inheritance diagram for State\+\_\+\+D\+R\+I\+V\+I\+NG\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=168pt]{class_state___d_r_i_v_i_n_g__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for State\+\_\+\+D\+R\+I\+V\+I\+NG\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=168pt]{class_state___d_r_i_v_i_n_g__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_state___d_r_i_v_i_n_g_a54b0c8690994358c52b409d17bc413b5}{State\+\_\+\+D\+R\+I\+V\+I\+NG} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Constructor of \hyperlink{class_state___d_r_i_v_i_n_g}{State\+\_\+\+D\+R\+I\+V\+I\+NG}. \end{DoxyCompactList}\item 
+\hyperlink{class_state___d_r_i_v_i_n_g_a0770c3991f746520e21e1c7e12610f1d}{$\sim$\+State\+\_\+\+D\+R\+I\+V\+I\+NG} ()
+\begin{DoxyCompactList}\small\item\em Destructor of \hyperlink{class_state___d_r_i_v_i_n_g}{State\+\_\+\+D\+R\+I\+V\+I\+NG}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___d_r_i_v_i_n_g_a7239b366223065ebd5bbbff2330efb0c}{drive} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anythin on command drive. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___d_r_i_v_i_n_g_a35fd6129ede7020827f4a2a8632b1527}{listen} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Switch to listening mode. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___d_r_i_v_i_n_g_a83631cdbe860c6fa1b965fe01337bb5f}{go\+\_\+to} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string target)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anythin on command go\+\_\+to. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___d_r_i_v_i_n_g_a3826ccfb3b2b4a63c2f9bc243ea403c8}{label} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string label)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anything on command label. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_state___d_r_i_v_i_n_g_a73ffdf6352e4cc70ff26a28266497c13}{goal\+\_\+reached} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)
+\begin{DoxyCompactList}\small\item\em Don\textquotesingle{}t do anything when goal reached is received. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+State class for the mode, when the robot is controlled manually using the smartwatch. 
+
+Definition at line 10 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a54b0c8690994358c52b409d17bc413b5}\label{class_state___d_r_i_v_i_n_g_a54b0c8690994358c52b409d17bc413b5}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{State\+\_\+\+D\+R\+I\+V\+I\+N\+G()}{State\_DRIVING()}}
+{\footnotesize\ttfamily State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::\+State\+\_\+\+D\+R\+I\+V\+I\+NG (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})}
+
+
+
+Constructor of \hyperlink{class_state___d_r_i_v_i_n_g}{State\+\_\+\+D\+R\+I\+V\+I\+NG}. 
+
+Calls service activate\+\_\+driving (always, when this state is entered) with a T\+R\+UE flag 
+
+Definition at line 11 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a0770c3991f746520e21e1c7e12610f1d}\label{class_state___d_r_i_v_i_n_g_a0770c3991f746520e21e1c7e12610f1d}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!````~State\+\_\+\+D\+R\+I\+V\+I\+NG@{$\sim$\+State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\index{````~State\+\_\+\+D\+R\+I\+V\+I\+NG@{$\sim$\+State\+\_\+\+D\+R\+I\+V\+I\+NG}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{$\sim$\+State\+\_\+\+D\+R\+I\+V\+I\+N\+G()}{~State\_DRIVING()}}
+{\footnotesize\ttfamily State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::$\sim$\+State\+\_\+\+D\+R\+I\+V\+I\+NG (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor of \hyperlink{class_state___d_r_i_v_i_n_g}{State\+\_\+\+D\+R\+I\+V\+I\+NG}. 
+
+Calls service activate\+\_\+driving (always, when this state is left) with a F\+A\+L\+SE flag 
+
+Definition at line 30 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a7239b366223065ebd5bbbff2330efb0c}\label{class_state___d_r_i_v_i_n_g_a7239b366223065ebd5bbbff2330efb0c}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!drive@{drive}}
+\index{drive@{drive}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{drive()}{drive()}}
+{\footnotesize\ttfamily void State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::drive (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anythin on command drive. 
+
+
+
+Implements \hyperlink{class_base_state_a398bc67a0353c3e8da1597dbdbbba2cc}{Base\+State}.
+
+
+
+Definition at line 45 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a83631cdbe860c6fa1b965fe01337bb5f}\label{class_state___d_r_i_v_i_n_g_a83631cdbe860c6fa1b965fe01337bb5f}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!go\+\_\+to@{go\+\_\+to}}
+\index{go\+\_\+to@{go\+\_\+to}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{go\+\_\+to()}{go\_to()}}
+{\footnotesize\ttfamily void State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::go\+\_\+to (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anythin on command go\+\_\+to. 
+
+
+
+Implements \hyperlink{class_base_state_a6acb02c9d6b3e54602e163dc1848ac3a}{Base\+State}.
+
+
+
+Definition at line 63 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a73ffdf6352e4cc70ff26a28266497c13}\label{class_state___d_r_i_v_i_n_g_a73ffdf6352e4cc70ff26a28266497c13}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!goal\+\_\+reached@{goal\+\_\+reached}}
+\index{goal\+\_\+reached@{goal\+\_\+reached}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{goal\+\_\+reached()}{goal\_reached()}}
+{\footnotesize\ttfamily void State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::goal\+\_\+reached (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anything when goal reached is received. 
+
+
+
+Implements \hyperlink{class_base_state_aafa71e762d651f1f5a1f7a6decd0d3b5}{Base\+State}.
+
+
+
+Definition at line 79 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a3826ccfb3b2b4a63c2f9bc243ea403c8}\label{class_state___d_r_i_v_i_n_g_a3826ccfb3b2b4a63c2f9bc243ea403c8}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!label@{label}}
+\index{label@{label}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{label()}{label()}}
+{\footnotesize\ttfamily void State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::label (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Don\textquotesingle{}t do anything on command label. 
+
+
+
+Implements \hyperlink{class_base_state_a9b21ace3d89308945fdecd81b34d3919}{Base\+State}.
+
+
+
+Definition at line 71 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+\mbox{\Hypertarget{class_state___d_r_i_v_i_n_g_a35fd6129ede7020827f4a2a8632b1527}\label{class_state___d_r_i_v_i_n_g_a35fd6129ede7020827f4a2a8632b1527}} 
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!listen@{listen}}
+\index{listen@{listen}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\subsubsection{\texorpdfstring{listen()}{listen()}}
+{\footnotesize\ttfamily void State\+\_\+\+D\+R\+I\+V\+I\+N\+G\+::listen (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Switch to listening mode. 
+
+
+
+Implements \hyperlink{class_base_state_ac65db46601f60cd025ff058dae117d7c}{Base\+State}.
+
+
+
+Definition at line 53 of file State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/include/labeled\+\_\+slam/\+State\+Machine/\hyperlink{_state___d_r_i_v_i_n_g_8h}{State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+h}\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/src/\+State\+Machine/\hyperlink{_state___d_r_i_v_i_n_g_8cpp}{State\+\_\+\+D\+R\+I\+V\+I\+N\+G.\+cpp}\end{DoxyCompactItemize}

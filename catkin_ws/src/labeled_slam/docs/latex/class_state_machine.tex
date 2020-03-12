@@ -1,0 +1,143 @@
+\hypertarget{class_state_machine}{}\section{State\+Machine Class Reference}
+\label{class_state_machine}\index{State\+Machine@{State\+Machine}}
+
+
+Implements the interface for the labeled\+\_\+slam state machine.  
+
+
+
+
+{\ttfamily \#include $<$State\+Machine.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_state_machine_aa4732b2706c581cb8aac47674b52a8b5}{State\+Machine} (ros\+::\+Service\+Client $\ast$client\+\_\+set\+\_\+goal, ros\+::\+Service\+Client $\ast$client\+\_\+set\+\_\+label, ros\+::\+Service\+Client $\ast$client\+\_\+activate\+\_\+path\+\_\+following, ros\+::\+Service\+Client $\ast$client\+\_\+activate\+\_\+driving)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_state_machine_a93d66cb2a89b186789d655a08b02674e}{$\sim$\+State\+Machine} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_state_machine_a0d90a952683cb15f30bfbaea63ff2e10}{callback\+\_\+command} (const labeled\+\_\+slam\+::\+Command\+::\+Const\+Ptr \&\hyperlink{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}{msg})
+\begin{DoxyCompactList}\small\item\em Callback function for text\+\_\+command subscriber. \end{DoxyCompactList}\item 
+void \hyperlink{class_state_machine_ae36de4ee8784f1ef63e5721aed3465fc}{callback\+\_\+goal\+\_\+reached} (const std\+\_\+msgs\+::\+Bool\+::\+Const\+Ptr \&\hyperlink{velocity__forwarder_8cpp_aba2f97176e275688941f5c2a40324b8a}{msg})
+\begin{DoxyCompactList}\small\item\em Callback function for goal\+\_\+reached subscriber. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_state_machine_a9f3d690f79a1c7f54e4417a8a3dfab55}{State\+\_\+\+D\+R\+I\+V\+I\+NG}
+\item 
+class \hyperlink{class_state_machine_a6309eb5fa74ee5fdbbe99598c54aa8ef}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}
+\item 
+class \hyperlink{class_state_machine_ae1f479386d109e891cf95b71a1fa9d38}{State\+\_\+\+G\+O\+\_\+\+TO}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the interface for the labeled\+\_\+slam state machine. 
+
+Uses the c++ \textquotesingle{}State\textquotesingle{}-\/pattern 
+
+Definition at line 41 of file State\+Machine.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_state_machine_aa4732b2706c581cb8aac47674b52a8b5}\label{class_state_machine_aa4732b2706c581cb8aac47674b52a8b5}} 
+\index{State\+Machine@{State\+Machine}!State\+Machine@{State\+Machine}}
+\index{State\+Machine@{State\+Machine}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{State\+Machine()}{StateMachine()}}
+{\footnotesize\ttfamily State\+Machine\+::\+State\+Machine (\begin{DoxyParamCaption}\item[{ros\+::\+Service\+Client $\ast$}]{client\+\_\+set\+\_\+goal,  }\item[{ros\+::\+Service\+Client $\ast$}]{client\+\_\+set\+\_\+label,  }\item[{ros\+::\+Service\+Client $\ast$}]{client\+\_\+activate\+\_\+path\+\_\+following,  }\item[{ros\+::\+Service\+Client $\ast$}]{client\+\_\+activate\+\_\+driving }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+Constructor of \hyperlink{class_state_machine}{State\+Machine} Class. 
+
+Definition at line 11 of file State\+Machine.\+cpp.
+
+\mbox{\Hypertarget{class_state_machine_a93d66cb2a89b186789d655a08b02674e}\label{class_state_machine_a93d66cb2a89b186789d655a08b02674e}} 
+\index{State\+Machine@{State\+Machine}!````~State\+Machine@{$\sim$\+State\+Machine}}
+\index{````~State\+Machine@{$\sim$\+State\+Machine}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{$\sim$\+State\+Machine()}{~StateMachine()}}
+{\footnotesize\ttfamily State\+Machine\+::$\sim$\+State\+Machine (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destructor. 
+
+Destructor of \hyperlink{class_state_machine}{State\+Machine} Class. 
+
+Definition at line 26 of file State\+Machine.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_state_machine_a0d90a952683cb15f30bfbaea63ff2e10}\label{class_state_machine_a0d90a952683cb15f30bfbaea63ff2e10}} 
+\index{State\+Machine@{State\+Machine}!callback\+\_\+command@{callback\+\_\+command}}
+\index{callback\+\_\+command@{callback\+\_\+command}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{callback\+\_\+command()}{callback\_command()}}
+{\footnotesize\ttfamily void State\+Machine\+::callback\+\_\+command (\begin{DoxyParamCaption}\item[{const labeled\+\_\+slam\+::\+Command\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Callback function for text\+\_\+command subscriber. 
+
+Callback-\/function interpreting command from command-\/recognition node.
+
+Allowed commands are \char`\"{}drive\char`\"{}, \char`\"{}go to\char`\"{}, \char`\"{}label\char`\"{}, \char`\"{}listen\char`\"{} commands go\+\_\+to and label are using an argument. For the other commands, the argument is just ignored. According function of the state\+\_\+member are called on each command Depending on the true object-\/type in the state\+\_\+-\/variable, the function of one specific state is called (P\+O\+L\+Y\+M\+O\+R\+P\+H\+I\+S\+M!) 
+
+Definition at line 41 of file State\+Machine.\+cpp.
+
+\mbox{\Hypertarget{class_state_machine_ae36de4ee8784f1ef63e5721aed3465fc}\label{class_state_machine_ae36de4ee8784f1ef63e5721aed3465fc}} 
+\index{State\+Machine@{State\+Machine}!callback\+\_\+goal\+\_\+reached@{callback\+\_\+goal\+\_\+reached}}
+\index{callback\+\_\+goal\+\_\+reached@{callback\+\_\+goal\+\_\+reached}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{callback\+\_\+goal\+\_\+reached()}{callback\_goal\_reached()}}
+{\footnotesize\ttfamily void State\+Machine\+::callback\+\_\+goal\+\_\+reached (\begin{DoxyParamCaption}\item[{const std\+\_\+msgs\+::\+Bool\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Callback function for goal\+\_\+reached subscriber. 
+
+Callback-\/function for the subscribed topic goal\+\_\+reached. 
+
+Definition at line 72 of file State\+Machine.\+cpp.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_state_machine_a9f3d690f79a1c7f54e4417a8a3dfab55}\label{class_state_machine_a9f3d690f79a1c7f54e4417a8a3dfab55}} 
+\index{State\+Machine@{State\+Machine}!State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}}
+\index{State\+\_\+\+D\+R\+I\+V\+I\+NG@{State\+\_\+\+D\+R\+I\+V\+I\+NG}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{State\+\_\+\+D\+R\+I\+V\+I\+NG}{State\_DRIVING}}
+{\footnotesize\ttfamily friend class \hyperlink{class_state___d_r_i_v_i_n_g}{State\+\_\+\+D\+R\+I\+V\+I\+NG}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line 71 of file State\+Machine.\+h.
+
+\mbox{\Hypertarget{class_state_machine_ae1f479386d109e891cf95b71a1fa9d38}\label{class_state_machine_ae1f479386d109e891cf95b71a1fa9d38}} 
+\index{State\+Machine@{State\+Machine}!State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}}
+\index{State\+\_\+\+G\+O\+\_\+\+TO@{State\+\_\+\+G\+O\+\_\+\+TO}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{State\+\_\+\+G\+O\+\_\+\+TO}{State\_GO\_TO}}
+{\footnotesize\ttfamily friend class \hyperlink{class_state___g_o___t_o}{State\+\_\+\+G\+O\+\_\+\+TO}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line 73 of file State\+Machine.\+h.
+
+\mbox{\Hypertarget{class_state_machine_a6309eb5fa74ee5fdbbe99598c54aa8ef}\label{class_state_machine_a6309eb5fa74ee5fdbbe99598c54aa8ef}} 
+\index{State\+Machine@{State\+Machine}!State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG@{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}}
+\index{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG@{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}!State\+Machine@{State\+Machine}}
+\subsubsection{\texorpdfstring{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}{State\_LISTENING}}
+{\footnotesize\ttfamily friend class \hyperlink{class_state___l_i_s_t_e_n_i_n_g}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line 72 of file State\+Machine.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/include/labeled\+\_\+slam/\+State\+Machine/\hyperlink{_state_machine_8h}{State\+Machine.\+h}\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/src/\+State\+Machine/\hyperlink{_state_machine_8cpp}{State\+Machine.\+cpp}\end{DoxyCompactItemize}

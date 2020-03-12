@@ -1,0 +1,99 @@
+\hypertarget{class_base_state}{}\section{Base\+State Class Reference}
+\label{class_base_state}\index{Base\+State@{Base\+State}}
+
+
+Base class for all the specific state classes. Contains public interface of all derived classes.  
+
+
+
+
+{\ttfamily \#include $<$Base\+State.\+h$>$}
+
+
+
+Inheritance diagram for Base\+State\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_base_state__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_base_state_a398bc67a0353c3e8da1597dbdbbba2cc}{drive} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)=0
+\item 
+virtual void \hyperlink{class_base_state_ac65db46601f60cd025ff058dae117d7c}{listen} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)=0
+\item 
+virtual void \hyperlink{class_base_state_a6acb02c9d6b3e54602e163dc1848ac3a}{go\+\_\+to} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string target)=0
+\item 
+virtual void \hyperlink{class_base_state_a9b21ace3d89308945fdecd81b34d3919}{label} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m, string label)=0
+\item 
+virtual void \hyperlink{class_base_state_aafa71e762d651f1f5a1f7a6decd0d3b5}{goal\+\_\+reached} (\hyperlink{class_state_machine}{State\+Machine} $\ast$m)=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for all the specific state classes. Contains public interface of all derived classes. 
+
+Definition at line 12 of file Base\+State.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_base_state_a398bc67a0353c3e8da1597dbdbbba2cc}\label{class_base_state_a398bc67a0353c3e8da1597dbdbbba2cc}} 
+\index{Base\+State@{Base\+State}!drive@{drive}}
+\index{drive@{drive}!Base\+State@{Base\+State}}
+\subsubsection{\texorpdfstring{drive()}{drive()}}
+{\footnotesize\ttfamily virtual void Base\+State\+::drive (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_state___g_o___t_o_aac09d9440545af49f32c947054bb9fcf}{State\+\_\+\+G\+O\+\_\+\+TO}, \hyperlink{class_state___d_r_i_v_i_n_g_a7239b366223065ebd5bbbff2330efb0c}{State\+\_\+\+D\+R\+I\+V\+I\+NG}, and \hyperlink{class_state___l_i_s_t_e_n_i_n_g_af77af4f01ff6fde1f64b133c5fa61cb8}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}.
+
+\mbox{\Hypertarget{class_base_state_a6acb02c9d6b3e54602e163dc1848ac3a}\label{class_base_state_a6acb02c9d6b3e54602e163dc1848ac3a}} 
+\index{Base\+State@{Base\+State}!go\+\_\+to@{go\+\_\+to}}
+\index{go\+\_\+to@{go\+\_\+to}!Base\+State@{Base\+State}}
+\subsubsection{\texorpdfstring{go\+\_\+to()}{go\_to()}}
+{\footnotesize\ttfamily virtual void Base\+State\+::go\+\_\+to (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_state___g_o___t_o_a31cad500afd9332090862e4eac34509a}{State\+\_\+\+G\+O\+\_\+\+TO}, \hyperlink{class_state___d_r_i_v_i_n_g_a83631cdbe860c6fa1b965fe01337bb5f}{State\+\_\+\+D\+R\+I\+V\+I\+NG}, and \hyperlink{class_state___l_i_s_t_e_n_i_n_g_ab6eba322cb293ec2b693f48260f72751}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}.
+
+\mbox{\Hypertarget{class_base_state_aafa71e762d651f1f5a1f7a6decd0d3b5}\label{class_base_state_aafa71e762d651f1f5a1f7a6decd0d3b5}} 
+\index{Base\+State@{Base\+State}!goal\+\_\+reached@{goal\+\_\+reached}}
+\index{goal\+\_\+reached@{goal\+\_\+reached}!Base\+State@{Base\+State}}
+\subsubsection{\texorpdfstring{goal\+\_\+reached()}{goal\_reached()}}
+{\footnotesize\ttfamily virtual void Base\+State\+::goal\+\_\+reached (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_state___g_o___t_o_aefada4399e8bfdc2794a7bd4c3fdc065}{State\+\_\+\+G\+O\+\_\+\+TO}, \hyperlink{class_state___d_r_i_v_i_n_g_a73ffdf6352e4cc70ff26a28266497c13}{State\+\_\+\+D\+R\+I\+V\+I\+NG}, and \hyperlink{class_state___l_i_s_t_e_n_i_n_g_a673b6c2cd73588f9db6b252c5e0d6d60}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}.
+
+\mbox{\Hypertarget{class_base_state_a9b21ace3d89308945fdecd81b34d3919}\label{class_base_state_a9b21ace3d89308945fdecd81b34d3919}} 
+\index{Base\+State@{Base\+State}!label@{label}}
+\index{label@{label}!Base\+State@{Base\+State}}
+\subsubsection{\texorpdfstring{label()}{label()}}
+{\footnotesize\ttfamily virtual void Base\+State\+::label (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m,  }\item[{string}]{label }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_state___g_o___t_o_a069ecbdf4f8e48e697cebd14da6be795}{State\+\_\+\+G\+O\+\_\+\+TO}, \hyperlink{class_state___d_r_i_v_i_n_g_a3826ccfb3b2b4a63c2f9bc243ea403c8}{State\+\_\+\+D\+R\+I\+V\+I\+NG}, and \hyperlink{class_state___l_i_s_t_e_n_i_n_g_a780b6f499710282279e60c7e48cd6611}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}.
+
+\mbox{\Hypertarget{class_base_state_ac65db46601f60cd025ff058dae117d7c}\label{class_base_state_ac65db46601f60cd025ff058dae117d7c}} 
+\index{Base\+State@{Base\+State}!listen@{listen}}
+\index{listen@{listen}!Base\+State@{Base\+State}}
+\subsubsection{\texorpdfstring{listen()}{listen()}}
+{\footnotesize\ttfamily virtual void Base\+State\+::listen (\begin{DoxyParamCaption}\item[{\hyperlink{class_state_machine}{State\+Machine} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_state___g_o___t_o_a9ef62ef0417ecbadae9ba02cac1903bd}{State\+\_\+\+G\+O\+\_\+\+TO}, \hyperlink{class_state___d_r_i_v_i_n_g_a35fd6129ede7020827f4a2a8632b1527}{State\+\_\+\+D\+R\+I\+V\+I\+NG}, and \hyperlink{class_state___l_i_s_t_e_n_i_n_g_a0063dbc4d0cc0712e4a69e67a452f92b}{State\+\_\+\+L\+I\+S\+T\+E\+N\+I\+NG}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+catkin\+\_\+ws/src/labeled\+\_\+slam/include/labeled\+\_\+slam/\+State\+Machine/\hyperlink{_base_state_8h}{Base\+State.\+h}\end{DoxyCompactItemize}
