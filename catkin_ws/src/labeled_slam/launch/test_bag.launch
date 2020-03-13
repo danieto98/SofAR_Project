@@ -1,6 +1,6 @@
 <launch>
         <param name="/use_sim_time" value="true" />
-<node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/filip/bag1_2020-03-07-16-39-27.bag"/>
+<node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/pep/Desktop/bag2_2020-03-07-18-15-43.bag"/>
     <node pkg="tf" type="static_transform_publisher" name="camera_link_pub" args="0 0 0 -0.6087614 0 0 0.7933533 base_link camera_rgb_optical_frame 100" />
 
   <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">

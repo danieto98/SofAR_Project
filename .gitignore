@@ -50,3 +50,5 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+catkin_ws/src/gesture-based-controller
