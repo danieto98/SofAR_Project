@@ -119,7 +119,7 @@ class Main_Speech_Controller:
                 # Otherwise, start all over again
                 else:
                     print("***** Oops! Sorry about that")
-                    time.sleep(3)
+                    #time.sleep(3)
                     return 0
 
             elif speech["Transcription"]=="label":
@@ -149,7 +149,7 @@ class Main_Speech_Controller:
                 # Otherwise, start all over again
                 else:
                     print("***** Oops! Sorry about that")
-                    time.sleep(3)
+                    #time.sleep(3)
                     return 0
 
             # If command not valid
@@ -191,7 +191,7 @@ class Main_Speech_Controller:
             while not rospy.is_shutdown():
 
                 # Clear command window
-                os.system('clear')
+                # os.system('clear')
 
                 # Ask if the user wants to perform a new voice command
                 print("****************************************")
@@ -226,12 +226,12 @@ class Main_Speech_Controller:
                             print("***** command sent")
                         else:
                             print("***** command NOT sent")
-                        time.sleep(3)
+                        #time.sleep(3)
 
                     # Otherwise, start all over again
                     else:
                         print("***** Oops! sorry about that")
-                        time.sleep(3)
+                        #time.sleep(3)
 
                 # Otherwise
                 else:
@@ -239,7 +239,7 @@ class Main_Speech_Controller:
                     # Sleep for 10 seconds
                     print("***** It's okay, I'm going to sleep 10 seconds. If you want to exit, press CTRL+C")
                     print("****************************************")
-                    time.sleep(10) # Doing this mostly for having an exit door for the program / Might change it later
+                    time.sleep(5) # Doing this mostly for having an exit door for the program / Might change it later
 
 # Main
 def main():
