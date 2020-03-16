@@ -10,26 +10,28 @@ This project has been developed using the [Robot Operating System (ROS)](https:/
 
 We have used the following hardware components:
 * Husqvarna 430x automower with a Raspberry Pi installed as explained in section 7.3 [here](https://github.com/HusqvarnaResearch/hrp/blob/master/Startup%20Guide%20HRP.pdf)
-* LG Smart Watch
+* LG Smart Watch with IMU stream application installed
 * Microsoft Kinect for Xbox 360 attached to the top of the automower
 * Microphone
 * Wi-Fi router
 * PC running ROS Kinetic or Melodic on a Linux distribution
 
-## Architecture of the System Description
+## Architecture of the System
 
 The architecture can be summarized using the following UML diagram:
 <p align="center"> 
 <img src="https://github.com/danieto98/SofAR_Project/blob/master/UML.png">
 </p>
 
-The Kinect driver (freenect_camera) provides an image, a depth image and the camera information for the device. All of this data is synched into a single topic using the rtabmap_ros/rgbd_sync nodelet. This is later fed to both the rtabmap and rgbd_odometry nodes. The latter computes odometry from the current image and point cloud visualized by the Kinect. The Husqvarna driver node (am_driver_legacy) provides odometry based on the model of the robot and the current speed of the wheels. These two odometry estimates are merged into a more robust estimate using the odometry_merge node. The results from this node and the synched Kinect data are fed into the rtabmap node which generates an estimate of the current map and computes the position of the robot as a tf using an RGBD SLAM approach.
+The Kinect driver (freenect_camera) provides an image, a depth image and the camera information for the device. All of this data is synchronized into a single topic using the rtabmap_ros/rgbd_sync nodelet. This is later fed to both the rtabmap and rgbd_odometry nodes. The latter computes odometry from the current image and point cloud visualized by the Kinect. The results from this node and the synchronized Kinect data are fed into the rtabmap node which generates an estimate of the current map and computes the position of the robot as a tf using an RGBD SLAM approach.
 
-At the same time, the command_recognition node listens to microphone and keyboard inputs and outputs valid commands to the logic node, which uses a state machine to change its behavior according to the given command. This node consequently publishes messages to either activator_1 or activator_2, which output the messages they receive as input to the velocity_forwarder node in case the received input from the logic node is true. The velocity_forwarder node lets all input messages through as velocity commands to the Husqvarna's driver (am_driver_legacy).
+At the same time, the main_speech_controller node listens to microphone and keyboard inputs and outputs valid commands to the logic node, which uses a state machine to change its behavior according to the given command. This node consequently publishes messages to either activator_1 or activator_2, which output the messages they receive as input to the velocity_forwarder node in case the received input from the logic node is true. The velocity_forwarder node lets all input messages through as velocity commands to the Husqvarna's driver (am_driver_legacy).
 
 The logic node also sets labels to the current position upon command by issuing the set_label() service call to the rtabmap node. In case a "go to" command is issued, it uses the set_goal() service call to the rtabmap node instead, which will consequently output a path for the robot to follow from its current position to reach that goal. This path is used by the path_folower, who listens to the tf of the current position and outputs velocity commands (activated by the logic node using activator_1) needed to reach that goal.
 
 When not following a given path, the robot is controlled by using certain gestures captured by the smartwatch. The IMU data from the watch is received by the gb_controller node, which outputs velocity commands to the robot (activated by the logic node using activator_2).
+
+## Description of the System's Architecture
 
 ### Activator Modules
 The system architecture requires 2 activator modules, that were mainly developed by Filip and Roberto. Their source code was written completely from scratch, because they strongly interact with the main logic, and are very specific for this project. This is why no additional software or libraries need to be installed and no specific hardware is necessary to run the nodes.
@@ -88,9 +90,9 @@ sudo apt-get install ros-melodic-rtabmap ros-melodic-rtabmap-ros
 
 #### Libfreenect
 
-This library provides drivers for the Microsoft Kinect which you will have to install in the Raspberry Pi connected directly to the Husqvarna automower.
+This library provides drivers for the Microsoft Kinect.
 
-You will first need to clone the libfreenect library from source. Open up a terminal in your desire directory and run:
+You will first need to clone the libfreenect library from source. Open up a terminal in your desired directory and run:
 ```
 git clone https://github.com/OpenKinect/libfreenect
 cd libfreenect
@@ -136,23 +138,9 @@ In order to test the installation as a Python package, input the following comma
 python -m speech_recognition
 ```
 
-#### Navigation Stack
-
-We use this stack, which includes the robot_pose_ekf package, to merge odometry data from our two sources.
-
-If you are a ROS Kinetic user, install it with:
-```
-sudo apt-get install ros-kinetic-navigation
-```
-
-If you are a ROS Melodic user, install it with:
-```
-sudo apt-get install ros-melodic-navigation
-```
-
 ### Installation
 
-Follow the instructions below for both the Raspberry Pi (if it is the first using it on the Husqvarna) and your PC.
+Follow the instructions below for both the Raspberry Pi (if it is the first time using it on the Husqvarna) and your PC.
 If you have trouble accessing the Raspberry Pi, take a look at the [preliminary steps](#preliminary-steps) section.
 
 #### On the Raspberry Pi
@@ -173,11 +161,6 @@ Navigate to the src directory and clone the Husqvarna driver repository:
 ```
 cd ~/catkin_ws/src
 git clone https://github.com/HusqvarnaResearch/hrp
-```
-
-Clone the freenect ROS stack too:
-```
-git clone https://github.com/ros-drivers/freenect_stack
 ```
 
 Make the catkin workspace:
@@ -203,16 +186,6 @@ Clone this repository:
 ```
 cd ~
 git clone --recurse-submodules -j8 https://github.com/danieto98/SofAR_Project.git
-```
-
-Navigate to the location of the gb_controller.py file:
-```
-cd ~/SofAR_Project/catkin_ws/src/gesture-based-controller/src/
-```
-
-Edit the following line (currently line 52) by replacing the number 1 with a number 2:
-```
-if (now.secs-self.last_time) < 1:
 ```
 
 Make the catkin workspace:
@@ -250,20 +223,57 @@ catkin_make
 export ROS_MASTER_URI=http://<your_ip>:11311
 ```
 
-#### Running the project
+#### Running the nodes
 * Open up a terminal on your machine and run roscore by using the command `roscore`
-* In a separate terminal, navigate to the repository's catkin workspace directory `cd ~/SofAR_Project/catkin_ws`
-* Make the repository if you haven't done so yet by issuing `catkin_make`
-* Source the files using `source devel/setup.bash`
-* Run the gesture based controller: `roslaunch gesture_based_controller hrp_gb_controller.launch`
 * On the terminal connected to the Raspberry Pi via ssh, run the following commands:
 ```
 sudo chmod 666 /dev/ttyACM0
 roslaunch am_driver_legacy automower_legacy.launch
 ```
-* Open up the IMU app on the LG SmartWatch
-* Set the IP address to that of your machine and the port number to "11311"
-* Move your hand to drive the robot
+* In a separate terminal, navigate to the repository's catkin workspace directory `cd ~/SofAR_Project/catkin_ws`
+* Make the repository if you haven't done so yet by issuing `catkin_make`
+* Source the files using `source devel/setup.bash`
+* Open up the IMU app on the LG smartwatch, set the IP address to that of your machine and the port number to "11311".
+
+##### Whole Project
+
+If you intend to run the entire project with SLAM being done online (not recommended at this stage of the project, maybe in the future), run:
+```
+roslaunch labeled_slam test.launch
+```
+
+##### Recording/Running Rosbag of Kinect Data Only
+
+First, record a bag of the Kinect data:
+```
+roslaunch labeled_slam record_bag.launch
+```
+
+After recording the bag, kill the processes and run the following command to create the map offline using the recorded data (edit the launchfile to point to the name of your bagfile):
+```
+roslaunch labeled_slam run_bag.launch
+```
+
+##### Recording/Running Rosbag of Kinect Data and Labeling
+
+First, record a bag of the Kinect data and the labels set using voice recognition:
+```
+roslaunch labeled_slam record_labels.launch
+```
+
+After recording the bag, kill the processes and run the following command to create the map offline using the recorded data (edit the launchfile to point to the name of your bagfile):
+```
+roslaunch labeled_slam run_labels.launch
+```
+
+##### Running the project in localization mode
+
+After having created a map by running one of the previous bagfiles, kill the process and the map will be saved onto rtabmap's long-term memory.
+
+Run the following command to run the project (restricted to DRIVING and GO_TO modes, the latter only if the second method of bag recording and playing above was used):
+```
+roslaunch labeled_slam test_localize.launch
+```
 
 ## Report
 
