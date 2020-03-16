@@ -266,7 +266,7 @@ After recording the bag, kill the processes and run the following command to cre
 roslaunch labeled_slam run_labels.launch
 ```
 
-##### Running the project in localization mode
+##### Running the Project in Localization Mode
 
 After having created a map by running one of the previous bagfiles, kill the process and the map will be saved onto rtabmap's long-term memory.
 
