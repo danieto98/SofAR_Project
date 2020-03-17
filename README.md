@@ -19,9 +19,11 @@ We have used the following hardware components:
 ## Architecture of the System
 
 The architecture can be summarized using the following UML diagram:
-<p align="center"> 
+<p align="center">
 <img src="https://github.com/danieto98/SofAR_Project/blob/master/UML.png">
 </p>
+
+To see the Doxygen-documantation, klick <a href="https://danieto98.github.io/SofAR_Project/catkin_ws/src/labeled_slam/docs/html/index.html">here</a>.
 
 The Kinect driver (freenect_camera) provides an image, a depth image and the camera information for the device. All of this data is synchronized into a single topic using the rtabmap_ros/rgbd_sync nodelet. This is later fed to both the rtabmap and rgbd_odometry nodes. The latter computes odometry from the current image and point cloud visualized by the Kinect. The results from this node and the synchronized Kinect data are fed into the rtabmap node which generates an estimate of the current map and computes the position of the robot as a tf using an RGBD SLAM approach.
 
@@ -56,13 +58,13 @@ Publish: ac2/cmd_vel (geometry_msgs/Twist)
 
 
 ### Path Follower Module
-The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target. 
+The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target.
 
 Subrcribe: local_path (nav_msgs/path)   
 TF Listener: tf::StampedTransform my_transform; lookupTransform ("/base_link", "/map", ros::Time(0), my_transform)    
 Publish: path/cmd_vel (geometry_msgs/Twist)   
 
-	
+
 ## Installation and System Testing
 
 ### Requirements
@@ -123,7 +125,7 @@ For ROS Melodic users, you can find installation instructions for both of these 
 For ROS Kinetic users, the suggested installation and version requirements might not work. To avoid this problem, we suggest to:
 
 * Download PyAudio-0.2.11.tar.gz [here](https://pypi.org/project/PyAudio/).
-* Move the file to the the Python2.7 package folder (/usr/local/lib/python2.7/dist-packages), you will need sudo privileges. 
+* Move the file to the the Python2.7 package folder (/usr/local/lib/python2.7/dist-packages), you will need sudo privileges.
 * In that directory, run:
 ```
 tar xvf PyAudio-0.2.11.tar.gz
