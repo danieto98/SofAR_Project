@@ -65,7 +65,9 @@ Service: activate_driving (std_srvs/SetBool)
 The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target.
 
 Input: local_path (nav_msgs/path)   
-Output: path/cmd_vel (geometry_msgs/Twist) 
+
+Output: path/cmd_vel (geometry_msgs/Twist)
+
 Listens to tf: /map to /base_link      
 
 
