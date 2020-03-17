@@ -237,7 +237,7 @@ roslaunch am_driver_legacy automower_legacy.launch
 
 ##### Whole Project
 
-If you intend to run the entire project with SLAM being done online (not recommended at this stage of the project, maybe in the future), run:
+If you intend to run the entire project with SLAM being done online (not recommended at this stage of the project, maybe in the future) and Kinect data being saved for later inspection, run:
 ```
 roslaunch labeled_slam test.launch
 ```
@@ -251,19 +251,19 @@ roslaunch labeled_slam record_bag.launch
 
 After recording the bag, kill the processes and run the following command to create the map offline using the recorded data (edit the launchfile to point to the name of your bagfile):
 ```
-roslaunch labeled_slam run_bag.launch
+roslaunch labeled_slam test_bag.launch
 ```
 
 ##### Recording/Running Rosbag of Kinect Data and Labeling
 
 First, record a bag of the Kinect data and the labels set using voice recognition:
 ```
-roslaunch labeled_slam record_labels.launch
+roslaunch labeled_slam labels_bag.launch
 ```
 
 After recording the bag, kill the processes and run the following command to create the map offline using the recorded data (edit the launchfile to point to the name of your bagfile):
 ```
-roslaunch labeled_slam run_labels.launch
+roslaunch labeled_slam test_bag_labels.launch
 ```
 
 ##### Running the Project in Localization Mode
