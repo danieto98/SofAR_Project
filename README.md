@@ -57,7 +57,7 @@ Input: gbc/cmd_vel (geometry_msgs/Twist)
 
 Output: ac2/cmd_vel (geometry_msgs/Twist)
 
-Advertised service: activate_driving (std_srvs/SetBool) 
+Advertised service: activate_driving (std_srvs/SetBool)
 
 
 
@@ -70,6 +70,20 @@ Output: path/cmd_vel (geometry_msgs/Twist)
 
 Required tf: /map to /base_link      
 
+### Logic-node
+The source code of this module was written completely from scratch because it implements the main logic, which is very specific for this project. This is why no additional software or libraries need to be installed and no specific hardware is necessary to run this node. To run this module, simply type: rosrun labeled_slam logic_node
+
+Input:  
+
+* text_command (labeled_slam/Command)
+* goal_reached (std_msgs/Bool)
+
+Output:
+
+* set_goal (rtabmap_ros/SetGoal)
+* set_label (rtabmap_ros/SetLabel)
+* activate_path_following (std_srvs/SetBool)
+* activate_driving (std_srvs/SetBool)
 
 ## Installation and System Testing
 
