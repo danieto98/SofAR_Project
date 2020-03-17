@@ -48,7 +48,7 @@ Input: path/cmd_vel (geometry_msgs/Twist)
 
 Output: ac1/cmd_vel (geometry_msgs/Twist)    
 
-Service: activate_path_following (std_srvs/SetBool)   
+Advertised service: activate_path_following (std_srvs/SetBool)   
 
 
 #### Activator 2
@@ -57,7 +57,7 @@ Input: gbc/cmd_vel (geometry_msgs/Twist)
 
 Output: ac2/cmd_vel (geometry_msgs/Twist)
 
-Service: activate_driving (std_srvs/SetBool) 
+Advertised service: activate_driving (std_srvs/SetBool) 
 
 
 
@@ -68,7 +68,7 @@ Input: local_path (nav_msgs/path)
 
 Output: path/cmd_vel (geometry_msgs/Twist)
 
-Listens to tf: /map to /base_link      
+Required tf: /map to /base_link      
 
 
 ## Installation and System Testing
