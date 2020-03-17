@@ -83,8 +83,8 @@ int main(int argc, char** argv){
 
         float inc_x, inc_y, direction, angle_to_goal, angle_difference, K_lin, K_ang;
         tf::StampedTransform my_transform;
-        tolerance_angle = 0.5;
-        tolerance_dist = 0.5;
+        tolerance_angle = 0.2;
+        tolerance_dist = 0.2;
         K_lin=0.1;
         K_ang=0.2;
         //Need a function to obtain my yaw from my current orientation! Maybe dont need current Quaternion! Depends on how I can compute the orientation of my robot.
