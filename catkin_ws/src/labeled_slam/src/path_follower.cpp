@@ -81,7 +81,7 @@ int main(int argc, char** argv){
         velocity_to_publish.angular.y = 0.0;
         velocity_to_publish.angular.z = 0.0;
 
-        float inc_x, inc_y, angle_to_goal, K_lin, K_ang;
+        float inc_x, inc_y, direction, angle_to_goal, angle_difference, K_lin, K_ang;
         tf::StampedTransform my_transform;
         tolerance_angle = 0.5;
         tolerance_dist = 0.5;
@@ -112,52 +112,68 @@ int main(int argc, char** argv){
 
                 if (current_yaw < 0)
                 {
-                        current_yaw += 2*M_PI;
+                        current_yaw = current_yaw + 2*M_PI;
                 }
 
 
                 inc_x = goal_position.x - current_position.getX();
                 inc_y = goal_position.y - current_position.getY();
+
                 angle_to_goal = atan2 (inc_y, inc_x);
-                if (angle_to_goal < 0)
-                {
-                        angle_to_goal += 2*M_PI;
+                angle_difference = current_yaw - angle_to_goal;
+
+                if(angle_difference < 0) {
+                        angle_difference = -angle_difference;
                 }
+
+                //determine the rotation direction
+                if (angle_to_goal < current_yaw) {
+                        if((2*M_PI - current_yaw + angle_to_goal) < (current_yaw - angle_to_goal)) {
+                                direction = 1;
+                        } else {
+                                direction = -1;
+                        }
+                } else {
+                        if( (2*M_PI - angle_to_goal + current_yaw) < (angle_to_goal - current_yaw)) {
+                                direction = -1;
+                        } else {
+                                direction = 1;
+                        }
+                }
+
 
                 //implementing a PID controller for speed, speed depends on target distance. In case it doesnt work, just use 0 and 1s
 
                 //IF WE ARE NOT THERE YET
                 if(!angle_check(angle_to_goal, current_yaw)) {  //ANGLE IS NOT GOOD ENOUGH
                         //ROTATION & STRAIGHT
-                        ROS_INFO("GO_STRAIGHT & ROTATE");
+                        ROS_INFO("ROTATE");
                         ROS_INFO("Angle_to_goal = %f\n Current_yaw = %f", angle_to_goal, current_yaw);
                         //velocity_to_publish.linear.x = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                        //velocity_to_publish.linear.y = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
                         velocity_to_publish.linear.x = 0;
-                        velocity_to_publish.angular.z = K_ang*(angle_to_goal - current_yaw);
-                        if (velocity_to_publish.angular.z>0.45)
+                        velocity_to_publish.angular.z = K_ang * direction * abs(angle_to_goal - current_yaw);
+
+                        if (abs(velocity_to_publish.angular.z) > 0.45)
                         {
-                                velocity_to_publish.angular.z = 0.45;
+                                velocity_to_publish.angular.z = direction * 0.45;
                         }
-                        if (velocity_to_publish.angular.z<-0.45)
-                        {
-                                velocity_to_publish.angular.z = -0.45;
-                        }
+
                 } else if (!proximity_check(goal_position, current_position)) { //DISTANCE IS NOT GOOD ENOUGH
                         //GO STRAIGHT
                         ROS_INFO("GO_STRAIGHT");
                         ROS_INFO("Goal_position = %f\n Current_position = %f", goal_position, current_position);
-                        velocity_to_publish.linear.x = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
-                        //velocity_to_publish.linear.y = K_lin*sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+                        velocity_to_publish.linear.x = K_lin * sqrt(pow(inc_y, 2) + pow(inc_x, 2));
+
                         velocity_to_publish.angular.z = 0.0;
                         if (velocity_to_publish.linear.x >0.9)
                         {
                                 velocity_to_publish.linear.x  = 0.9;
                         }
-                        if (velocity_to_publish.linear.x <-0.9)
-                        {
+                        /* This was useless I believe! it's an impossible scenario" -> inc_x and inc_y are squared!
+                           if (velocity_to_publish.linear.x <-0.9)
+                           {
                                 velocity_to_publish.linear.x  = -0.9;
-                        }
+                           } */
                 }
                 else{ //IF WE ARE THERE THEN STOP & ITERATE TO NEXT GOAL POSITION
                         velocity_to_publish.linear.x = 0.0;
@@ -204,7 +220,7 @@ void path_callback(const nav_msgs::Path::ConstPtr& received_path){
 
 bool proximity_check(geometry_msgs::Point goal, tf::Point current){
         //checking if the robot is close/has almost reached to my goal
-        if( ( (goal.x - current.getX()) <tolerance_dist ) &&  ( (goal.y - current.getY()) <tolerance_dist ) ) {
+        if( sqrt( pow((goal.x - current.getX()),2) + pow((goal.y - current.getY()),2)) <tolerance_dist  ) {
                 return true;
         } else {
                 return false;
