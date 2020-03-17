@@ -90,8 +90,6 @@ $(function() {
 Include dependency graph for path_follower.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="path__follower_8cpp__incl.png" border="0" usemap="#catkin__ws_2src_2labeled__slam_2src_2path__follower_8cpp" alt=""/></div>
-<map name="catkin__ws_2src_2labeled__slam_2src_2path__follower_8cpp" id="catkin__ws_2src_2labeled__slam_2src_2path__follower_8cpp">
-</map>
 </div>
 </div>
 <p><a href="path__follower_8cpp_source.html">Go to the source code of this file.</a></p>
@@ -102,13 +100,15 @@ Functions</h2></td></tr>
 <tr class="separator:aa9a42b10b0895a8dea5f7a3e53622445"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6580d4219bb711f9f65ecdc5ae43a7b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a6580d4219bb711f9f65ecdc5ae43a7b4">proximity_check</a> (geometry_msgs::Point goal, tf::Point current)</td></tr>
 <tr class="separator:a6580d4219bb711f9f65ecdc5ae43a7b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a381fc6065d560c219bdf0733ccd3ba13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a381fc6065d560c219bdf0733ccd3ba13">angle_check</a> (float goal_angle, tfScalar yaw)</td></tr>
+<tr class="separator:a381fc6065d560c219bdf0733ccd3ba13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a73a99adc688e2eaa700896b945104f25"><td class="memItemLeft" align="right" valign="top">std::vector&lt; geometry_msgs::PoseStamped &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a73a99adc688e2eaa700896b945104f25">current_state</a></td></tr>
-<tr class="separator:a73a99adc688e2eaa700896b945104f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06bc50440cb7aad0ef28a930499574c5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; geometry_msgs::PoseStamped &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a06bc50440cb7aad0ef28a930499574c5">current_path</a></td></tr>
+<tr class="separator:a06bc50440cb7aad0ef28a930499574c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd300c5785c540c1370de4c45066f345"><td class="memItemLeft" align="right" valign="top">std::vector&lt; geometry_msgs::PoseStamped &gt;::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#afd300c5785c540c1370de4c45066f345">it</a></td></tr>
 <tr class="separator:afd300c5785c540c1370de4c45066f345"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1dd788339a5b3696b0f6273eda3136fc"><td class="memItemLeft" align="right" valign="top">geometry_msgs::Point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a1dd788339a5b3696b0f6273eda3136fc">goal_position</a></td></tr>
@@ -120,8 +120,42 @@ Variables</h2></td></tr>
 <tr class="memitem:ad9ace2e48e2ae1119c2d4d0ae2ea25b8"><td class="memItemLeft" align="right" valign="top">geometry_msgs::Twist&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#ad9ace2e48e2ae1119c2d4d0ae2ea25b8">velocity_to_publish</a></td></tr>
 <tr class="memdesc:ad9ace2e48e2ae1119c2d4d0ae2ea25b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Velocity sent to robot driver.  <a href="#ad9ace2e48e2ae1119c2d4d0ae2ea25b8">More...</a><br /></td></tr>
 <tr class="separator:ad9ace2e48e2ae1119c2d4d0ae2ea25b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12fa92d7da4d3dad3d9962e706c7eb60"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a12fa92d7da4d3dad3d9962e706c7eb60">tolerance_angle</a></td></tr>
+<tr class="separator:a12fa92d7da4d3dad3d9962e706c7eb60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e58fbe5f78a53ae55c2fc5ff2e690d0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="path__follower_8cpp.html#a7e58fbe5f78a53ae55c2fc5ff2e690d0">tolerance_dist</a></td></tr>
+<tr class="separator:a7e58fbe5f78a53ae55c2fc5ff2e690d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a381fc6065d560c219bdf0733ccd3ba13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a381fc6065d560c219bdf0733ccd3ba13">&#9670;&nbsp;</a></span>angle_check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool angle_check </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>goal_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tfScalar&#160;</td>
+          <td class="paramname"><em>yaw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00213">213</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&nbsp;</a></span>main()</h2>
 
@@ -172,7 +206,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Path Callback Callback function for the path follower. The node subscribes to the nav_msgs::Path published by rtabmap. These messages provide the node with the goal position and orientation to be achived when in GO_TO_GOAL MODE. The callback is used to initialize the two gobal variables goal_position and goal_orientation used in the </p>
 
-<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00154">154</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00188">188</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
 
 </div>
 </div>
@@ -203,19 +237,19 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>Proximity Check The function checks whether the robot is close enough to the target position and returns a bool. It takes as input and uses the xy coordinates of the goal position and current positions. If the robot is close enough, it returns a true, otherwise returns a false. </p>
 
-<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00166">166</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00205">205</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a73a99adc688e2eaa700896b945104f25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73a99adc688e2eaa700896b945104f25">&#9670;&nbsp;</a></span>current_state</h2>
+<a id="a06bc50440cb7aad0ef28a930499574c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06bc50440cb7aad0ef28a930499574c5">&#9670;&nbsp;</a></span>current_path</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;geometry_msgs::PoseStamped&gt; current_state</td>
+          <td class="memname">std::vector&lt;geometry_msgs::PoseStamped&gt; current_path</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -273,6 +307,38 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00032">32</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a12fa92d7da4d3dad3d9962e706c7eb60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12fa92d7da4d3dad3d9962e706c7eb60">&#9670;&nbsp;</a></span>tolerance_angle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float tolerance_angle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00040">40</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7e58fbe5f78a53ae55c2fc5ff2e690d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e58fbe5f78a53ae55c2fc5ff2e690d0">&#9670;&nbsp;</a></span>tolerance_dist</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float tolerance_dist</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="path__follower_8cpp_source.html#l00040">40</a> of file <a class="el" href="path__follower_8cpp_source.html">path_follower.cpp</a>.</p>
 
 </div>
 </div>

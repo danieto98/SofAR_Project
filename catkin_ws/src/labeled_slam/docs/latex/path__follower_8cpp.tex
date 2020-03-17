@@ -17,8 +17,7 @@
 {\ttfamily \#include $<$string$>$}\newline
 {\ttfamily \#include $<$array$>$}\newline
 {\ttfamily \#include $<$cmath$>$}\newline
-Include dependency graph for path\+\_\+follower.\+cpp\+:
-\nopagebreak
+Include dependency graph for path\+\_\+follower.\+cpp\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -32,12 +31,14 @@ void \hyperlink{path__follower_8cpp_aa9a42b10b0895a8dea5f7a3e53622445}{path\+\_\
 \item 
 bool \hyperlink{path__follower_8cpp_a6580d4219bb711f9f65ecdc5ae43a7b4}{proximity\+\_\+check} (geometry\+\_\+msgs\+::\+Point goal, tf\+::\+Point current)
 \item 
+bool \hyperlink{path__follower_8cpp_a381fc6065d560c219bdf0733ccd3ba13}{angle\+\_\+check} (float goal\+\_\+angle, tf\+Scalar yaw)
+\item 
 int \hyperlink{path__follower_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-std\+::vector$<$ geometry\+\_\+msgs\+::\+Pose\+Stamped $>$ \hyperlink{path__follower_8cpp_a73a99adc688e2eaa700896b945104f25}{current\+\_\+state}
+std\+::vector$<$ geometry\+\_\+msgs\+::\+Pose\+Stamped $>$ \hyperlink{path__follower_8cpp_a06bc50440cb7aad0ef28a930499574c5}{current\+\_\+path}
 \item 
 std\+::vector$<$ geometry\+\_\+msgs\+::\+Pose\+Stamped $>$\+::iterator \hyperlink{path__follower_8cpp_afd300c5785c540c1370de4c45066f345}{it}
 \item 
@@ -46,10 +47,24 @@ geometry\+\_\+msgs\+::\+Point \hyperlink{path__follower_8cpp_a1dd788339a5b3696b0
 geometry\+\_\+msgs\+::\+Quaternion \hyperlink{path__follower_8cpp_afbef336bbcb2c1100f1e01e10a7beee6}{goal\+\_\+orientation}
 \begin{DoxyCompactList}\small\item\em Goal orientation on map. \end{DoxyCompactList}\item 
 geometry\+\_\+msgs\+::\+Twist \hyperlink{path__follower_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}{velocity\+\_\+to\+\_\+publish}
-\begin{DoxyCompactList}\small\item\em Velocity sent to robot driver. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Velocity sent to robot driver. \end{DoxyCompactList}\item 
+float \hyperlink{path__follower_8cpp_a12fa92d7da4d3dad3d9962e706c7eb60}{tolerance\+\_\+angle}
+\item 
+float \hyperlink{path__follower_8cpp_a7e58fbe5f78a53ae55c2fc5ff2e690d0}{tolerance\+\_\+dist}
+\end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
+\mbox{\Hypertarget{path__follower_8cpp_a381fc6065d560c219bdf0733ccd3ba13}\label{path__follower_8cpp_a381fc6065d560c219bdf0733ccd3ba13}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!angle\+\_\+check@{angle\+\_\+check}}
+\index{angle\+\_\+check@{angle\+\_\+check}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{angle\+\_\+check()}{angle\_check()}}
+{\footnotesize\ttfamily bool angle\+\_\+check (\begin{DoxyParamCaption}\item[{float}]{goal\+\_\+angle,  }\item[{tf\+Scalar}]{yaw }\end{DoxyParamCaption})}
+
+
+
+Definition at line 213 of file path\+\_\+follower.\+cpp.
+
 \mbox{\Hypertarget{path__follower_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{path__follower_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
 \index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!main@{main}}
 \index{main@{main}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
@@ -70,7 +85,7 @@ Definition at line 50 of file path\+\_\+follower.\+cpp.
 
 Path Callback Callback function for the path follower. The node subscribes to the nav\+\_\+msgs\+::\+Path published by rtabmap. These messages provide the node with the goal position and orientation to be achived when in G\+O\+\_\+\+T\+O\+\_\+\+G\+O\+AL M\+O\+DE. The callback is used to initialize the two gobal variables goal\+\_\+position and goal\+\_\+orientation used in the 
 
-Definition at line 154 of file path\+\_\+follower.\+cpp.
+Definition at line 188 of file path\+\_\+follower.\+cpp.
 
 \mbox{\Hypertarget{path__follower_8cpp_a6580d4219bb711f9f65ecdc5ae43a7b4}\label{path__follower_8cpp_a6580d4219bb711f9f65ecdc5ae43a7b4}} 
 \index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!proximity\+\_\+check@{proximity\+\_\+check}}
@@ -80,16 +95,16 @@ Definition at line 154 of file path\+\_\+follower.\+cpp.
 
 Proximity Check The function checks whether the robot is close enough to the target position and returns a bool. It takes as input and uses the xy coordinates of the goal position and current positions. If the robot is close enough, it returns a true, otherwise returns a false. 
 
-Definition at line 166 of file path\+\_\+follower.\+cpp.
+Definition at line 205 of file path\+\_\+follower.\+cpp.
 
 
 
 \subsection{Variable Documentation}
-\mbox{\Hypertarget{path__follower_8cpp_a73a99adc688e2eaa700896b945104f25}\label{path__follower_8cpp_a73a99adc688e2eaa700896b945104f25}} 
-\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!current\+\_\+state@{current\+\_\+state}}
-\index{current\+\_\+state@{current\+\_\+state}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
-\subsubsection{\texorpdfstring{current\+\_\+state}{current\_state}}
-{\footnotesize\ttfamily std\+::vector$<$geometry\+\_\+msgs\+::\+Pose\+Stamped$>$ current\+\_\+state}
+\mbox{\Hypertarget{path__follower_8cpp_a06bc50440cb7aad0ef28a930499574c5}\label{path__follower_8cpp_a06bc50440cb7aad0ef28a930499574c5}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!current\+\_\+path@{current\+\_\+path}}
+\index{current\+\_\+path@{current\+\_\+path}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{current\+\_\+path}{current\_path}}
+{\footnotesize\ttfamily std\+::vector$<$geometry\+\_\+msgs\+::\+Pose\+Stamped$>$ current\+\_\+path}
 
 
 
@@ -132,6 +147,26 @@ Definition at line 34 of file path\+\_\+follower.\+cpp.
 
 
 Definition at line 32 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_a12fa92d7da4d3dad3d9962e706c7eb60}\label{path__follower_8cpp_a12fa92d7da4d3dad3d9962e706c7eb60}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!tolerance\+\_\+angle@{tolerance\+\_\+angle}}
+\index{tolerance\+\_\+angle@{tolerance\+\_\+angle}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{tolerance\+\_\+angle}{tolerance\_angle}}
+{\footnotesize\ttfamily float tolerance\+\_\+angle}
+
+
+
+Definition at line 40 of file path\+\_\+follower.\+cpp.
+
+\mbox{\Hypertarget{path__follower_8cpp_a7e58fbe5f78a53ae55c2fc5ff2e690d0}\label{path__follower_8cpp_a7e58fbe5f78a53ae55c2fc5ff2e690d0}} 
+\index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!tolerance\+\_\+dist@{tolerance\+\_\+dist}}
+\index{tolerance\+\_\+dist@{tolerance\+\_\+dist}!path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}}
+\subsubsection{\texorpdfstring{tolerance\+\_\+dist}{tolerance\_dist}}
+{\footnotesize\ttfamily float tolerance\+\_\+dist}
+
+
+
+Definition at line 40 of file path\+\_\+follower.\+cpp.
 
 \mbox{\Hypertarget{path__follower_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}\label{path__follower_8cpp_ad9ace2e48e2ae1119c2d4d0ae2ea25b8}} 
 \index{path\+\_\+follower.\+cpp@{path\+\_\+follower.\+cpp}!velocity\+\_\+to\+\_\+publish@{velocity\+\_\+to\+\_\+publish}}
