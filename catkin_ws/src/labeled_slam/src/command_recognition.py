@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# SPEECH RECOGNITION AND COMMAND NODE
+## @labeled_slam command_recognition.py
+## Speech recognition and command node
 # Requires connection to the internet
 
 # Import system calls
@@ -17,10 +18,10 @@ import rospy
 # ROS messages
 from labeled_slam.msg import Command # Custome message containing two strings variables and a header
 
-# Mother class
+## Mother class
 class Main_Speech_Controller:
 
-        # Initialize global variables for the object
+        ## Initialize global variables like topics and recognizer
         def __init__(self):
 
             # Topic where we will publish our costume message
@@ -40,7 +41,7 @@ class Main_Speech_Controller:
             self.speechcommand.command= "" # Tried to used None insted of "" but mytopic.pub returned error
             self.speechcommand.argument= ""
 
-        # Get the audio signal from the microphone as a string
+        ## Get the audio signal from the microphone as a string
         def recognize_speech(self, speech):
 
             # Declare a type of recognizer an microphone for the speech recognition library
@@ -67,7 +68,7 @@ class Main_Speech_Controller:
 
             return speech
 
-        # From the audio signal, publish the desired command
+        ## From the audio signal received, publish the desired command
         def recognize_command(self, speech, speechcommand, mytopic):
 
             if speech["Transcription"]== "drive":
@@ -163,7 +164,7 @@ class Main_Speech_Controller:
                 print("***** I'm afraid I cannot do that")
                 return 0
 
-        # Ask user for feedback of the recognized speech
+        ## Ask user for feedback of the recognized speech
         def recognize_user(self, speech, confirmation):
 
             # If the speech is free of errors
@@ -185,7 +186,7 @@ class Main_Speech_Controller:
                 confirmation= 0
                 return confirmation
 
-        # The QuarterBack
+        ## The 'main' function of the class, it calls constantly the other
         def start_recognition(self):
 
             while not rospy.is_shutdown():
@@ -241,7 +242,7 @@ class Main_Speech_Controller:
                     print("****************************************")
                     time.sleep(5) # Doing this mostly for having an exit door for the program / Might change it later
 
-# Main
+## Main, initializes the class and starts the node
 def main():
 
     # Initialize and cleanup the ROS node
@@ -263,14 +264,7 @@ if __name__ == '__main__':
 
 
 # ----------
-# TO-DO list:
+## TO-DO list:
 # 1. How to check if the label of Go mode is correct?
 # 2. Fill with error exceptions
-
-# 3. Branch and Merge in git repository
-# 4. Test and debug
-# 5. Use and installation manual of the package (also readme)
-
-# 6. Might do a GUI if we have time
-# 7. Improve comments and documentation
-# 8. Learn more about the Speech Recognition library
+# 3. Might do a GUI if we have time
