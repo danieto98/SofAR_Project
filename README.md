@@ -23,7 +23,7 @@ The architecture can be summarized using the following UML diagram:
 <img src="https://github.com/danieto98/SofAR_Project/blob/master/UML.png">
 </p>
 
-To see the Doxygen-documantation, click <a href="https://danieto98.github.io/SofAR_Project/catkin_ws/src/labeled_slam/docs/html/index.html">here</a>.
+To see the Doxygen documentation, click <a href="https://danieto98.github.io/SofAR_Project/catkin_ws/src/labeled_slam/docs/html/index.html">here</a>.
 
 The Kinect driver (freenect_camera) provides an image, a depth image and the camera information for the device. All of this data is synchronized into a single topic using the rtabmap_ros/rgbd_sync nodelet. This is later fed to both the rtabmap and rgbd_odometry nodes. The latter computes odometry from the current image and point cloud visualized by the Kinect. The results from this node and the synchronized Kinect data are fed into the rtabmap node which generates an estimate of the current map and computes the position of the robot as a tf using an RGBD SLAM approach.
 
