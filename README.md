@@ -45,14 +45,18 @@ Activator1 receives robot velocity inputs and passes it to the velocity forwarde
 #### Activator 1
 
 Input: path/cmd_vel (geometry_msgs/Twist)
+
 Output: ac1/cmd_vel (geometry_msgs/Twist)    
+
 Service: activate_path_following (std_srvs/SetBool)   
 
 
 #### Activator 2
 
 Input: gbc/cmd_vel (geometry_msgs/Twist)
+
 Output: ac2/cmd_vel (geometry_msgs/Twist)
+
 Service: activate_driving (std_srvs/SetBool) 
 
 
