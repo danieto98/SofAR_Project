@@ -296,6 +296,13 @@ Run the following command to run the project (restricted to DRIVING and GO_TO mo
 ```
 roslaunch labeled_slam test_localize.launch
 ```
+## Tests and Results
+
+To provide the interested party with a visual guide of the test and experiments concerning this project, we here propose three videos that show the physical tests made in the Lab. These video provide a brief guide to our architecture and the physical implementation of the architecture. 
+
+-Rtabmap GUI: https://youtu.be/6lu6xGg_Bjs
+-General Test: https://youtu.be/RyLhx6saB6o
+-Robot Stuck on Path Following: https://youtu.be/yplDEHOiaA8
 
 ## Report
 
