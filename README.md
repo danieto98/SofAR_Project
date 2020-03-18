@@ -19,9 +19,11 @@ We have used the following hardware components:
 ## Architecture of the System
 
 The architecture can be summarized using the following UML diagram:
-<p align="center"> 
+<p align="center">
 <img src="https://github.com/danieto98/SofAR_Project/blob/master/UML.png">
 </p>
+
+To see the Doxygen documentation, click <a href="https://danieto98.github.io/SofAR_Project/catkin_ws/src/labeled_slam/docs/html/index.html">here</a>.
 
 The Kinect driver (freenect_camera) provides an image, a depth image and the camera information for the device. All of this data is synchronized into a single topic using the rtabmap_ros/rgbd_sync nodelet. This is later fed to both the rtabmap and rgbd_odometry nodes. The latter computes odometry from the current image and point cloud visualized by the Kinect. The results from this node and the synchronized Kinect data are fed into the rtabmap node which generates an estimate of the current map and computes the position of the robot as a tf using an RGBD SLAM approach.
 
@@ -42,27 +44,106 @@ Activator1 receives robot velocity inputs and passes it to the velocity forwarde
 
 #### Activator 1
 
-Subrcribe: path/cmd_vel (geometry_msgs/Twist)    
-Service: activate_path_following (std_srvs/SetBool)   
-Publish: ac1/cmd_vel (geometry_msgs/Twist)    
+Input:
+
+* path/cmd_vel (geometry_msgs/Twist)
+
+Output:
+
+* ac1/cmd_vel (geometry_msgs/Twist)    
+
+Advertised service:
+
+* activate_path_following (std_srvs/SetBool)   
 
 
 #### Activator 2
 
-Subrcribe: gbc/cmd_vel (geometry_msgs/Twist)    
-Service: activate_driving (std_srvs/SetBool)    
-Publish: ac2/cmd_vel (geometry_msgs/Twist)    
+Input:
+
+* gbc/cmd_vel (geometry_msgs/Twist)
+
+Output:
+
+* ac2/cmd_vel (geometry_msgs/Twist)
+
+Advertised service:
+
+* activate_driving (std_srvs/SetBool)
 
 
 
 ### Path Follower Module
-The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target. 
+The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target.
 
-Subrcribe: local_path (nav_msgs/path)   
-TF Listener: tf::StampedTransform my_transform; lookupTransform ("/base_link", "/map", ros::Time(0), my_transform)    
-Publish: path/cmd_vel (geometry_msgs/Twist)   
+Input:
 
-	
+* local_path (nav_msgs/path)   
+
+Output:
+
+* path/cmd_vel (geometry_msgs/Twist)
+
+Required tf:
+
+* /map to /base_link      
+
+### Logic-node
+The source code of this module was written completely from scratch because it implements the main logic, which is very specific for this project. This is why no additional software or libraries need to be installed and no specific hardware is necessary to run this node. To run this module, simply type: rosrun labeled_slam logic_node
+
+Input:  
+
+* text_command (labeled_slam/Command)
+* goal_reached (std_msgs/Bool)
+
+Output:
+
+* set_goal (rtabmap_ros/SetGoal)
+* set_label (rtabmap_ros/SetLabel)
+* activate_path_following (std_srvs/SetBool)
+* activate_driving (std_srvs/SetBool)
+
+### Speech Recognition Module
+The final objective of this node is to properly receive a standard audio input from the user, analyze its content and then generate an output that the state machine can work with to change the state of the system. The Speech recognition module deals with the programmatic design for accomplishing this requirement of the project. After the dependencies have been installed, the module can be run by typing: rosrun labeled_slam command_recognition.py
+
+Input:
+
+* Audio signal from the microphone (hardware)
+* Keyboard inputs (hardware)
+
+Output:
+
+* text_command(msg/command)
+
+### Velocity Forwarder Module
+This node subscribes to the output topics of "activator1" and "activator2" nodes, and publishes any incoming data to the Husqvarna robot. Having two nodes publishing data on the same topic can be problematic, so the Velocity Forwarder node simply merges all the incoming messages into the same output, avoiding any problems that this procedure could create. The module can be run, simply by typing: rosrun labeled_slam velocity_forwarder
+
+Input:
+
+* ac1/cmd_vel (geometry_msgs/Twist)
+* ac2/cmd_vel (geometry_msgs/Twist)
+
+Output:
+
+* cmd_vel (geometry_msgs/Twist)
+
+### Simulator Module
+This module is run by the Gazebo Simulator. It simulates our Husqvarna robot with a Kinect device attached to it. Its purpose is to run simulations without being in the laboratory. It can be used to acquire data from a virtual Kinect sensor and/or to represent the theoretical movements that the robot should do. The module can be run, simply by typing: roslaunch am_gazebo am_gazebo_hrp.launch GUI:=true
+
+Input:
+
+* cmd_vel (geometry_msgs/Twist)
+
+Output:
+
+* /rgb/image (sensor_msgs/Image)
+* /rgb/camera_info (sensor_msgs/CameraInfo)
+* /depth/image (sensor_msgs/Image)
+* /camera/depth/camera_info (sensor_msgs/CameraInfo)
+* /camera/depth/points (sensor_msgs/PointCloud2)
+
+
+
 ## Installation and System Testing
 
 ### Requirements
@@ -123,7 +204,7 @@ For ROS Melodic users, you can find installation instructions for both of these 
 For ROS Kinetic users, the suggested installation and version requirements might not work. To avoid this problem, we suggest to:
 
 * Download PyAudio-0.2.11.tar.gz [here](https://pypi.org/project/PyAudio/).
-* Move the file to the the Python2.7 package folder (/usr/local/lib/python2.7/dist-packages), you will need sudo privileges. 
+* Move the file to the the Python2.7 package folder (/usr/local/lib/python2.7/dist-packages), you will need sudo privileges.
 * In that directory, run:
 ```
 tar xvf PyAudio-0.2.11.tar.gz
@@ -274,6 +355,13 @@ Run the following command to run the project (restricted to DRIVING and GO_TO mo
 ```
 roslaunch labeled_slam test_localize.launch
 ```
+## Tests and Results
+
+To provide the interested party with a visual guide of the test and experiments concerning this project, we here propose three videos that show the physical tests made in the Lab. These video provide a brief guide to our architecture and the physical implementation of the architecture. 
+
+-Rtabmap GUI: https://youtu.be/6lu6xGg_Bjs
+-General Test: https://youtu.be/RyLhx6saB6o
+-Robot Stuck on Path Following: https://youtu.be/yplDEHOiaA8
 
 ## Report
 
