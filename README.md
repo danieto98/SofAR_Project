@@ -85,6 +85,18 @@ Output:
 * activate_path_following (std_srvs/SetBool)
 * activate_driving (std_srvs/SetBool)
 
+### Speech Recognition Module
+The final objective of this node is to properly receive a standard audio input from the user, analyze its content and then generate an output that the state machine can work with to change the state of the system. The Speech recognition module deals with the programmatic design for accomplishing this requirement of the project. After the dependencies have been installed, the module can be run by typing: rosrun labeled_slam command_recognition.py
+
+Input:
+
+* Audio signal from the microphone (hardware)
+* Keyboard inputs (hardware)
+
+Output:
+
+* text_command(msg/command)
+
 ## Installation and System Testing
 
 ### Requirements
