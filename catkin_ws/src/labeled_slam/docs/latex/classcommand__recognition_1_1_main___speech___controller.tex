@@ -1,18 +1,23 @@
 \hypertarget{classcommand__recognition_1_1_main___speech___controller}{}\section{command\+\_\+recognition.\+Main\+\_\+\+Speech\+\_\+\+Controller Class Reference}
 \label{classcommand__recognition_1_1_main___speech___controller}\index{command\+\_\+recognition.\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition.\+Main\+\_\+\+Speech\+\_\+\+Controller}}
+
+
+Mother class.  
+
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 def \hyperlink{classcommand__recognition_1_1_main___speech___controller_abfc55f738b24720625190c078d5de151}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
-\item 
+\begin{DoxyCompactList}\small\item\em Initialize global variables like topics and recognizer. \end{DoxyCompactList}\item 
 def \hyperlink{classcommand__recognition_1_1_main___speech___controller_a5d05c0bcca81f6fdcea9de648f114291}{recognize\+\_\+speech} (self, \hyperlink{classcommand__recognition_1_1_main___speech___controller_abbf94dd60a0a5244906d8842734eca55}{speech})
-\item 
+\begin{DoxyCompactList}\small\item\em Get the audio signal from the microphone as a string. \end{DoxyCompactList}\item 
 def \hyperlink{classcommand__recognition_1_1_main___speech___controller_a8430ad5000f73886dbc9cde072f0d4ba}{recognize\+\_\+command} (self, \hyperlink{classcommand__recognition_1_1_main___speech___controller_abbf94dd60a0a5244906d8842734eca55}{speech}, \hyperlink{classcommand__recognition_1_1_main___speech___controller_a382d3bbe539ba93713ad9b4057e2a226}{speechcommand}, \hyperlink{classcommand__recognition_1_1_main___speech___controller_ace8e299f41b4b37fe5e3e060fa03781f}{mytopic})
-\item 
+\begin{DoxyCompactList}\small\item\em From the audio signal received, publish the desired command. \end{DoxyCompactList}\item 
 def \hyperlink{classcommand__recognition_1_1_main___speech___controller_a7b0164a1ceb1c3de76242c77c3b762d5}{recognize\+\_\+user} (self, \hyperlink{classcommand__recognition_1_1_main___speech___controller_abbf94dd60a0a5244906d8842734eca55}{speech}, \hyperlink{classcommand__recognition_1_1_main___speech___controller_a8db8cf2f5d84e14336e83ce65fc79584}{confirmation})
-\item 
+\begin{DoxyCompactList}\small\item\em Ask user for feedback of the recognized speech. \end{DoxyCompactList}\item 
 def \hyperlink{classcommand__recognition_1_1_main___speech___controller_a502341d8112e260fc5912eba6620d788}{start\+\_\+recognition} (self)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em The \textquotesingle{}main\textquotesingle{} function of the class, it calls constantly the other. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -29,9 +34,9 @@ def \hyperlink{classcommand__recognition_1_1_main___speech___controller_a502341d
 
 
 \subsection{Detailed Description}
+Mother class. 
 
-
-Definition at line 21 of file command\+\_\+recognition.\+py.
+Definition at line 22 of file command\+\_\+recognition.\+py.
 
 
 
@@ -44,7 +49,11 @@ Definition at line 21 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 24 of file command\+\_\+recognition.\+py.
+Initialize global variables like topics and recognizer. 
+
+
+
+Definition at line 25 of file command\+\_\+recognition.\+py.
 
 
 
@@ -57,7 +66,11 @@ Definition at line 24 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 71 of file command\+\_\+recognition.\+py.
+From the audio signal received, publish the desired command. 
+
+
+
+Definition at line 72 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_a5d05c0bcca81f6fdcea9de648f114291}\label{classcommand__recognition_1_1_main___speech___controller_a5d05c0bcca81f6fdcea9de648f114291}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!recognize\+\_\+speech@{recognize\+\_\+speech}}
@@ -67,7 +80,11 @@ Definition at line 71 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 44 of file command\+\_\+recognition.\+py.
+Get the audio signal from the microphone as a string. 
+
+
+
+Definition at line 45 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_a7b0164a1ceb1c3de76242c77c3b762d5}\label{classcommand__recognition_1_1_main___speech___controller_a7b0164a1ceb1c3de76242c77c3b762d5}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!recognize\+\_\+user@{recognize\+\_\+user}}
@@ -77,7 +94,11 @@ Definition at line 44 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 167 of file command\+\_\+recognition.\+py.
+Ask user for feedback of the recognized speech. 
+
+
+
+Definition at line 168 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_a502341d8112e260fc5912eba6620d788}\label{classcommand__recognition_1_1_main___speech___controller_a502341d8112e260fc5912eba6620d788}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!start\+\_\+recognition@{start\+\_\+recognition}}
@@ -87,7 +108,11 @@ Definition at line 167 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 189 of file command\+\_\+recognition.\+py.
+The \textquotesingle{}main\textquotesingle{} function of the class, it calls constantly the other. 
+
+
+
+Definition at line 190 of file command\+\_\+recognition.\+py.
 
 
 
@@ -100,7 +125,7 @@ Definition at line 189 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 33 of file command\+\_\+recognition.\+py.
+Definition at line 34 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_ace8e299f41b4b37fe5e3e060fa03781f}\label{classcommand__recognition_1_1_main___speech___controller_ace8e299f41b4b37fe5e3e060fa03781f}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!mytopic@{mytopic}}
@@ -110,7 +135,7 @@ Definition at line 33 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 27 of file command\+\_\+recognition.\+py.
+Definition at line 28 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_abbf94dd60a0a5244906d8842734eca55}\label{classcommand__recognition_1_1_main___speech___controller_abbf94dd60a0a5244906d8842734eca55}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!speech@{speech}}
@@ -120,7 +145,7 @@ Definition at line 27 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 30 of file command\+\_\+recognition.\+py.
+Definition at line 31 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_a382d3bbe539ba93713ad9b4057e2a226}\label{classcommand__recognition_1_1_main___speech___controller_a382d3bbe539ba93713ad9b4057e2a226}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!speechcommand@{speechcommand}}
@@ -130,7 +155,7 @@ Definition at line 30 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 39 of file command\+\_\+recognition.\+py.
+Definition at line 40 of file command\+\_\+recognition.\+py.
 
 \mbox{\Hypertarget{classcommand__recognition_1_1_main___speech___controller_a7b8c9320db0e9e052e46d7261914aa1f}\label{classcommand__recognition_1_1_main___speech___controller_a7b8c9320db0e9e052e46d7261914aa1f}} 
 \index{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller@{command\+\_\+recognition\+::\+Main\+\_\+\+Speech\+\_\+\+Controller}!status@{status}}
@@ -140,7 +165,7 @@ Definition at line 39 of file command\+\_\+recognition.\+py.
 
 
 
-Definition at line 36 of file command\+\_\+recognition.\+py.
+Definition at line 37 of file command\+\_\+recognition.\+py.
 
 
 

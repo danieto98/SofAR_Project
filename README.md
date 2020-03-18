@@ -42,6 +42,7 @@ These 2 nodes are used to activate the two different types of motion that the Hu
 
 Activator1 receives robot velocity inputs and passes it to the velocity forwarder (the node that actually sends velocity to the robot) when the state machine enters the GO_TO_MODE; Activator2 behaves similarly when in DRIVING_MODE. The state machine activates both activators through a Service call. The activators cannot overlap, as they are activated only in these two modes, and the state machine operation prevents activation inaccuracies.
 
+
 #### Activator 1
 
 Input:
@@ -72,7 +73,6 @@ Advertised service:
 * activate_driving (std_srvs/SetBool)
 
 
-
 ### Path Follower Module
 The path follower calculates how to follow the path it receives from the rtabmap_ros node. It will receive the entire path, which is an array of poses, but it will only try to go to the next one. First of all, the node checks whether the robot is at the desired pose and distance of the path by using the functions proximity_check() and angle_check(). If the robot is not at the desired pose, it calculate the distance and the angular difference between the two. To calculate the distance, it takes the position of the robot (Point) and the position of the desired pose (Vector3) and subtract them. The path follower publishes velocities as the desired rate, which are regulated through a simple PID controller, that regulates the velocity according to the distance to the target.
 
@@ -88,10 +88,12 @@ Required tf:
 
 * /map to /base_link      
 
+
 ### Logic-node
 The source code of this module was written completely from scratch because it implements the main logic, which is very specific for this project. This is why no additional software or libraries need to be installed and no specific hardware is necessary to run this node. To run this module, simply type: rosrun labeled_slam logic_node
 
 Input:  
+
 
 * text_command (labeled_slam/Command)
 * goal_reached (std_msgs/Bool)
@@ -141,7 +143,6 @@ Output:
 * /depth/image (sensor_msgs/Image)
 * /camera/depth/camera_info (sensor_msgs/CameraInfo)
 * /camera/depth/points (sensor_msgs/PointCloud2)
-
 
 
 ## Installation and System Testing

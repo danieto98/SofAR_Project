@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['path_5fcallback',['path_callback',['../path__follower_8cpp.html#aa9a42b10b0895a8dea5f7a3e53622445',1,'path_follower.cpp']]],
-  ['path_5ffollowing_5factivate',['path_following_activate',['../activator1_8cpp.html#a0e0b3479775a039d6aa169f4a86f4c5b',1,'activator1.cpp']]],
-  ['proximity_5fcheck',['proximity_check',['../path__follower_8cpp.html#a6580d4219bb711f9f65ecdc5ae43a7b4',1,'path_follower.cpp']]]
+  ['main',['main',['../activator1_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;activator1.cpp'],['../activator2_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;activator2.cpp'],['../namespacecommand__recognition.html#a7ea48f781ea104f0a02f0b755f671b52',1,'command_recognition.main()'],['../logic__node_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;logic_node.cpp'],['../path__follower_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;path_follower.cpp'],['../velocity__forwarder_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;velocity_forwarder.cpp']]]
 ];

@@ -1,6 +1,6 @@
-[submodule "catkin_ws/src/freenect_stack"]
-	path = catkin_ws/src/freenect_stack
-	url = ../../ros-drivers/freenect_stack.git
 [submodule "catkin_ws/src/gesture-based-controller"]
 	path = catkin_ws/src/gesture-based-controller
-	url = ../../FilipHesse/gesture-based-controller
+	url = https://github.com/FilipHesse/gesture-based-controller
+[submodule "catkin_ws/src/freenect_stack"]
+	path = catkin_ws/src/freenect_stack
+	url = https://github.com/ros-drivers/freenect_stack
